@@ -1,0 +1,1025 @@
+\section{The KLS Conjecture}
+
+\subsection{An Isoperimetric Problem}
+
+	\subsubsection{Introduction}
+
+		In the context of ball-step, let us look at the mixing time of the chain for a general (not necessarily convex) body.\\
+		As discussed, it suffices to look at the conductance of the chain, which relates to finding a ``cut'' of the body of relatively small surface area. For example, in a dumbbell, we could have a cut down the central bottleneck, which would result in a very low conductance.\\
+		What about convex bodies? It is seen that hyperplanes are not bad (this is made precise in \Cref{kls conj hyperplane}). A natural next question is: could we have some convoluted cut that ends up being a bottleneck? In \cite{KLSConjecture}, Kannan, Lov\`asz, and Simonovits conjectured that this in fact cannot happen. In particular, they claim that up to a constant factor, hyperplane cuts are in fact the ``worst'' cuts.\\
+		We first formalize this notion of a cut to get an expression similar to that of conductance, discuss some localization lemmata similar to those discussed earlier (to reduce $n$-dimensional integrals to $1$-dimensional integrals), prove an improvement of \Cref{improvement of conductance isoperimetric inequality} in \Cref{isoperimetric coefficient bound 1,isoperimetric coefficient bound 2}, and finish off with the statement of the conjecture.
+
+		Suppose we have a convex body $K$ and we want to find a surface that divides $K$ into two parts, whose measure is minimum relative to that of the two parts.
+
+		\begin{fdef}
+			\label{def: isoperimetric coefficient}
+			The \textit{isoperimetric coefficient} of a convex body $K\subseteq\Rn$ is defined as the largest number $\psi=\psi(K)$ such that for any measurable $S\subseteq K$,
+			\[ \psi = \inf_{S\subseteq K} \frac{\vol_{n-1}(\partial S)}{\min\{\vol(S),\vol(K\setminus S)\}} \]
+			More generally, for any log-concave density $p$ on $\Rn$ (instead of $\indic_K$ taken above), we can define $\psi_p$, the isoperimetric constant for $p$, as
+			\[ \psi_p = \inf_{S\subseteq\Rn} \frac{p(\partial S)}{\min\{p(S),p(\Rn\setminus S)\}}. \]
+		\end{fdef}
+
+		In some texts, the above definition is replaced with
+		\[ \psi_p = \inf_{S\subseteq\Rn} \frac{p(\partial S)}{p(S)p(\Rn\setminus S)}. \]
+		Since both definitions are within a factor of $2$ of each other, this does not make much difference in our estimations.\\
+
+		This problem turns out to be very intimately related to that of volume computation we explored in the previous section.\\
+		\cite{lovasz-simonovits-mixing-rate-isoperimetric} bounds the isoperimetric coefficient below by $1/d$, where $d$ is the diameter of the body. Note that this is quite obvious if the separating surface $\partial S$ is a (section of a) hyperplane.\\
+		\cite{applegate-kannan-cube-sandwich} gives a more general result where the measure is replaced by that with density equal to any log-concave function and bounds it below by $2/d$. This is in fact as tight as we can get in terms of the diameter and indeed, the bound is attained for a thin long cylinder.\\
+		However, the bodies we are interested in (in say, volume computation) tend to have a certain structure to them. In particular, sandwiching makes the bodies somewhat round.\\
+		The main result of this section is that for every convex body $K$,
+		\[ \psi(K) \geq \frac{\ln 2}{M_1(K)}, \]
+		where $M_1(K)$ is the average distance of a point in $K$ from the center of gravity of $K$. 
+
+	\subsubsection{Needles and Localization Lemmas}
+	\label{sec: 5.1.2}
+
+		To begin, consider the following motivated by \Cref{localization lemma}.
+
+		\begin{definition}
+			A \textit{needle} is a segment $[a,b]\in\Rn$ together with a non-negative linear function $\ell:I\to\R^{\geq 0}$ not identically $0$. If $N=(I,\ell)$ is a needle and $f$ is an integrable function defined on $I$, denote
+			\[ \int_N f = \int_{0}^{|b-a|} f(a+tu)\ell(a+tu)^{n-1} \d{t}, \]
+			where $u=(b-a)/|b-a|$.
+		\end{definition}
+
+		\begin{lemma}
+			\label{lem: 5.1}
+			Let $f_1$, $f_2$, $f_3$, $f_4$ be non-negative continuous functions defined on $\Rn$ and $\alpha,\beta>0$. The following are equivalent.
+			\begin{itemize}
+				\item For every convex body $K$ in $\Rn$,
+					\[ \left(\int_K f_1\right)^\alpha \left(\int_K f_2\right)^\beta \leq \left(\int_K f_3\right)^\alpha \left(\int_K f_4\right)^\beta. \]
+				\item For every needle $N$ in $\Rn$,
+					\[ \left(\int_N f_1\right)^\alpha \left(\int_N f_2\right)^\beta \leq \left(\int_N f_3\right)^\alpha \left(\int_N f_4\right)^\beta. \]
+			\end{itemize}
+		\end{lemma}
+		\begin{proof}
+			The first implying the second is quite easy to show. For the converse, suppose that the second holds but the first does not.\\
+			Adding a sufficiently small quantity to $f_3$ and $f_4$, we may further assume that they are (strictly) positive. We may also assume that $f_1$ and $f_2$ are positive (Why?). Choose some $A$ such that
+			\[ \left(\frac{\int_K f_1}{\int_K f_3}\right)^\alpha > A > \left(\frac{\int_K f_4}{\int_K f_2}\right)^\beta. \]
+			Then,
+			\[ \int_K f_1 - A^{1/\alpha}f_3 > 0 \text{ and } \int_K A^{1/\beta}f_2 - f_4 > 0. \]
+			Using \Cref{localization lemma}, there is some needle $N$ such that
+			\[ \int_N f_1 - A^{1/\alpha}f_3 > 0 \text{ and } \int_N A^{1/\beta}f_2 - f_4 > 0. \]
+			This implies that
+			\[ \frac{\left(\int_N f_1\right)^\alpha}{\left(\int_N f_3\right)^\alpha} > A > \frac{\left(\int_N f_4\right)^\beta}{\left(\int_N f_2\right)^\beta}, \]
+			thus proving the claim.
+		\end{proof}
+
+		Observe that we can extend this more generally to the case where $f_1$ and $f_2$ are upper semicontinuous and $f_3$ and $f_4$ are lower semicontinuous by considering an appropriate sequence of continuous functions. In particular, this allows us to restrict ourselves from $\Rn$ to some subset $T$ of $\Rn$ by multiplying the functions with the indicator function $\indic_T$ (the functions extend to upper semicontinuous functions if $T$ is closed and lower semicontinuous functions if $T$ is open).
+		% *** Why?
+
+		\begin{corollary}
+			\label{cor: if positive on convex set convex on some needle}
+			Let $T$ be a bounded open convex set in $\Rn$, $g$ a bounded lower semicontinuous function on $T$, and $h$ a continuous function on $T$ such that
+			\[ \int_T g > 0 \text{ and } \int_T h = 0. \]
+			Then there is a needle $N=(I,\ell)$ with $I\subseteq T$ such that
+			\[ \int_N g > 0 \text{ and } \int_N h = 0. \]
+		\end{corollary}
+		\begin{proof}
+			Choose some $0<\delta<\int_T g$ and let $\varepsilon>0$. Then,
+			\[ \int_T \left(g-\delta+\frac{1}{\varepsilon}h\right) > 0 \text{ and } \int_T (\varepsilon^2	-h) > 0. \]
+			Extending these functions to functions on $\Rn$ (multiplying with the indicator function) and using \Cref{localization lemma}, we get a needle $N_\varepsilon=(I_\varepsilon,\ell_\varepsilon)$ with $I_\varepsilon\subseteq T$ (Why?) such that
+			\begin{equation}
+				\label{eqn: 5.1}
+				\int_{N_\varepsilon} \left(g-\delta+\frac{1}{\varepsilon}h\right) > 0 \text{ and } \int_{N_\varepsilon} (\varepsilon^2-h) > 0.
+			\end{equation}
+			Observe that $\int_{N_\varepsilon} (g-\delta+\varepsilon)>0$.\\
+			Taking $M$ as the supremum of $g$ on $\Rn$,
+			\begin{equation}
+				\label{eqn: 5.2}
+				-M\varepsilon\int_{N_\varepsilon} 1 < \int_{N_\varepsilon} h < \varepsilon^2 \int_{N_\varepsilon} 1.
+			\end{equation}
+			Consider these needles for $\varepsilon=1/k$ ($k\in\N$). Scaling appropriately, we may assume that the maximum of each linear function $\ell_{1/k}$ is $1$. Using the Bolzano-Weierstrass Theorem, there is some subsequence of these needles that converges (in the sense that the endpoints of the $I_{1/k}$ and the $\ell_{1/k}$ converge)\footnote{We can think of an needle $N=([a,b],\ell)$ as an element $(a,b,\ell(a),\ell(b)-\ell(a))\in\R^{2n+2}$. In our case, this sequence is bounded because each interval is in the bounded set $T$ and each $\ell$ is between $0$ and $1$.} to some needle $N=(I,\ell)$. Combining \Cref{eqn: 5.1,eqn: 5.2} implies that $N$ satisfies the required (we get $\int_N (g-\delta) \geq 0$ and $\int_N h = 0$).
+		\end{proof}
+
+		While these results are quite nice, exponents of a linear function are not very convenient to deal with. This motivates the following.
+
+	\subsubsection{Exponential Needles}
+	\label{sec: 5.1.3}
+
+		\begin{definition}
+			An \textit{exponential needle} is a segment $[a,b]\in\Rn$ together with a real $\gamma$. If $E=(I,\gamma)$ is a needle and $f$ is an integrable function defined on $I$, denote
+			\[ \int_E f = \int_{0}^{|b-a|} f(a+tu)e^{\gamma t} \d{t}, \]
+			where $u=(b-a)/\norm{b-a}$.
+		\end{definition}
+
+		If we manage to prove our results for an exponential needle instead, it is extremely convenient because taking exponents does not change the underlying structure of the function itself.
+
+		\begin{lemma}
+			\label{localized exponential needle interconversion}
+			Let $f_1$, $f_2$, $f_3$, and $f_4$ be four non-negative continuous functions defined on an interval $[a,b]$ in $\R$ and $\alpha,\beta>0$. Then the following are equivalent.
+			\begin{itemize}
+				\item For every log-concave function $F$ defined on $\R$, 
+				\[ \left(\int_a^b F(t)f_1(t)\d{t}\right)^\alpha \left(\int_a^b F(t)f_2(t)\d{t}\right)^\beta \leq \left(\int_a^b F(t)f_3(t)\d{t}\right)^\alpha \left(\int_a^b F(t)f_4(t)\d{t}\right)^\beta. \]
+
+				\item For every subinterval $[a',b']\subseteq[a,b]$ and real $\gamma$,
+				\[ \left(\int_{a'}^{b'} e^{\gamma t}f_1(t)\d{t}\right)^\alpha \left(\int_{a'}^{b'} e^{\gamma t}f_2(t)\d{t}\right)^\beta \leq \left(\int_{a'}^{b'} e^{\gamma t}f_3(t)\d{t}\right)^\alpha \left(\int_{a'}^{b'} e^{\gamma t}f_4(t)\d{t}\right)^\beta. \]
+			\end{itemize}
+		\end{lemma}
+
+		\begin{proof}
+			The first implying the second is obvious (on setting $F=\indic_{[a',b']}e^{\gamma t}$).
+
+			Note that if for some $t_0\in[a,b]$, $f_1(t_0)^\alpha f_2(t_0)^\beta > f_3(t_0)^\alpha f_4(t_0)^\beta$, then both the assertions above fail since we can consider
+			\begin{itemize}
+				\item the log-concave function $e^{-c(t-t_0)^2}$ for a sufficiently large $c$, or
+				\item a sufficiently small interval containing $t_0$.
+			\end{itemize}
+			Therefore, we may assume that for all $t\in[a,b]$,
+			\begin{equation*}
+				\label{eqn: init observation exp needle conv body}
+				\tag{$*$}
+				f_1(t)^\alpha f_2(t)^\beta \leq f_3(t)^\alpha f_4(t)^\beta.
+			\end{equation*}
+
+			Suppose the second holds and the first does not for some log-concave function $F$.\\
+			We may assume that $F\neq 0$ (so $F>0$) on $[a,b]$. Otherwise, we can replace it with its convolution with $e^{-ct^2}$ for a sufficiently large $c$, which is still log-concave by \Cref{convolution of log concave functions is log concave} and would still satisfy the inequality (Why?). We may also assume that $F\geq 1$ on $[a,b]$ by scaling up appropriately. Let $F=e^G$, where $G$ is a non-negative concave function on $[a,b]$.\\
+			For each $n$, define $K_n\subseteq\R^{n+1}$ by
+			\[ K_n = \left\{ (t,x) : t\in[a,b], x\in\Rn, \norm{x} \leq 1 + \frac{G(t)}{n} \right\}. \]
+			Let $\hat{f}_i:\R^{n+1}\to\R$ by defined by $\hat{f}_i(t,x)=f_i(t)$.\\
+			For sufficiently large $n$, we have $(1+G(t)/n)^n\approx e^{G(t)} = F(t)$, so we can write%\footnote{The $F$ disappears from the integral when integrating over the ``discs'' orthogonal to the $t$-axis.}
+			\[ \left(\int_{K_n} \hat{f}_1(t)\d{t}\right)^\alpha \left(\int_{K_n} \hat{f}_2(t)\d{t}\right)^\beta > \left(\int_{K_n} \hat{f}_3(t)\d{t}\right)^\alpha \left(\int_{K_n} \hat{f}_4(t)\d{t}\right)^\beta. \]
+			Using \Cref{lem: 5.1}, there exists a needle $N_n$ such that
+			\[ \left(\int_{N_n} \hat{f}_1(t)\d{t}\right)^\alpha \left(\int_{N_n} \hat{f}_2(t)\d{t}\right)^\beta > \left(\int_{N_n} \hat{f}_3(t)\d{t}\right)^\alpha \left(\int_{N_n} \hat{f}_4(t)\d{t}\right)^\beta. \]
+
+			If $N_n$ is orthogonal to the $t$-axis, then (\ref{eqn: init observation exp needle conv body}) immediately breaks so we arrive at a contradiction. Otherwise, we may project the needle onto the $t$-axis to get some $[a_n,b_n]\subseteq[a,b]$ and a linear function $\ell_n$ such that
+			\begin{equation}
+				\label{eqn: 5.3}
+				\left(\int_{a_n}^{b_n} \ell_n(t)^n \hat{f}_1(t)\d{t}\right)^\alpha \left(\int_{a_n}^{b_n} \ell_n(t)^n \hat{f}_2(t)\d{t}\right)^\beta > \left(\int_{a_n}^{b_n} \ell_n(t)^n \hat{f}_3(t)\d{t}\right)^\alpha \left(\int_{a_n}^{b_n} \ell_n(t)^n \hat{f}_4(t)\d{t}\right)^\beta.
+			\end{equation}
+			By the Bolzano-Weierstrass Theorem, there is a subsequence such that $a_{n_k}$, $b_{n_k}$ converge, to say $a_0$ and $b_0$. By (\ref{eqn: init observation exp needle conv body}), $a_0 < b_0$. Suppose that $\ell_n(a_0) < \ell_n(b_0)$ for infinitely many indices -- if not, then exchange $a_0$ and $b_0$ in the following argument. Now, let each $\ell_n$ be normalized such that $\ell_n(b_0)=1$. Let $\gamma_n = \ell_n(a_0)$ for each $n$.\\
+			For some subsequence, let $\gamma_n\to\gamma$ and $n(1-\gamma_n)\to\gamma'$, where $0\leq\gamma\leq 1$ and $0\leq\gamma'\leq\infty$. Henceforth, we restrict ourselves to this subsequence.
+			\begin{itemize}
+				\item If $\gamma\neq 1$, $\ell_n(t)^n\to 0$ for all $a_0\leq t<b_0$. Dividing \Cref{eqn: 5.3} by $\left(\int_{a_n}^{b_n}\ell_n(t)^n\d{t}\right)^{\alpha+\beta}$ and letting $n\to\infty$, we get
+				\[ f_1(b_0)^\alpha f_2(b_0)^\beta \geq f_3(b_0)^\alpha f_4(b_0)^\beta. \]
+				If instead of $f_3$ and $f_4$ everywhere in the proof above, we instead take $f_3+\varepsilon$ and $f_4+\varepsilon$ for a sufficiently small $\varepsilon$, we get a strict inequality above and arrive at a contradiction to (\ref{eqn: init observation exp needle conv body}).
+
+				\item Therefore, $\gamma=1$. We then have
+				\[ \ell_n(t)^n = \left((1 - (1-\ell_n(t)))^{1/(1-\ell_n(t))}\right)^{n(1-\ell_n(t))}. \]
+				The inner expression goes to $1/e$. If $\gamma'=\infty$, then we again get $\ell_n(t)^n\to 0$ for $t < b_0$, so we arrive at a contradiction similar to the first case above. Otherwise, we have
+				\[ \ell_n(t) \to e^{\gamma'(t-b_0)/(b_0-a_0)}. \]
+				Letting $\gamma''=\gamma'/(b_0-a_0)$ and letting $n\to\infty$, we get
+				\[ \left(\int_{a_0}^{b_0} e^{\gamma''(t-b_0)} f_1(t)\d{t}\right)^\alpha \left(\int_{a_0}^{b_0} e^{\gamma''(t-b_0)} f_2(t)\d{t}\right)^\beta > \left(\int_{a_0}^{b_0} e^{\gamma''(t-b_0)} f_3(t)\d{t}\right)^\alpha \left(\int_{a_0}^{b_0} e^{\gamma''(t-b_0)} f_4(t)\d{t}\right)^\beta. \]
+				However, this (after multiplying by $e^{\gamma''b_0(\alpha+\beta)}$ on either side to remove the $b_0$ in the exponent) contradicts the original assumption that the opposite inequality holds for any exponential needle, thus completing the proof.
+			\end{itemize}
+		\end{proof}
+
+		The next result is essentially a generalized version of the above lemma, so is relatively straight-forward to prove since we have various tools for localization in our repertoire at this point.
+
+		\begin{ftheo}
+			\label{generalized exponential needle interconversion}
+			Let $f_1$, $f_2$, $f_3$, and $f_4$ be non-negative functions on $\Rn$ and $\alpha,\beta>0$. The following are equivalent.
+			\begin{itemize}
+				\item For every log-concave function $F$ on $\Rn$ with compact support,
+					\[ \left(\int_{\Rn} F(t) f_1(t)\d{t}\right)^\alpha \left(\int_{\Rn} F(t) f_2(t)\d{t}\right)^\beta \leq \left(\int_{\Rn} F(t) f_3(t)\d{t}\right)^\alpha \left(\int_{\Rn} F(t) f_4(t)\d{t}\right)^\beta. \]
+				\item For every exponential needle $E$ in $\Rn$,
+					\[ \left(\int_E f_1\right)^\alpha \left(\int_E f_2\right)^\beta \leq \left(\int_E f_3\right)^\alpha \left(\int_E f_4\right)^\beta. \]
+			\end{itemize}
+		\end{ftheo}
+		\begin{proof}
+			Going from the first to the second isn't too difficult. Given the exponential needle over $[a,b]$ and constant $\gamma$, consider the function $F$ defined by $t\mapsto e^{\gamma \langle t, u\rangle}$, where $u=(b-a)/\norm{b-a}$ restricted to some $\varepsilon$-neighbourhood of $[a,b]$. Letting $\varepsilon\to 0$, we get the required.\\
+			On the other hand, let the second hold but not the first for some function $F$. Then applying \Cref{lem: 5.1} on the $Ff_i$, we get some $[a,b]$ and linear function $\ell$ on $[a,b]$ such that
+			\begin{multline*}
+				\left(\int_0^{\norm{b-a}} f_1(a+tu) F(a+tu)\ell(a+tu)^{n-1}\d{t}\right)^\alpha \left(\int_0^{\norm{b-a}} f_2(a+tu) F(a+tu)\ell(a+tu)^{n-1}\d{t}\right)^\beta \\
+				> \left(\int_0^{\norm{b-a}} f_3(a+tu) F(a+tu)\ell(a+tu)^{n-1}\d{t}\right)^\alpha \left(\int_0^{\norm{b-a}} f_4(a+tu) F(a+tu)\ell(a+tu)^{n-1}\d{t}\right)^\beta,
+			\end{multline*}
+			where $u$ has the usual meaning of $(b-a)/\norm{b-a}$.
+
+			However, $F\ell^{n-1}$ is log-concave, so by \Cref{localized exponential needle interconversion}, there exists an exponential needle that violates the assumption.
+		\end{proof}
+
+	\subsubsection{An Example Using the Equivalences}
+
+		Let $K$ be a convex body and $f:K\to\R$ be integrable. Define its $L_p$ norm by
+		\[ \norm{f}_p = \left(\frac{1}{\vol K} \int_{K} |f(x)|^p \d{x} \right)^{1/p}. \]
+		It is easy to see that if $0<p<q$, $\norm{f}_p \leq \norm{f}_q$.
+		% Use H\"{o}lder's
+		% \int (f^p)^{1/p} \leq (\int (f^p)^{q/p})^{p/q} \norm{1}_{1/(1-p/q)}, which is exactly what you want after shifting around some stuff
+		\begin{theorem}
+			Let $0<p<q$. There exists a constant $c_{p,q}$ such that for any dimension $n$, convex body $K\subseteq\Rn$ and linear function $f:K\to\R$,
+			\[ \norm{f}_q \leq c_{p,q}\norm{f}_p \]
+		\end{theorem}
+		\begin{proof}
+			We wish to show that for any $K$,
+			\[ \left(\int_K |f|^q\right)^{1/q} \left(\int_K 1\right)^{1/p} \leq c_{p,q} \left(\int_K 1\right)^{1/q} \left(\int_K |f|^p\right)^{1/p}. \]
+			Equivalently, we wish to show that for any exponential needle $E$,
+			\[ \left(\int_E |f|^q\right)^{1/q} \left(\int_E 1\right)^{1/p} \leq c_{p,q} \left(\int_E 1\right)^{1/q} \left(\int_E |f|^p\right)^{1/p}. \]
+			That is, we wish to show that for any linear function $f$, $a,b\in\R$, and real $\gamma$,
+			\[ \left( \frac{\int_a^b e^{\gamma t} |f(t)|^q\d{t}}{\int_a^b e^{\gamma t}\d{t}} \right)^{1/q} \leq c_{p,q} \left( \frac{\int_a^b e^{\gamma t} |f(t)|^p\d{t}}{\int_a^b e^{\gamma t}\d{t}}\right)^{1/p}, \]
+			Since $f$ is linear, we may assume without loss of generality that $f(a+tu)=t$ on $[a,b]$ and that $\gamma=1$; for the general case where $\gamma\neq 0$, we can just substitute appropriately. The cases where $\gamma=0$ or $f$ is constant on $[a,b]$ are easily shown.\\
+			\[ \varphi(a,b) = \left( \frac{\int_a^b e^{t} |f(t)|^q\d{t}}{\int_a^b e^{t}\d{t}} \right)^{1/q} \left( \frac{\int_a^b e^{t} |f(t)|^p\d{t}}{\int_a^b e^{t}\d{t}} \right)^{-1/p}. \]
+			We wish to show that $c_{p,q} = \sup_{a<b} \varphi(a,b)$ is finite. Note that $\varphi$ is continuous for $a<b$. Further, for any $\alpha$, $\varphi(a,b)\to 1$ as $a,b\to\alpha$. That is, we may extend the function continuously to $a\leq b$ defining $\varphi(a,a)=1$.\\
+			Now, observe that for fixed $a$, as $b\to\infty$, $\varphi(a,b)\to 1$.\footnote{$\int_a^b e^t |f(t)|^p\d{t}$ grows as $e^{-b}b^p$ and $\int_a^b e^t\d{t}$ grows as $e^b$.} On the other hand, for fixed $b$ and $a\to\infty$, $\varphi(a,b)$ remains bounded. The continuity implies that $\varphi$ is bounded (and its supremum is finite).
+		\end{proof}
+
+		The actual calculation of the supremum above is quite tedious, however.
+
+
+	\subsubsection{Isotropy}
+
+		The content of this section is closely related to that of volume computation, primarily \Cref{pro sandwiching}, which discussed sandwiching.
+
+		Given a convex body $K\subseteq\Rn$ and $f:K\to\R^m$, denote by $\expec_K(f)$ the average of $f$ over $K$. That is,
+		\[ \expec_K(f) = \frac{1}{\vol(K)} \int_{K} f(x)\d{x}. \]
+		Denote by $b(K)=\expec_K(x)$ the center of gravity of $K$, also known as the barycenter of $K$. If $K$ is clear from context, we often denote it as just $b$. Denote by $A(K)$ the $n\times n$ matrix of inertia
+		\[ A(K) = \expec_K((x-b)(x-b)^\top). \]
+		Denote by $M_p(K)$ the $p$th moment of $K$
+		\[ M_p(K) = \expec_K\left(\norm{x-b}^p\right). \]
+		It is seen that $M_2(K)$ is the trace of $A(K)$. Further, the average squared distance between points in $K$ is
+		\[ \frac{1}{\vol(K)^2} \int_K \int_K \norm{x-y}^2\d{x}\d{y} = 2M_2(K). \]
+		As $p\to\infty$, $M_p(K)^{1/p}$ converges to $\sup_{x\in K} \norm{x-b}$.
+
+		\begin{fdef}[Isotropic]
+			A body $K$ is said to be in \textit{isotropic position} if $b=0$ and $A(K)=I$, the identity matrix.\footnotemark\\
+			Similarly, a function $f:\Rn\to[0,\infty)$ is said to be \textit{isotropic} if its covariance matrix is the identity matrix.
+		\end{fdef}
+		\footnotetext{Some texts use $\vol(K)=1$ and $A(K)=\lambda_K I$ for some constant $\lambda_K$. It remains an open problem as to whether the value of $\lambda_K$ across convex bodies $K\subseteq\Rn$ is bounded above.}
+
+		Observe that a convex body is in isotropic position iff its indicator function is isotropic.
+
+		It may be shown the affine family of a convex body (the set of its image under affine transformations) has a unique body in isotropic position.\\
+		First, let us show how isotropic position is related to sandwiching.
+
+		\begin{ftheo}
+			If $K$ is in isotropic position, then
+			\[ \sqrt{\frac{n+2}{n}} B_2^n \subseteq K \subseteq \sqrt{n(n+2)}B_2^n. \]
+		\end{ftheo}
+
+		Observe that these inequalities are tight for the regular simplex and also imply the second part of \Cref{fritz john banach mazur distance}. If $K$ is in isotropic position, then for any unit $u$,
+		\[ \int_K \langle u,x\rangle^2 \d{x} = \vol(K). \]
+
+		\begin{proof}
+			\phantom{agh}
+			\begin{itemize}
+				\item Suppose that $\sqrt{(n+2)/n}B_2^n\not\subseteq K$. Choosing our basis appropriately, we may assume that $K$ is contained in the half-space $x_1 > -\sqrt{(n+2)/n}$. Now, we have
+				\[ \int_K x_1 = 0 \text{ and } \int_K (x_1^2 - 1) = 0. \]
+				Using \Cref{cor: if positive on convex set convex on some needle} (or rather, an extension of it with a weak inequality on $\int g$), we get some needle $N=([a,b],\ell)$. We may assume that $[a,b]$ is contained in the $x_1$ axis, so that
+				\[ \int_a^b x_1\ell(x_1)^{n-1} = 0 \text{ and } \int_a^b x_1^2\ell(x_1)^{n-1} \geq \int_a^b \ell(x_1)^{n-1}. \]
+				We have $a > -\sqrt{\frac{n+2}{n}}$. It is easy to see\footnote{If $|b|>|a|$, then the first equality implies that $\ell$ cannot be increasing. Otherwise, we can use the second inequality to justify the assumption.} that we may assume that $\ell$ is decreasing, and thus may suppose that is of the form $t-x$ for some $\lambda\geq b$. We can then manually (and tediously) compute the integrals to arrive at a contradiction.
+
+				\item Let $v$ be the point in $K$ furthest from $0$ (assume that $K$ is closed so this is well-defined). We wish to show that $\norm{v}\leq\sqrt{n(n+2)}$. Let $v^{\circ} = v/\norm{v}$ and for each unit $u$, let $\varphi(u) = \sup\{t\geq 0 : v+tu\in K\}$. Then,
+				\[ \vol(K) = \int_{\partial B_2^n} \int_{0}^{\varphi(u)} t^{n-1}\d{t}\d{u} = \int_{\partial B_2^n} \frac{\varphi(u)^n}{n} \d{u}. \]
+				We also have
+				\begin{align*}
+					1 &= \frac{1}{\vol(K)} \int_K \langle v^\circ, x\rangle^2 \d{x} \\
+					 &=  \frac{1}{\vol(K)} \int_{\partial B_2^n} \int_0^{\varphi(u)} t^{n-1} \langle v^\circ, v+tu\rangle^2 \d{t}\d{u} \\
+					 &= \frac{1}{\vol(K)} \int_{\partial B_2^n} \left( \frac{\varphi(u)^n}{n}\norm{v}^2 + 2\frac{\varphi(u)^{n+1}}{n+1} \langle v^\circ, u\rangle + \frac{\varphi(u)^{n+2}}{n+2} \langle v^\circ, u\rangle^2 \right) \d{u} \\
+					 &= \frac{1}{\vol(K)} \int_{\partial B_2^n} \left( \frac{\varphi(u)^n}{n} \left(\frac{\sqrt{n(n+2)}}{n+1}\norm{v} + \sqrt{\frac{n}{n+2}}\varphi(u) \langle v^\circ, u\rangle\right)^2 + \frac{\varphi(u)^n}{n(n+1)^2}\norm{v}^2 \right) \d{u} \\
+					 &= \frac{1}{\vol(K)} \left( \int_{\partial B_2^n} \frac{\varphi(u)^n}{n} \left(\frac{\sqrt{n(n+2)}}{n+1}\norm{v} + \sqrt{\frac{n}{n+2}}\varphi(u)\langle v^\circ, u\rangle\right)^2 \d{u} \right) + \frac{\norm{v}^2}{(n+1)^2}
+				\end{align*}
+				This gives a bound of $\norm{v}\leq n+1$. To get the bound mentioned in the theorem, it remains to bound the integral by a suitable positive quantity. Now, we have
+				\begin{align*}
+					0 = b(K) &= \frac{1}{\vol(K)} \int_{\partial B_2^n} \int_{0}^{\varphi(u)} t^{n-1} (v+tu) \d{t}\d{u} \\
+					 &= \frac{1}{\vol(K)} \int_{\partial B_2^n} \frac{\varphi(u)^n}{n}v + \frac{\varphi(u)^{n+1}}{n+1}u \d{u} \\
+					 &= v + \frac{1}{\vol(K)} \int_{\partial B_2^n} \frac{\varphi(u)^{n+1}}{n+1}u\d{u}.
+				\end{align*}
+				Therefore,
+				\begin{multline*}
+					\frac{1}{\vol(K)} \int_{\partial B_2^n} \frac{\varphi(u)^n}{n} \left(\frac{\sqrt{n(n+2)}}{n+1}\norm{v} + \sqrt{\frac{n}{n+2}}\varphi(u) \langle v^\circ,u\rangle\right) \d{u} \\
+					= \left(\frac{\sqrt{n(n+2)}}{n+1} - \frac{n+1}{\sqrt{n(n+2)}}\right)\norm{v} = -\frac{1}{(n+1)\sqrt{n(n+2)}}\norm{v}.
+				\end{multline*}
+				We can then use the Cauchy-Schwarz inequality to get
+				\[ \left( \frac{1}{\vol(K)} \int_{\partial B_2^n} \frac{\varphi(u)^n}{n} \left(\frac{\sqrt{n(n+2)}}{n+1}\norm{v} + \sqrt{\frac{n}{n+2}}\varphi(u)\langle v^\circ, u\rangle\right)^2 \d{u} \right) \cdot 1 \geq \frac{1}{(n+1)^2n(n+2)}\norm{v}^2. \]
+				That is,
+				\[ 1 \geq \left(\frac{1}{(n+1)^2n(n+2)} + \frac{1}{(n+1)^2}\right)\norm{v}^2 = \frac{\norm{v}^2}{n(n+2)}, \]
+				proving the result.
+			\end{itemize}	
+		\end{proof}
+
+	\subsubsection{The KLS Conjecture}
+
+		Let us now move on to the main result of this section.
+
+		\begin{ftheo}
+			\label{isoperimetric coefficient bound 1}
+			For any convex body $K$,
+			\[ \psi(K) \geq \frac{\ln 2}{M_1(K)}. \]
+		\end{ftheo}
+
+		In \Cref{def: isoperimetric coefficient}, let $K_3$ be the intersection of $K$ with the open $\varepsilon/2$-neighbourhood of $\partial S$. Further, let $K_1 = S\setminus K_3$ and $K_2 = (K\setminus S)\setminus K_3$. Then, it suffices to prove the following, which is yet another improvement of \Cref{conductance isoperimetric inequality,improvement of conductance isoperimetric inequality}.
+
+		\begin{ftheo}
+			Let $K$ be a convex body and $K = K_1\cup K_2\cup K_3$ a decomposition of $K$ into three measurable sets such that $d(K_1,K_2)=\varepsilon>0$. Then
+			\[ \vol(K_1)\vol(K_2) \leq \frac{M_1(K)}{\varepsilon\ln 2} \vol(K)\vol(K_3). \]
+		\end{ftheo}
+		\begin{proof}
+			We may assume that $K_1$ and $K_2$ are closed. Assume that $b(K)=0$. Let $f_1$, $f_2$, and $f_3$ be the indicator functions on $K_1$, $K_2$, and $K_3$ respectively and $f_4(x) = \norm{x}/\varepsilon\ln 2$. We then wish to show that
+			\[ \int_K f_1 \int_K f_2 \leq \int_K f_3 \int_K f_4. \]
+			By \Cref{localized exponential needle interconversion}, it suffices to show that for any exponential needle $E$,
+			\[ \int_E f_1 \int_E f_2 \leq \int_E f_3 \int_E f_4. \]
+			Let $E$ be an arbitrary exponential defined by $[a,b]$ and $\gamma$. As before, we may assume that $\gamma=1$ by rescaling appropriately. The case $\gamma=0$ is taken care of by going to the appropriate limits.\\
+			First of all, we may assume that $0\in[a,b]$. Indeed, otherwise, we can move the body such that $0$ goes to the point on $[a,b]$ closest to it initially. Then the integral of $f_4$ decreases while the others remain the same, so proving it for this case suffices.\\
+			So let us restate the problem in the one-dimensional case that we have reduced it to. Let $[a,b]$ be an interval, $u\in[a,b]$ and $[a,b]=J_1\cup J_2 \cup J_3$ be a decomposition of $[a,b]$ into three measurable sets, where $d(J_1,J_2)\geq\varepsilon>0$. We wish to show that
+			\[ \int_{J_1} e^t\d{t} \int_{J_2} e^t\d{t} \leq \int_{J_3} e^t\d{t} \int_a^b \frac{|t-u|}{\varepsilon\ln 2}e^t\d{t}. \]
+			Here, each $J_i$ corresponds to the intersection of $K_i$ with the interval and $u$ corresponds to the position of $0$ in $[a,b]$. Let us first prove the result for the case where $J_3$ is a single interval. Let $a\leq s< s+\varepsilon\leq b$ (Why does it suffice to prove it for the case where the interval is of length $\varepsilon$?). Then we claim that
+			\[ \int_a^s e^t\d{t} \int_{s+\varepsilon}^b e^t\d{t} \leq \int_s^{s+\varepsilon}e^t\d{t} \int_a^b \frac{|t-u|}{\varepsilon\ln 2}e^t\d{t}. \]
+			Equivalently,
+			\[ \int_a^s e^t\d{t} \int_\varepsilon^{b-s} e^t\d{t} \leq \int_0^\varepsilon e^t\d{t} \int_a^b \frac{|t-u|}{\varepsilon\ln 2}e^t\d{t}. \]
+			Now, note that the expression on the left is maximized when $s=(a+b-\varepsilon)/2$ and that on the right is minimized when $u=\ln((e^a+e^b)/2)$. Substituting these values on each side and simplifying, it suffices to show that
+			\[ (e^{(b-a)/2} - e^{\varepsilon/2})^2 \leq \frac{1}{\ln 2} \frac{e^\varepsilon-1}{\varepsilon} \left(-\ln\left(\frac{e^{a-b}-1}{2}\right)e^{b-a} + \ln\left(\frac{e^{b-a}-1}{2}\right)\right). \]
+			On decreasing $\varepsilon$, the left increases whereas the right decreases. Therefore, it suffices to prove the above in the limit case where $\varepsilon=0$. Letting $z=e^{(b-a)/2}\geq 1$, we want to prove that
+			\[ \ln 2 (z - 1)^2 + z^2\ln\left(\frac{z^{-2}-1}{2}\right) - \ln\left(\frac{z^2-1}{2}\right) \leq 0. \]
+			This is a computational task and is not too difficult.\footnote{Show that the function $f$ on the left is monotone decreasing and use the fact that $f(1)=0$.}\\
+
+			For the general case, let $[c_i,d_i]$ be maximal intervals in $J_3$ for $1\leq i\leq k$. They are each of length at least $\varepsilon$. Then we get
+			\[ \sum_{i=1}^k \int_a^{c_i} e^t\d{t} \int_{d_i}^b e^t\d{t} \leq \int_{J_3}\d{t} \int_a^b \frac{|t-u|}{\varepsilon\ln 2}e^t\d{t}. \]
+			We then have
+			\[ \sum_{i=1}^k \int_a^{c_i} e^t\d{t} \int_{d_i}^b e^t\d{t} \geq \int_{J_1} e^t\d{t} \int_{J_2} e^t\d{t}, \]
+			completing the proof.
+		\end{proof}
+
+
+		Let $K$ be an arbitrary convex body and for each $x\in K$, let $\chi_K(x)$ denote the longest segment in $K$ that has midpoint $x$. Let
+		\[ \chi(K) = \frac{1}{\vol(K)} \int_K \chi_K(x). \]
+		Note that $\chi(K)=\diam(K \cap (2x-K))$.
+
+		\begin{ftheo}
+			\label{isoperimetric coefficient bound 2}
+			For any convex body $K$,
+			\[ \psi(K) \geq \frac{1}{\chi(K)}. \]
+		\end{ftheo}
+		\begin{proof}
+			As before, it is equivalent to show that for any decomposition $K=K_1\cup K_2\cup K_3$, where $d(K_1,K_2)=\varepsilon>0$,
+			\[ \vol(K_1)\vol(K_2) \leq \frac{1}{\varepsilon}\vol(K_3) \int_K \chi_K(x)\d{x}. \]
+			The proof of this is very similar to the that of the previous theorem. It suffices to show that for any interval $[a,b]$ and any decomposition $[a,b]=J_1\cup J_2\cup J_3$ into three measurable sets such that $d(J_1,J_2)\geq \varepsilon$,
+			\[ \int_{J_1} e^t\d{t} \int_{J_2} e^t\d{t} \leq \frac{1}{\varepsilon} \int_{J_3} e^t\d{t} \int_a^b \min\{t-a, b-t\}e^t\d{t}. \]
+			Similar to earlier, this can be shown without too much difficulty in the case where $J_3$ is a single interval, and similarly extending it to the general case.
+		\end{proof}
+
+		The two bounds \Cref{isoperimetric coefficient bound 1,isoperimetric coefficient bound 2} are not comparable however. For example, \Cref{isoperimetric coefficient bound 1} gives $\psi(K)=\Omega(n^{-1/2})$ for any body in isotropic position whereas \Cref{isoperimetric coefficient bound 2} gives $\Omega(1)$ for the isotropic ball and $\Omega(n^{-1})$ for the isotropic simplex.\\
+
+		% For any convex body $K$, let $\alpha(K)$ be the largest eigenvalue of $A(K)$. 
+
+		\begin{theorem}
+			\label{kls conj hyperplane}
+			For any convex body $K$ with covariance matrix $A$,
+			\[ \psi(K) \leq \frac{10}{\sqrt{\opnorm{A}}}. \]
+		\end{theorem}
+
+		This is proved using the following result.
+
+		\begin{theorem}
+			Let $K$ be a convex body in $\Rn$ and assume that $b(K)=0$. Let $u\in\Rn$ have unit norm and $\beta=\expec_K(\langle u,x\rangle^2)$. Then
+			\[ \vol(K \cap \{x : \langle u,x\rangle < 0\}) \vol(K \cap \{x : \langle u,x\rangle > 0\}) \geq \frac{1}{10}\sqrt{\beta}\vol(K)\vol_{n-1}(K \cap \{x : \langle u,x\rangle = 0\}). \]
+		\end{theorem}
+
+		The above can be proved by projecting the body onto the $u$-axis and considering the resulting log-concave function (using \nameref{brunn's theorem}).
+
+		\begin{fcon}[KLS Conjecture]
+			\label{con: kls conjecture}
+			There is a constant $c$ (independent of dimension) such that for any log-concave density $p$ on $\Rn$,
+			\[ \psi_p \geq c \cdot \inf_{H\text{ is a halfspace}} \frac{p(\partial H)}{\min\{p(H),p(\Rn\setminus H)\}}. \]
+		\end{fcon}
+
+		The \nameref{con: kls conjecture} asserts that up to a constant factor, a hyperplane cut is the ``worst'' cut (involved in the isoperimetric coefficient).
+
+		% \cite{chen2021constant} has made the most progress in recent times, proving that there is a constant $c$ such that
+		% \[ \psi(K) \geq \frac{1}{\sqrt{ n^{c\left(\log\log n/\log n\right)^{1/2}} \alpha(K)}}. \]
+
+\subsection{A More Detailed Look}
+
+	Henceforth, we write $a\gtrsim b$ if there is some constant $c$ (independent of dimension and all parameters under consideration) such that $a \geq c b$.\\
+	Generalizing \Cref{kls conj hyperplane} to an arbitrary log-concave density (by a nearly identical proof), it just says that
+	\[ \inf_{H\text{ is a halfspace}} \frac{p(\partial H)}{\min\{p(H),p(\Rn\setminus H)\}} \gtrsim \frac{1}{\sqrt{\opnorm{A}}}, \]
+	where $A$ is the covariance matrix of $p$ and $\opnorm{A}$ is the largest eigenvalue of $A$.
+
+	In this context, the \nameref{con: kls conjecture} can be restated as follows. 
+
+	\begin{fcon}[KLS Conjecture (Reformulated)]
+		\label{con: kls conjecture reformulated}
+		For any log-concave density $p$ with covariance matrix $A$, $\psi_p \gtrsim \opnorm{A}^{-1/2}$. Equivalently, $\psi_p\gtrsim 1$ for any isotropic log-concave density $p$.
+	\end{fcon}
+
+	\Cref{isoperimetric coefficient bound 1} then says that for any isotropic log-concave $p$, $\psi_p \gtrsim n^{-1/2}$.\\
+	% For the sake of brevity, if $p$ is a log-concave density with covariance matrix $A$, let $\rho(p) = \opnorm{A}$.\\
+
+	% \subsubsection{The Connection to Ball-Step and the Log-Sobolev Constant}
+
+	% 	\subsubsection{The Log-Sobolev Constant}
+
+	% 		Recall that if we apply the ball-walk to a log-concave density $p$, then the conductance is $\Omega(1/n\psi_p)$, which leads to $\mathcal{O}^*(n^2\psi_p^2)$ steps (from a warm start).\\
+	% 		The log-Sobolev constant attempts to provide a similar bound in the case where we do not have a warm start.
+
+
+	Next, we look at a few consequences of the KLS Conjecture.
+
+	\subsubsection{The Slicing Conjecture}
+
+		The slicing conjecture essentially asks whether a convex body of unit volume in $\Rn$ has a hyperplane section whose $(n-1)$-volume is at least some universal constant.
+
+		\begin{fcon}[Slicing Conjecture]
+			Any convex body $K\subseteq\R^n$ of volume $1$ has at least one hyperplane section $H$ such that
+			\[ \vol_{n-1}(K \cap H) \gtrsim 1. \]
+		\end{fcon}
+
+		\cite{slicing-conjecture-equivalent} showed that the above is in fact equivalent to asking how much volume is present around the origin. This makes sense because if a large proportion of volume is there around the origin, then no hyperplane will intersect a lot of volume.\\
+		Motivated by this intuition, define
+
+		\begin{definition}[Slicing Constant]
+			For any isotropic log-concave density $p$ on $\Rn$, define the \textit{isotropic (slicing) constant} by $L_p = p(0)^{1/n}$.
+		\end{definition}
+
+		\begin{fcon}[Slicing Conjecture]
+			\label{slicing conjecture}
+			For any isotropic log-concave density $p$ on $\Rn$, the slicing constant $L_p$ is $\mathcal{O}(1)$.
+		\end{fcon}
+
+		% There are some nice consequences of the slicing conjecture (and by extension, the KLS conjecture, as we mention at the end of this section).
+
+		% \begin{theorem}
+		% 	If the slicing conjecture is true, then for any isotropic log-concave density $p$ in $\Rn$,
+		% 	\[ \Pr_{x\sim p}\left[\norm{x} \leq t\sqrt{n}\right] = \mathcal{O}(t^n) \]
+		% \end{theorem}
+
+	\subsubsection{The Thin-Shell Conjecture}
+
+		\begin{fcon}[Thin-Shell Conjecture]
+			\label{con: thin shell conjecture}
+			Let $p$ be an isotropic log-concave density. Then
+			\[ \sigma_p^2 \coloneqq \expec_{X\sim p}\left[(\norm{X}-\sqrt{n})^2\right] \lesssim 1. \]
+			Equivalently, $\Var_{X\sim p}(\norm{X}^2) \lesssim 1$.
+		\end{fcon}
+
+		The above means that a random point $X$ from a log-concave density lies in a constant width annulus (a thin shell) with constant probability.\\
+
+		It was shown in \cite{Eldan2010ApproximatelyGM} that the Thin-Shell conjecture implies the Slicing conjecture and by Ball that the KLS conjecture implies the Thin-Shell conjecture. That is, we have that $L_p \lesssim \sigma_p \lesssim \psi_p^{-1}$.
+
+	\subsubsection{The Poincar\'{e} Constant}
+		\label{sec: poincare constant}
+
+		\begin{fdef}
+			For any isotropic log-concave density $p$ in $\Rn$, define the \textit{Poincar\'{e} constant} $\zeta_p$ by
+			\[ \zeta_p = \inf_{\text{smooth $g$}} \frac{ \expec_p \left[\norm{\nabla g(x) }_2^2\right] }{ \Var_p (g(x)) }. \]
+		\end{fdef}
+
+		It may be shown that
+		\[ \zeta_p \sim \psi_p^2, \]
+		that is, $\zeta_p$ is within a constant factor of the square of the isoperimetric constant. Due to this strong relation, we shall in fact use the Poincar\'{e} constant in a later proof (of \Cref{primary bounds chen}) to help bound the isoperimetric constant.
+
+\subsection{Recent Bounds on the Isoperimetric Constant}
+
+	\subsubsection{A Look At Stochastic Localization}
+
+	% \subsubsection{An Overview}
+
+		Most of the progress towards proving the conjecture in recent times has been done using a method known as \textit{stochastic localization}. Recall how in the proof of the localization lemma \Cref{localization lemma}, which is possibly one of the most powerful tools we have built thus far, we use a bisection argument, where we bisect the body with a hyperplane at each step. In the general setting, this just corresponds to multiplying the current log-concave measure by $\indic_{H}$, where $H$ is a certain half-space.\\
+
+		For now, let us discuss how stochastic localization works out in discrete time. Instead of multiplying by this indicator function, we multiply by an affine functional that is very close to $1$. That is, we transform the density $p(x)$ to $(1 + \varepsilon\langle x-\mu,\theta\rangle)p(x)$, where $\mu$ is the barycenter of the measure and $\theta$ is randomly chosen. This is like a reweighting in favour of a certain half-space.\\
+		As a result, the resulting measure is a probability measure. Further, this measure remains log-concave (assuming $p$ is log-concave).\\
+		This gives a stochastic process (which is discrete time for now) defined by
+		\begin{equation}
+			\label{eqn: discrete time stochastic localization}
+			p_0(x) = p(x) \text{ and } p_{t+\Delta t}(x) = (1 + \langle x-\mu_t,\sqrt{\Delta t}Z_t\rangle) p_t(x).
+		\end{equation}
+		The $\sqrt{\Delta t}Z_t$ represents $\pm \varepsilon\theta$ and is the random component. Here, $\mu_t$ is the barycenter of the measure corresponding to $p_t$ and the $Z_t$ are iid random which are either uniform on the sphere on $\sqrt{n}S^{n-1}$ or standard Gaussians in $\Rn$.\\
+		By the averaging property mentioned, the $p_t$ form a martingale (with respect to the filtration with $\mathcal{F}_t = \sigma\{Z_s : 0\leq s\leq t\}$).
+
+		Now, we would like to make this continuous by letting $\Delta t\to 0$. How do we do this? When the $Z_t$ are Gaussian, \Cref{eqn: discrete time stochastic localization} can be rewritten as a stochastic differential equation
+		\begin{equation}
+			\label{eqn: continuous time stochastic localization density}
+			\d{p}_t(x) = \langle x-\mu_t,\d{W}_t\rangle p_t(x),% = (x-\mu_t)^\top \d{W}_t p_t(x),
+		\end{equation}
+		where $p_0=p$ and $\mu_t$, as before, is $\int_{\Rn} x p_t(x) \d{x}$.\\
+		Existence and uniqueness for all $t\geq 0$ can be shown using standard means. Moreover, for any time $t$, $p_t$ is almost surely continuous. If $\mathcal{F}_t$ is the $\sigma$-algebra generated by $(W_s)_{0\leq s\leq t}$, then $\expec[p_t(x) \mid \mathcal{F}_s] = p_s(x)$ for $s<t$. That is, it is a martingale. The processes are also $\mathcal{F}_t$-adapted.\\
+		% The main question in the continuous world is: is this continuous analogue still log-concave? The answer is yes, and moreover, if we write $p_t = e^{-\rho_t}$, then for all $x\in\Rn$,
+		% \[ \nabla^2 \rho_t(x) = \nabla^2\rho_0(x) + t\cdot I \succeq t\cdot I, \]
+		% where $I$ is the identity matrix. That is, $p_t$ is ``more log-concave than the Gaussian''.\\
+
+		While the above is the basic idea, the following, slightly more complicated form is what is slightly more handy. Define the stochastic differential equation
+		\begin{equation}
+			\label{eqn: stochastic localization identity control}
+			c_0 = 0 \text{ and } \d{c}_t = \d{W}_t + \mu_t\d{t},
+		\end{equation}
+		with $p_t$ and $\mu_t$ defined by
+		\[ p_t(x) = \frac{e^{\langle c_t,x\rangle - (t/2)\norm{x}^2}p(x)}{\int_{\Rn}e^{\langle c_t,y\rangle - (t/2)\norm{y}^2}p(y)\d{y}}\text{ and } \mu_t(x) = \expec_{x\sim p_t} [x]. \]
+		Sometimes, to add another method to control the covariance, we add in a \textit{control matrix} $C_t$ to control the covariance matrix $A_t$ of the density $p_t$ at time $t$. This is incorporated into the previous equations as
+		\begin{equation}
+			\label{eqn: main stoch local}
+			\begin{gathered}
+				\d{p_t}(x) =  (x - \mu_t)^\top C_t^{1/2} \d{W}_t p_t(x) \\
+				c_0 = 0, \;\;\; \d{c}_t = C_t^{1/2}\d{W}_t + C_t\mu_t\d{t}, \\
+				B_0 = 0, \;\;\; \d{B}_t = C_t\d{t}, \\
+				p_t(x) = \frac{e^{\langle c_t,x\rangle - (1/2)(x^\top B_t x)^2}p(x)}{\int_{\Rn}e^{\langle c_t,y\rangle - (1/2)(y^\top B_t y)^2}p(y)\d{y}}, \;\;\; \mu_t(x) = \expec_{x\sim p_t} [x], \\	
+			\end{gathered}
+		\end{equation}
+
+		where $C_t$ is a Lipschitz function with respect to $c_t$, $\mu_t$, $A_t$, and $t$.\\
+		It may be shown that a solution to the above equation exists and is unique (up to almost-sure equivalence).\\
+		It is also not too difficult to show using It\^{o}'s Lemma that \eqref{eqn: main stoch local} implies \eqref{eqn: continuous time stochastic localization density}.\\
+
+		% The reason we insist on the density at time $t$ being a Gaussian multipled by some log-concave function is that densities which are ``more log-concave than the Gaussian'' lead to nice bounds on the isoperimetric constant $\psi_p$ in terms of the covariance matrix.\\
+
+		For the other direction, using \Cref{eqn: continuous time stochastic localization density},
+		\begin{align*}
+			\d{\log p_t(x)} &= (x-\mu_t)^\top \d{W}_t - \frac{1}{2} (x-\mu_t)^\top (x-\mu_t) \d{t} \\
+				&= x^\top (\d{W}_t + \mu_t\d{t}) - \frac{1}{2}\norm{x}^2\d{t} + g(t) \\
+				&= x^\top\d{c}_t - \frac{1}{2}\norm{x}^2\d{t} + \d{g}(t),
+		\end{align*}
+		where $\d{g}(t)$ is independent of $x$. This explains the appearance of the Gaussian in \eqref{eqn: main stoch local} -- the above implies that $p_t$ is ``more log-concave'' than $e^{-t\norm{x}^2/2}$.\\
+		As the Gaussian factor dominates more and more, the density converges to a Dirac delta ``function'', where the measure of any subset is $0$ or $1$. This is stated in \Cref{kls for gaussian}.\\
+
+		The KLS Conjecture has been proven for Gaussian distributions. More generally, for any distribution whose density is the product of the density of $\mathcal{N}(0,\sigma^2 I)$ and any log-concave function, $\psi_p \gtrsim 1/\sigma$ -- this can be proved by normal localization.\\
+		
+		To get some sort of bound for $\psi_p$, we want to bound the covariance matrix (in some meaningful sense of the word bound).\\
+		Using It\^{o}'s Lemma once more on the covariance matrix, we get 
+		\begin{align}
+			d{A}_t &= \int_{\Rn} (x-\mu_t)(x-\mu_t)^\top \cdot (x-\mu_t)^\top\d{W}_t \cdot p_t(x) \d{x} - A_t^2 \d{t} \nonumber \\
+				&= \expec_{x \sim p_t} (x-\mu_t)(x-\mu_t)^\top \cdot (x-\mu_t)^\top\d{W}_t - A_t^2 \d{t}. \label{eqn: dAt expression}
+		\end{align}
+
+		One important result that we have not mentioned thus far is due to \cite{milman2008isoperimetricprofile}, which proves that the \textit{isoperimetric profile} $I_p : [0,1]\to\Rp$, defined by
+		\[ I_p(t) = \inf_{\substack{S\subseteq\Rn \\ p(S) = t}} p(\partial S) \]
+		is concave. In particular, since $I_p(t) = I_p(1-t)$, it attains its maximum at $1/2$. Concavity implies that $I_p(t)/t$ attains its minimum at $t = 1/2$, and therefore to bound the isoperimetric coefficient (and prove the KLS Conjecture), it suffices to check subsets of measure $1/2$.\\
+
+		With this added information, we desire from stochastic localization that the covariance matrix does not explode. % what do we desire from stochastic localization?
+		% \begin{enumerate}
+		% 	\item The covariance matrix should not explode (since the bound on the isoperimetric coefficient that we obtain depends on it) and
+		% 	\item The measure of a set $E$ of measure $1/2$ (under the initial density) does not change much.
+		% \end{enumerate}
+		% The reason the above works is due to the following series of inequalities for some set $E$ of initial measure $1/2$:
+		In fact, it turns out that it suffices to show that the measure of a set $E$ of measure $1/2$ (initially) does not change much:
+		\begin{align}
+			p(\partial E) &= \expec\left[p_t(\partial E)\right] & (p_t\text{ is a martingale}) \nonumber \\
+				&\geq \expec\left[\frac{1}{2}\norm{B_t^{-1}}_2^{-1/2}\min\{p_t(E),p_t(\Rn\setminus E)\}\right] & (p_t \text{ is more log-concave than the Gaussian}) \nonumber \\
+				&\geq \frac{1}{4}\cdot\frac{1}{2}\norm{B_t^{-1}}_2^{-1/2}\Pr\left[\frac{1}{4} \leq p_t(E) \leq \frac{3}{4}\right] & (p_t(E) \geq 0) \nonumber \\
+				&= \frac{1}{4}\norm{B_t^{-1}}_2^{-1/2}\Pr\left[\frac{1}{4} \leq p_t(E) \leq \frac{3}{4}\right]\min\{p(E),p(\Rn\setminus E)\}. \label{stoch loc: basic intuition}
+		\end{align}
+
+		Over the next two sections, we give a $n^{-1/4}$ bound on $\psi_p$, as described in \cite{lee-vempala-kls-n14}. More precisely, we show that $\psi_p \gtrsim \Tr(A^2)^{-1/4}$.
+
+	\subsubsection{Towards a \texorpdfstring{$n^{-1/4}$}{n1/4} Bound}
+
+		Before we begin, define the following for notational convenience.
+		\begin{definition}
+			For any stochastic processes $x_t$ and $y_t$, denote the \textit{quadratic variations} $[x]_t$ and $[x,y]_t$ by
+			\[ [x]_t = \lim_{\norm{P} \to 0} \sum_{n=1}^\infty (x_{\tau_n} - x_{\tau_{n-1}})^2 \]
+			and
+			\[ [x,y]_t = \lim_{\norm{P} \to 0} \sum_{n=1}^\infty (x_{\tau_n} - x_{\tau_{n-1}})(y_{\tau_n} - y_{\tau_{n-1}}), \]
+			where $P = \{ 0 = \tau_0 \leq \tau_1 \leq \cdots \uparrow t \}$ is a \textit{stochastic partition} of the non-negative reals and $\norm{P} = \max_n (\tau_n - \tau_{n-1})$ is called the \textit{mesh} of $P$ and the limit is defined using convergence in probability.
+		\end{definition}
+
+		For example, if $x_t$ and $y_t$ satisfy $\d{x}_t = \mu(x_t) \d{t} + \sigma(x_t)\d{W}_t$ and $\d{y}_t = \nu(x_t) \d{t} + \eta(y_t) \d{t}$, then
+		\[ \d{[x]_t} = \sigma^2(x_t) \d{t} \text{ and } \d{[x,y]_t} = \sigma(x_s)\eta(y_s) \d{W_t}. \]
+
+		The following two results will also come in useful.
+
+		\begin{lemma}[Reflection Principle]
+			\label{reflection principle}
+			Given a Wiener process $W_t$ and $a,t\geq 0$,
+			\[ \Pr\left[\sup_{0 \leq s \leq t} W_s \geq a\right] = 2 \Pr\left[W_t \geq a\right]. \]
+		\end{lemma}
+
+		\begin{theorem}[Dambis, Dubins-Schwarz Theorem]
+			\label{Dambis Dubins Schwarz Th}
+			Every continuous local martingale $M_t$ is of the form
+			\[ M_t = M_0 + W_{[M]_t} \text{ for all } t \geq 0, \]
+			where $W_s$ is a Wiener process.
+		\end{theorem}
+
+		The first simplest case is when we take the control matrix to just be the identity. That is, the relevant stochastic differential equation is given by \eqref{eqn: stochastic localization identity control}. Denote by $A_t$ the covariance matrix of $p_t$.\\
+
+
+		First, we give some ``basic estimates''. Let us start by bounding the measure of any set of initial measure $1/2$.
+
+		\begin{lemma}
+			\label{basic estimate}
+			For any $E\subseteq\Rn$ with $p(E) = 1/2$ and $t \geq 0$,
+			\[ \Pr\left[\frac{1}{4} \leq p_t(E) \leq \frac{3}{4} \right] \geq \frac{9}{10} - \Pr\left[\int_0^t \opnorm{A_s} \d{s} \geq \frac{1}{64}\right]. \]
+		\end{lemma}
+		\begin{proof}
+			Let $g_t = p_t(E)$. Then $\d{g}_t = \int_E (x-\mu_t)^\top \d{W}_t p_t(x) \d{x}$. We have
+			\begin{align*}
+				\d{[g]_t} &= \norm{\int_E (x-\mu_t)p_t(x) \d{x}}_2^2 \d{t} \\
+					&= \max_{\norm{\zeta}_2 \leq 1} \left(\int_E (x-\mu_t)^\top\zeta p_t(x) \d{x}\right)^2 \d{t} \\
+					&\leq \left(\max_{\norm{\zeta}_2 \leq 1} \int_{\Rn} ((x-\mu_t)^\top\zeta)^2 p_t(x) \d{x}\right) \left(\int_{\Rn} p_t(x)\d{x}\right) \d{t} \\
+					&= \max_{\norm{\zeta}_2 \leq 1} \zeta^\top A_t \zeta \d{t} = \opnorm{A_t}\d{t}.
+			\end{align*}
+			Using \Cref{Dambis Dubins Schwarz Th}, let $\tilde{W}_t$ be a Wiener process such that $g_t - g_0$ has the same distribution as $\tilde{W}_{[g]_t}$. Then,
+			\begin{align*}
+				\Pr\left[\frac{1}{4} \leq g_t \leq \frac{3}{4}\right] &= \Pr\left[-\frac{1}{4} \leq \tilde{W}_{[g]_t} \leq \frac{1}{4}\right] \\
+					&\geq 1 - \Pr\left[\max_{0 \leq s \leq 1/64} |\tilde{W}_s| > \frac{1}{4}\right] - \Pr\left[[g]_t > \frac{1}{64}\right] \\
+					&= 1 - 4\Pr\left[\tilde{W}_{1/64} > \frac{1}{4}\right] - \Pr\left[[g]_t > \frac{1}{64}\right] \\
+					&\geq \frac{9}{10} - \Pr\left[\int_0^t \opnorm{A_s} \d{s} \geq \frac{1}{64}\right].
+			\end{align*}
+			In the second-to-last equation, the first two terms simplify on estimates for the concentration of the normal distribution and the second term simplifies on using the earlier bound on $\frac{\d{[g]_t}}{\d{t}}$.
+		\end{proof}
+
+		We now restate the bound on the isoperimetric constant we mentioned earlier for distributions more log-concave than the Gaussian.
+
+		\begin{theorem}
+			\label{kls for gaussian}
+			Let
+			\[ h(x) = \frac{f(x)e^{-\norm{x}^2/2\sigma^2}}{\int f(y)e^{\norm{y}^2/2\sigma^2}}, \]
+			where $f:\Rn\to\Rp$ is an integrable log-concave function. Then $h$ is log-concave and $\psi_h \gtrsim 1/\sigma$. That is, for any measurable $S\subseteq\Rn$,
+			\[ \int_{\partial S} h(x)\d{x} \gtrsim \frac{1}{\sigma} \min\left\{\int_S h(x)\d{x}, \int_{\Rn\setminus S}h(x)\d{x}\right\}. \]
+		\end{theorem}
+
+		Now, let us get to the main estimation of the isoperimetric constant using the above results.
+
+		\begin{ftheo}
+			\label{lee-vem: isoperimetric using time}
+			Suppose there is $T > 0$ such that
+			\[ \Pr\left[\int_0^T \opnorm{A_s} \d{s} \leq \frac{1}{64} \right] \geq \frac{3}{4}. \]
+			Then $\psi_p \gtrsim T^{1/2}$.
+		\end{ftheo}
+		\begin{proof}
+			Let $E\subseteq\Rn$ with $p(E) = 1/2$.
+			We then have
+			\begin{align*}
+				\int_{\partial E} p(x) \d{x} &= \expec\left[ \int_{\partial E} p_T(x)\d{x} \right] & (p_t\text{ is a martingale}) \\
+					&\gtrsim T^{1/2} \expec \left[ \min\left\{p_T(E) , p_T(\Rn\setminus E)\right\} \right] & \text{($p_T$ is more log-concave than the Gaussian)} \\
+					&\gtrsim T^{1/2} \Pr\left[ \frac{1}{4} \leq p_T(E) \leq \frac{3}{4} \right] \\
+					&\gtrsim T^{1/2} \left(\frac{9}{10} - \Pr\left[\int_0^T \opnorm{A_s}\d{s} \geq \frac{1}{64}\right]\right) & \text{(by \Cref{basic estimate})} \\
+					&\gtrsim T^{1/2}. & & \qedhere
+			\end{align*}
+		\end{proof}
+
+		As mentioned earlier, we now need to control the growth of the covariance matrix $A_t$, preventing it from exploding and ensuring that the condition in above theorem is satisfied for some large $T$.
+
+	\subsubsection{Controlling \texorpdfstring{$A_t$}{At}}
+
+		To control the growth of $A_t$, we use the potential function $\Tr(A_t^2)$.
+
+		\begin{lemma}
+			\label{lee-vem: growth lemma 1}
+			Given a log-concave distribution $p$ with mean $\mu$ and covariance matrix $A$, for any positive semi-definite matrix $C$,
+			\[ \norm{\expec_{x\sim p}\left[(x-\mu)(x-\mu)^\top C (x-\mu)\right]}_2 \lesssim \opnorm{A}^{1/2} \Tr\left(A^{1/2}CA^{1/2}\right). \]
+		\end{lemma}
+		\begin{proof}
+			First, consider the case where $C$ is of the form $vv^\top$. Let $w = A^{1/2}v$ and $y = A^{-1/2}(x-\mu)$. Let the distribution of $y$ be $\tilde{p}$ (it is isotropic and log-concave). Then
+			\begin{align*}
+				\norm{\expec_{x \sim p}\left[(x-\mu)(x-\mu)^\top C (x-\mu)\right]}_2 &= \norm{\expec_{y\sim \tilde{p}}\left[A^{1/2}y(y^\top w)^2\right]}_2 \\
+					&= \max_{\norm{\zeta}_2 \leq 1} \expec_{y\sim\tilde{p}}\left[(A^{1/2}y)^\top \zeta (y^\top w)^2\right] \\
+					&\leq \max_{\norm{\zeta}_2 \leq 1} \sqrt{\expec_{y\sim\tilde{p}}\left[((A^{1/2}y)^\top \zeta)^2\right]} \sqrt{\expec_{y\sim\tilde{p}} \left[(y^\top w)^4\right]} \\
+					&\lesssim \max_{\norm{\zeta}_2 \leq 1} \sqrt{\zeta^\top A \zeta} \expec_{y \sim \tilde{p}} \left[(y^\top w)^2\right] & (\tilde{p}\text{ is isotropic}) \\
+					&= \opnorm{A}^{1/2} \norm{w}_2^2.
+			\end{align*}
+			The second-to-last inequality uses a reverse H\"{o}lder-like inequality, which says that if $q$ is a log-concave density in $\Rn$ and $k\geq 1$, then
+			\[ \expec_{x \sim q} \norm{x}^k \leq (2k)^k \left(\expec_{x \sim q} \norm{x}^2 \right)^{k/2}. \]
+			We use the above with $k=4$ and $x = y^\top w$, which has a one-dimensional log-concave distribution.\\
+			The bound for a general $C$ isn't too difficult to show by writing it as $\sum \lambda_i v_i v_i^\top$ in terms of its eigenvalues $\lambda_i \geq 0$ and eigenvectors $v_i$.
+		\end{proof}
+
+		\begin{lemma}
+			\label{lee-vem: growth lemma 2}
+			Given a log-concave distribution $p$ with mean $\mu$ and covariance matrix $C$,
+			\[ \expec_{x,y \sim p} \left[ |\langle x-\mu,y-\mu\rangle|^3 \right] \lesssim \Tr(A^2)^{3/2}. \]
+		\end{lemma}
+
+		\begin{proof}
+			We may assume that $\mu = 0$. For a fixed $x$, we have
+			\begin{align*}
+			 	\expec_{y\sim p}\left[ |\langle x,y\rangle|^3 \right] &\leq \expec_{y\sim p}\left[ |\langle x,y\rangle|^2 \right]^{3/2} \\
+			 		&= (x^\top A x)^{3/2} = \norm{A^{1/2}x}^3.
+			 \end{align*} 
+			 Thus,
+			 \begin{align*}
+			 	\expec_{x,y\sim p}\left[|\langle x,y\rangle|^3\right] &\leq \expec_{x \sim p} \left[ \norm{A^{1/2} x}^3 \right] \\
+			 		&\leq \expec_{x\sim p} \left[ \norm{A^{1/2}x}^2 \right]^{3/2} \\
+			 		&= \Tr(A^2)^{3/2}.
+			 \end{align*}
+		\end{proof}
+
+		\begin{theorem}
+			\label{lee-vem: growth theorem}
+			With the previously used notation, there is a universal constant $c_1$ such that
+			\[ \Pr\left[\max_{t \in [0,T]} \Tr(A_t^2) \geq 8 \Tr(A_0^2) \right] \leq 0.01 \text{ with } T = \frac{c_1}{\sqrt{\Tr(A_0^2)}}. \]
+		\end{theorem}
+
+		Before we get to the proof, we show that the bound on the isoperimetric constant follows from previously mentioned results.
+
+		\begin{corollary}
+			For any log-concave distribution $p$ with covariance matrix $A$,
+			\[ \psi_p \gtrsim \Tr(A^2)^{-1/4}. \]
+			In particular, if $p$ is isotropic log-concave,
+			\[ \psi_p \gtrsim n^{-1/4}. \]
+		\end{corollary}
+		\begin{proof}
+			\Cref{lee-vem: growth theorem} implies that
+			\[ \Pr\left[\max_{s \in [0,t]} \Tr(A_s^2) \leq 8 \Tr(A_0^2)\right] \geq 0.99, \]
+			where $t$ is equal to the quantity we denoted as $T$ there. Since $\opnorm{A_s} \leq \sqrt{\Tr(A_s^2)}$, we have
+			\[ \Pr\left[\max_{s \in [0,t]} \opnorm{A_s} \leq \sqrt{8 \Tr(A_0^2)}\right] \geq 0.99. \]
+			Therefore, letting
+			\[ T = \min\left\{c_1, \frac{1}{64\sqrt{8}}\right\} \frac{1}{\sqrt{\Tr(A_0^2)}}, \]
+			we have
+			\[ \Pr\left[\int_0^T \opnorm{A_s}\d{s} \leq \frac{1}{64}\right] \geq 0.99, \]
+			and the result follows on using \Cref{lee-vem: isoperimetric using time}.
+		\end{proof}
+
+		\begin{proof}[Proof of \Cref{lee-vem: growth theorem}]
+			Define the potential function $\Phi_t = \Tr(A_t^2)$.\\
+			It is a computational task using It\^{o}'s Lemma to check that
+			\[ \d{\Phi_t} = \left( 2 \expec_{x \sim p_t} (x-\mu_t)^\top A_t (x-\mu_t)(x-\mu_t)^\top \right) \d{W}_t + \left( \expec_{x,y \sim p_t} ((x-\mu_t)^\top(y-\mu_t))^3 - 2 \Tr(A_t^3)\d{t} \right) \d{t}. \]
+			Write this as
+			\[ \d{\Phi_t} = \delta_t \d{t} + v_t^\top \d{W}_t. \]
+			By \Cref{lee-vem: growth lemma 2}, we get
+			\[ \delta_t \lesssim \Tr(A_t^2)^{3/2} = \Phi_t^{3/2} \]
+			by dropping the negative term in the expression ($A_t$ is positive semi-definite). What about the martingale term? Using \Cref{lee-vem: growth lemma 1}, we have
+			\[ \norm{v_t}_2 = 2 \norm{\expec_{x \sim p_t} (x-\mu_t)^\top A_t (x-\mu_t)(x-\mu_t)^\top}_2 \lesssim \opnorm{A_t}^{1/2} \Tr(A_t^2) \leq \Phi_t^{5/4}. \]
+			Intuitively, this means that the drift term (the $\d{t}$ part) grows as $\Phi_t^{3/2}t$ and the martingale term (the $\d{W}_t$ part) grows as $\Phi_t^{5/4}\sqrt{t}$. So for $t$ up to $\mathcal{O}(\Phi_0^{-1/2})$, the potential $\Phi_t$ remains $\mathcal{O}(\Phi_0)$.\\
+			To formalize this, define $f(a) = 1/\sqrt{a + \Phi_0}$. Observe that $\Phi_t \geq 8 \Phi_0$ if and only if $f(\Phi_t) \geq -1/3\sqrt{\Phi_0}$. We can use It\^{o}'s Lemma to get
+			\[ \d{f(\Phi_t)} = \left(\frac{1}{2} \frac{v_t^\top \d{W}_t}{(\Phi_t + \Phi_0)^{3/2}} \right) + \left(\frac{1}{2}\frac{\delta_t}{(\Phi_t+\Phi_0)^{3/2}} - \frac{3}{8}\frac{\norm{v_t}_2^2}{(\Phi_t + \Phi_0)^{5/2}}\right)\d{t} \leq \d{Y_t} + C' \d{t}, \]
+			where $C'$ is a suitable constant and $\d{Y_t}$ is the martingale term. Observe that
+			\[ \frac{\d{[Y]_t}}{\d{t}} = \frac{1}{4} \frac{\norm{v_t}_2^2}{(\Phi_t + \Phi_0)^3} \leq \frac{C}{\sqrt{\Phi_0}} \]
+			for a suitable constant $C$.\\
+			Let $\tilde{W}_t$ be a Wiener process such that $Y_t = \tilde{W}_{[Y]_t}$ (in distribution). Using \Cref{reflection principle},
+			\begin{align*}
+				\Pr\left[\max_{t\in[0,T]} Y_t \geq \gamma\right] &\leq \Pr\left[\max_{t\in\left[0,CT/\sqrt{\Phi_0}\right]} \tilde{W}_t \geq \gamma \right] \\
+					&= \Pr\left[\tilde{W}_{CT/\sqrt{\Phi_0}} \geq \gamma\right] \leq 2 \exp\left(-\frac{\gamma^2\sqrt{\Phi_0}}{2CT}\right).
+			\end{align*}
+			Therefore,
+			\[ \Pr\left[\max_{t\in[0,T]}f(\Phi_t) \geq -\frac{1}{\sqrt{2\Phi_0}} + C'T + \gamma\right] \leq 2\exp\left(-\frac{\gamma^2\sqrt{\Phi_0}}{2CT}\right). \]
+			Setting $T = 1/256(C+C')\sqrt{\Phi_0}$ and $\gamma = 1/4\sqrt{\Phi_0}$, we get
+			\[ \Pr\left[\max_{t\in[0,T]} f(\Phi_t) \geq -\frac{1}{3\Phi_0}\right] \leq 2\exp(-8). \]
+			Using our earlier observation about $f$,
+			\[ \Pr\left[\max_{t\in[0,T]} \Phi_t \geq 8\Phi_0 \right] \leq 2\exp(-8) \leq 0.01. \qedhere \]
+		\end{proof}
+
+		Over the next few sections, we look at the best bound attained (as of the time of writing) of the isoperimetric constant, as described in \cite{chen2021constant}.
+
+	\subsubsection{An Almost Constant Bound}
+
+		Here, we prove that there is a constant $c$ such that for any log-concave $p$ in $\Rn$,
+		\[ \psi_p \geq \frac{1}{n^{c \sqrt{\log \log n / \log n}} \opnorm{A}^{1/2}}. \]
+		Rather than the original proof given in \cite{chen2021constant}, we give a slightly modified proof from \href{https://www.him.uni-bonn.de/fileadmin/him/Lecture_Notes/chen_lecture_notes.pdf}{here}. Again, we set the control matrix $C_t$ in \Cref{eqn: main stoch local} as the identity matrix.
+		% To get this, we set the control matrix $C_t$ in \Cref{eqn: main stoch local} as $A^{-1}$. The resulting stochastic differential equations are then
+		% \begin{equation}
+		% 	\label{eqn: chen main stoch local}
+		% 	\begin{gathered}
+		% 		c_0 = 0, \;\;\; \d{c}_t = A^{-1/2}\d{W}_t + A^{-1}\mu_t\d{t}, \\
+		% 		B_0 = 0, \;\;\; \d{B}_t = A^{-1}\d{t}, \\
+		% 		p_t(x) = \frac{e^{c_t^\top x - \frac{1}{2}x^\top B_t x}p(x)}{\int_{\Rn}e^{c_t^\top y - \frac{1}{2}y^\top B_t y}p(y)\d{y}}, \;\;\; \mu_t(x) = \expec_{x\sim p_t} [x], \\	
+		% 	\end{gathered}
+		% \end{equation}
+
+		To begin, for any integer $n \geq 1$, define
+		\[ \psi_n = \inf_{\substack{\text{$p$ is log-concave in $\R^n$} \\ \text{and has compact support}}} \psi_p\opnorm{A}^{1/2}. \]
+
+		% With a proof very similar to \Cref{basic estimate}, we have
+		% \begin{equation}
+		% 	\label{eqn: chen prob in terms of spectral norm}
+		% 	\Pr\left[\frac{1}{4} \leq p_t(E) \leq \frac{3}{4}\right] \geq \frac{9}{10} - \Pr\left[\int_0^t \norm{A^{-1/2}A_sA^{1/2}}_2\d{s} \geq \frac{1}{64}\right].
+		% \end{equation}
+		Using results from \cite{Paouris2006}, we may assume that the log-concave density $p$ has compact support -- we can restrict it to a sufficiently large ball losing exponentially small measure in the process. We shall restrict our measure to a ball of radius $n^5$. %We can in fact get away with much looser constraints in this situation and restrict ourselves to a ball throwing away at most $0.2$ of the measure.\\
+
+		Assume the dimension $n$ is at least $3$.
+
+		First, like before, let us give a basic estimate like in the last section to bound the isoperimetric constant.
+
+		\begin{lemma}
+			\label{chen basic estimate}
+			Let $p$ be an isotropic log-concave density. If for some $T > 0$,
+			\[ \expec\left[\int_0^T \opnorm{A_t} \d{t} \right] \leq \frac{1}{8}, \]
+			then $\psi_p \gtrsim T^{1/2}$.
+		\end{lemma}
+		\begin{proof}
+			Let $E$ be a set of measure initially $1/2$ (under $p$). As described before, we would like to bound the change in measure of $E$.
+			We have
+			\[ \int_{\partial E} p(x) \d{x} = \expec\left[\int_{\partial E} p_T(x) \d{x}\right] \gtrsim T^{1/2} \expec[\min\{p_T(E),1-p_T(E)\}] \geq T^{1/2} \expec[p_T(E)(1-p_T(E))]. \]
+			Let $M_t = p_t(E)$. Then
+			\[ \d{M_t} = \int_E \langle x-\mu_t, \d{W}_t \rangle p_t(x) \d{x} = \left\langle \int_E (x-\mu_t) p_t(x) \d{x} , \d{W_t} \right\rangle, \]
+			so $M_t$ is a martingale. Letting the first expression in the final inner product be $v_t$, we have
+			\[ \norm{v_t} = \sup_{\theta \in S^{n-1}} \int_E \langle x-\mu_t , \theta \rangle p_t(x) \d{x} \leq \sqrt{ \sup_{\theta \in S^{n-1}} \int_E \langle x-\mu_t , \theta \rangle^2 p_t(x) \d{x} } = \opnorm{A_t}^{1/2}. \]
+			Using It\^{o}'s Lemma,
+			\[ \d{(M_t(1-M_t))} = -\norm{v_t}^2\d{t} + \text{(martingale term)}. \]
+			Taking the expectation on eithe side and using the bound,
+			\[ \d{\expec[M_t(1-M_t)]} \geq -\expec\left[\opnorm{A_t}\right]\d{t}. \]
+			Therefore,
+			\[ \expec[M_t(1-M_t)] \geq M_0(1-M_0) - \frac{1}{8} = \frac{1}{8}, \]
+			proving the lemma.
+		\end{proof}
+
+		Therefore, we wish to control the growth of the spectral norm. To do this, define the potential
+		\[ \Gamma_t = \Tr(A_t^q). \]
+		It is quite easy to see that $\Gamma_t^{1/q} \geq \opnorm{A_t}$.
+
+		\begin{flem}
+			\label{primary bounds chen}
+			With the above definition,
+			\begin{equation}
+				\label{kls chen bound A}
+				\d{\Gamma_t} \leq \frac{2q^2}{t}\Gamma_t\d{t} + (\text{martingale term})
+			\end{equation}
+			and
+			\begin{equation}
+				\label{kls chen bound B}
+				\d{\Gamma_t} \lesssim q^2\psi_n^{-2}\opnorm{A_t}\Gamma_t\d{t} + (\text{martingale term}).
+			\end{equation}
+		\end{flem}
+		\begin{proof}
+			Let $\d{\Gamma_t} = \delta_t \d{t} + \text{(martingale term)}$. We wish to show that
+			\[ \delta_t \leq 2q^2\Gamma_t \min\left\{ \frac{1}{t} , c\psi_n^{-2}\opnorm{A_t} \right\} \]
+			for a suitable constant $c$.\\
+			Denote the minimum used on the right as $\kappa^{-1}$.\\
+			Recall the Poincar\'{e} constant from \Cref{sec: poincare constant}.
+			Since $p_t$ is more log-concave than the Gaussian $\exp(-t\norm{x}^2/2)$, $\zeta_{p_t}$ is at least $t$.
+			Also, the Poincar\'{e} constant is at least $c\psi_n^2 / \opnorm{A_t}$. So, $\zeta_{p_t} \geq \kappa$.\\
+			Recalling \eqref{eqn: dAt expression}, let $\d{(A_t)_{i,j}} = \langle\xi_{i,j},\d{W}_t\rangle - (A_t^2)_{i,j} \d{t}$, where
+			\[ \xi_{i,j} = \expec\left[ X_i X_j X \right] = \int_{\Rn} x x_i x_j p_t(x+\mu_t) \d{x}. \]
+			To bound $\delta_t$, we use the following lemma. Let $0 < \lambda_1 \leq \cdots \leq \lambda_n$ be the eigenvalues of $A_t$. Then for any smooth function $f$,
+			\[ \d{ \sum_{i=1}^n f(\lambda_i) } = \left( \frac{1}{2} \sum_{i,j = 1}^n \norm{\xi_{i,j}}^2 \frac{f'(\lambda_i) - f'(\lambda_j)}{\lambda_i - \lambda_j} - \sum_{i=1}^n \lambda_i^2 f'(\lambda_i) \right) \d{t} + \text{(martingale term)}. \]
+			If $\lambda_i - \lambda_j = 0$, we interpret the corresponding term as $f''(\lambda_i)$. The $\xi_{i,j}$ are expressed in the basis of eigenvectors of $A_t$.\\
+			Substituting $f$ as $t \mapsto t^q$,
+			\begin{align*}
+				\delta_t &= q \left( \frac{1}{2} \sum_{i,j = 1}^n \norm{\xi_{i,j}}^2 \frac{\lambda_i^{q-1} - \lambda_j^{q-1}}{\lambda_i - \lambda_j} - \sum_{i=1}^n \lambda_i^{q+1} \right) \\
+					&\leq q \left( \frac{1}{2} \sum_{i,j = 1}^n (q-1) \norm{\xi_{i,j}}^2 \left(\frac{\lambda_i^{q-2} + \lambda_j^{q-2}}{2}\right) - \sum_{i=1}^n \lambda_i^{q+1} \right) \\
+					&\leq \frac{q(q-1)}{2} \sum_{i,j = 1}^n \norm{\xi_{i,j}}^2 \lambda_i^{q-2}.
+			\end{align*}
+			Denote
+			\[ \xi_{i,j,k} = \expec[X_i X_j X_k], \;\;\; \xi_{i} = (\xi_{i,j,k})_{j,k=1,\ldots,n} = \expec[X_i X X^\top] \in \R^{n\times n}. \]
+			Observe that $\xi_{i,j} = (\xi_{i,j,k})_{k = 1,\ldots,n} \in \Rn$ and further, $\sum_{j=1}^n\norm{\xi_{i,j}}^2 \leq \Tr(\xi_i^2)$. Therefore, it suffices to upper bound
+			\[ \sum_{i=1}^n \lambda_i^{q-2} \Tr(\xi_i^2). \]
+			To control the growth of the individual traces,
+			\begin{align*}
+				\Tr(\xi_i^2) &= \Tr \left(\xi_i \expec[ X_i X X^\top ] \right) \\
+					&= \expec\left[ X_i \langle \xi_i X , X \rangle \right] \\
+					&\leq \sqrt{\expec[X_i^2]} \sqrt{\expec\left[ \langle \xi_i X , X \rangle^2 \right]}.
+			\end{align*}
+			As we are working in the basis of the eigenvectors of $A_t$, the first term is upper bounded by $\sqrt{\lambda_i}$.\\
+			Using the definition of the Poincar\'{e} constant on the function $t \mapsto \langle \xi t , t \rangle$ together with our earlier bound using $\kappa$,
+			\[ \Var \langle \xi_i X, X \rangle \leq \frac{1}{\zeta_p} \expec\left[ \norm{ 2 \xi_i X }^2 \right] \leq \frac{4}{\kappa} \expec\left[ \norm{ \xi_i X }^2 \right] = \frac{4}{\kappa} \Tr\left(A_t \xi_i^2\right).  \]
+			Therefore,
+			\[ \Tr(\xi_i^2) \leq 2 \sqrt{\frac{\lambda_i}{\kappa}} \sqrt{ \sum_{j,k=1}^n \lambda_j \xi_{i,j,k}^2 }. \]
+			Going back to the original expression we care about,
+			\begin{align*}
+				\sum_{i=1}^n \lambda_i^{q-2} \Tr(\xi_i^2) &\leq \frac{2}{\sqrt{\kappa}} \sum_{i=1}^n \lambda_i^{q-(3/2)} \sqrt{ \sum_{j,k=1}^n \lambda_j \xi_{i,j,k}^2 } \\
+					&\leq \frac{2}{\sqrt{\kappa}} \sqrt{ \sum_{i=1}^n \lambda_i^q } \sqrt{ \sum_{i,j,k=1}^n \lambda_i^{q-3} \lambda_j \xi_{i,j,k}^2 } \\
+					&\leq \frac{2}{\sqrt{\kappa}} \Gamma_t^{1/2} \sqrt{ \sum_{i,j,k=1}^n \lambda_i^{q-2} \xi_{i,j,k}^2 } \\
+					&\leq \frac{2}{\sqrt{\kappa}} \Gamma_t^{1/2} \sqrt{ \sum_{i=1}^n \lambda_i^{q-2} \Tr(\xi_i^2) },
+			\end{align*}
+			where the second-to-last inequality follows since $\lambda_i^{q-3}\lambda_j + \lambda_j^{q-3}\lambda_i \leq \lambda_i^{q-2} + \lambda_j^{q-2}$.
+			Therefore,
+			\[ \delta_t \leq \frac{q(q-1)}{2} \sum_{i=1}^n \lambda_i^{q-2} \Tr(\xi_i^2) \leq \frac{2q(q-1)}{\kappa} \Gamma_t, \]
+			completing the proof.
+		\end{proof}
+
+		\begin{corollary}
+			\label{chen: expectation of potential A}	
+			With the above definitions, for $t_2 > t_1 > 0$, we have
+			\begin{equation}
+				\expec[\Gamma_{t_2}^{1/q}] \leq \expec[\Gamma_{t_1}^{1/q}] \left(\frac{t_2}{t_1}\right)^{2q}.	
+			\end{equation}
+		\end{corollary}
+		\begin{proof}
+			The function $x \mapsto x^{1/q}$ is concave. Therefore, the It\^{o} term in $\d{\Gamma_t^{1/q}}$ is negative and we have
+			\[ \d{\Gamma_t^{1/q}} \leq \frac{1}{q} \Gamma_t^{1/q-1}\d{\Gamma_t} \leq \frac{2q}{t} \Gamma_t^{1/q} + \text{(martingale term)}, \]
+			where the second inequality follows from \eqref{kls chen bound A}. Taking the expectation on either side to eliminate the martingale term,
+			\[ \d{\expec[\Gamma_t^{1/q}]} \leq \frac{2q^2}{t} \expec[\Gamma_t^{1/q}]\d{t}, \]
+			so for $t_2 > t_1 > 0$, we have
+			\[ \expec[\Gamma_{t_2}^{1/q}] \leq \expec[\Gamma_{t_1}^{1/q}] \left(\frac{t_2}{t_1}\right)^{2q}. \qedhere \]
+		\end{proof}
+
+		Next, we show that our basic estimate \Cref{chen basic estimate} is in fact tight up to a log factor.
+
+		\begin{corollary}
+			\label{chen: expectation of potential B}
+			There exists a sufficiently small constant $c$ such that if $0 < T \leq c \psi_n^2 / \log n$, then $\expec[\opnorm{A_T}] \leq 3$, and further, $\expec[\Gamma_T^{1/q}] \leq 3n^{1/q}$ for all $q \geq 1$.
+		\end{corollary}
+		\begin{proof}
+			Recall from earlier that we assume our log-concave density $p$ to be restricted to $n^5 B_2^n$. So, it suffices to show that $\Pr[\opnorm{A_t} < 2] \geq 1 - n^{-10}$, since $\opnorm{A_T} \leq n^{10}$.\\
+			Define the stopping time $\tau = \inf\{t \geq 0 : \opnorm{A_t} \geq 2 \}$ and set $X_t = \Gamma_{\min\{t,\tau\}}$. Using \eqref{kls chen bound B}, we have
+			\[ \d{X_t} \lesssim q^2\psi_n^{-2}\opnorm{A_t}X_t\d{t} + \text{(martingale term)}. \]
+			Using the definition of $X_t$ to bound $\opnorm{A_t}$ by a constant and taking the expectation on either side,
+			\[ \d{\expec[X_t]} \lesssim q^2\psi_n^{-2}\expec[X_t]\d{t}. \]
+			Setting $q = \lceil 40 \log n \rceil$,
+			\[ \expec[X_T] \lesssim n \exp(c\log^2 (n)\psi_n^{-2}T) \leq n^2 \]
+			for some constant $c$ and where the last inequality arises from the choice of $T$. Therefore,
+			\[ n^2 \gtrsim \expec[X_T] \geq \Pr\left[ \opnorm{A_T} > 2 \right] \cdot 2^{40 \log n}, \]
+			proving the claim.\\
+			The second part of the result is easily proved since $\Gamma_T \leq n\opnorm{A_T}^q$.
+		\end{proof}
+
+		With the above, we may get to the final proof of the bound on the isoperimetric constant.
+
+		\begin{ftheo}
+			There exists a universal constant $c'$ such that
+			\[ \psi_n \gtrsim n^{-c'\sqrt{\log \log n / \log n}}. \]
+		\end{ftheo}
+		\begin{proof}
+			Using  \Cref{chen: expectation of potential B}, let $T_0 = c \psi_n^2 / \log n < 1 / 100$ for sufficiently small $c$ such that for $t\leq T_0$, $\expec[\Gamma_t^{1/q}] \leq 3n^{1/q}$. For $t \geq T_0$ and $q \geq 2$,
+			\[ \expec[\Gamma_t^{1/q}] \leq \left(\frac{t}{T_0}\right)^{2q} \expec[\Gamma_{T_0}^{1/q}] \leq \left(\frac{t}{T_0}\right)^{2q} 3n^{1/q}. \]
+			So, for any $T_1 > T_0$,
+			\begin{align*}
+				\expec\left[ \int_0^{T_1} \opnorm{A_t} \right] &= \int_0^{T_1} \expec[\opnorm{A_t}] \d{t} \\
+					&\leq 3T_1 + 3n^{1/q} \int_{T_0}^{T_1} \left(\frac{t}{T_0}\right)^{2q} \d{t} \\
+					&\leq \frac{3}{100} + 3 \frac{ n^{1/q} }{2q+1} \frac{T_1^{2q+1}}{T_0^{2q}} \leq \frac{3}{100} + 3 n^{1/q} \frac{T_1^{2q+1}}{T_0^{2q}}.
+			\end{align*}
+			How large can we make $T_1$ while ensuring that the integral we care about (for the purposes of \Cref{chen basic estimate}) remains less than $1/8$?\\
+			We get
+			\[ T_1 \sim n^{-1/q(2q+1)} T_0^{2q/(2q+1)}. \]
+			This gives a bound of
+			\[ \psi_n \gtrsim T_1^{1/2} \sim n^{-1/2q(2q+1)} T_0^{q/(2q+1)}. \]
+			By our choice of $T_0$,
+			\[ \psi_n \gtrsim \psi_n^{2q/(2q+1)} (\log n)^{-q/(2q+1)} n^{-1/2q(2q+1)}. \]
+			% This procedure of getting a bound on something using itself is known as \textit{bootstrapping}. Simplifying the above, we get
+			Simplifying,
+			\[ \psi_n \gtrsim \left(\frac{c}{\log n}\right)^{q} n^{-1/2q} \]
+			for some universal constant $c$. Taking $q$ of the order of $\left(\log n / \log \log n\right)^{1/2}$,
+			\[ \psi_n \gtrsim e^{-c' \sqrt{\log n \log \log n} }, \]
+			completing the proof.
+		\end{proof}
+
+
+		% \begin{proof}
+			% It suffices to prove that
+			% \[ \Pr\left[\max_{t\in[0,T_1]} - \frac{1}{(1+\Gamma_t)^{1/q}} \geq -\frac{1}{2(n+1)^{1/q}} \right] \leq \exp\left(-\frac{2}{3}q\log n\right). \]
+			% Since the function $h : x \mapsto - 1/(1+x)^{1/q}$ is concave, we have
+			% \[ \d{h(\Gamma_t)} \leq \frac{1}{q(\Gamma_t + 1)^{1 + 1/q}} \d{\Gamma_t} \]
+		% \end{proof}
+
+	
+		% \begin{ftheo}
+		% 	\label{chen norm bound}
+		% 	Let $p$ be a log-concave density with compact support and invertible covariance matrix $A$. Suppose that for some $0<\beta\leq 1/2$ and $\alpha \geq 1$, $\psi_k \geq 1/\alpha k^\beta$ for all $k \leq n$. Then, there exists a universal constant $c$ such that for $q = 1 + \lfloor 1/\beta \rfloor$, $n \geq 3$, and $T_2 = 1/cq\alpha^2 \log(n)n^{2\beta - (\beta/4q)}$,
+		% 	\[ \Pr\left[\int_0^{T_2} \norm{A^{-1/2} A_t A^{-1/2}}_2 \d{t} \geq \frac{1}{64} \right] < \frac{4}{10}. \]
+		% \end{ftheo}
+		% \begin{proof}
+		% 	Let
+		% 	\[ T_1 = \frac{1}{c'q\alpha^2\log(n)n^{2\beta}} \text{ and } T_2 = \frac{n^{\beta/4q}}{40}T_1, \]
+		% 	where $c' = 32768$.
+
+		% 	We bound the integral of the spectral norm by doing so separately on $[0,T_1]$ and $[T_1,T_2]$.
+		% 	\begin{itemize}
+		% 		\item[$\displaystyle{[0,T_1]}$] We have
+		% 			\begin{align*}
+		% 				\Pr\left[\int_0^{T_1} \Gamma_t^{1/q} \geq \frac{1}{128} \right] &\leq \Pr\left[\max_{t\in[0,T_1]} \Gamma_t^{1/q} \geq \frac{1}{128 T_1} \right] \\
+		% 					&\leq \Pr\left[ \max_{t\in[0,T_1]} \Gamma_t^{1/q} \geq 3 n^{1/q} \right] \\
+		% 					&= \Pr\left[ \max_{t\in[0,T_1]} \Gamma_t \geq 3^q n \right] \\
+		% 					&\leq \Pr\left[ \max_{t\in[0,T_1]} 1 + \Gamma_t \geq 2^q (n+1) \right] \\
+		% 					&\leq \frac{3}{10}. & \text{(using \eqref{eqn: expectation of potential B})}
+		% 			\end{align*}
+
+		% 		\item[$\displaystyle{[T_1,T_2]}$] Since $p_{T_1}$ is more log-concave than a Gaussian density with covariance matrix $\frac{1}{T_1}A$, the covariance matrix of $p_{T_1}$ itself can be upper bounded using Theorem 4.1 in \cite{Brascamp2002}, giving
+		% 		\[ A_{T_1} \preceq \frac{A}{T_1}. \]
+		% 		As a result, every eigenvalue of $A_{T_1}$ is upper bounded by $1/T_1$ and so, $\Gamma_{T_1}$ is upper bounded by $n/T_1^q$.
+		% 		Then,
+		% 		\begin{align*}
+		% 			\expec[\Gamma_{T_1}^{1/q}] &= \expec\left[\indic_{\Gamma_{T_1} \geq 3^q n} \Gamma_{T_1}\right] + \expec\left[\indic_{\Gamma_{T_1} < 3^q n} \Gamma_{T_1} \right] \\
+		% 				&\leq \frac{n^{1/q}}{T_1}\exp\left(-\frac{2}{3}q\log n\right) + 3n^{1/q} & \text{(similar to the first part and using \eqref{eqn: expectation of potential B})} \\
+		% 				&\leq (c'q\alpha^2 + 4) n^{1/q} \leq c''n^{1/q},
+		% 		\end{align*}
+		% 		for $c'' = 40000$.
+		% 		Thus, we have
+		% 		\begin{align}
+		% 			\expec\left[\Gamma_t^{1/q}\right] &\leq \expec\left[\Gamma_{T_1}^{1/q}\right] \left(\frac{t}{T_1}\right)^{2q} & \text{(using \eqref{eqn: expectation of potential A})} \nonumber \\
+		% 				&\leq \expec\left[\Gamma_{T_1}^{1/q}\right] \left(\frac{T_2}{T_1}\right)^{2q} \nonumber \\
+		% 				&\leq 1000 n^{1/q + \beta/2}q\alpha^2. \label{eqn: expec potential}
+		% 		\end{align}
+		% 		It is then straightforward to bound the integral as
+		% 		\begin{align*}
+		% 			\Pr\left[\int_{T_1}^{T_2} \Gamma_t^{1/q} \geq \frac{1}{128} \right] &\leq 128\expec\left[\int_{T_1}^{T_2} \Gamma_t^{1/q}\right] & \text{(Markov's inequality)} \\
+		% 				&\leq 128T_2 \cdot 1000 n^{1/q + \beta/2}q\alpha^2 & \text{(using \eqref{eqn: expec potential})} \\
+		% 				&\leq \frac{1}{10}.
+		% 		\end{align*}
+		% 	\end{itemize}
+		% 	Therefore,
+		% 	\[ \expec\left[\int_0^{T_2} \opnorm{A_t}\d{t} \right] \leq \expec\left[\int_0^{T_2} \Gamma_t^{1/q} \d{t} \right] \leq \frac{4}{10}. \qedhere \]
+		% \end{proof}
+
+		% \begin{corollary}
+		% 	Suppose that for some $0<\beta\leq 1/2$ and $\alpha \geq 1$, $\psi_k \geq 1/\alpha k^\beta$ for all $k \leq n$. Then, for $q = 1 + \lfloor 1/\beta \rfloor$,
+		% 	\begin{equation}
+		% 		\label{eqn: main bootstrap}
+		% 		\psi_n \gtrsim \frac{1}{q^{1/2}\alpha\log(n)^{1/2}n^{\beta - (\beta/8q)}}.
+		% 	\end{equation}
+		% \end{corollary}
+		% \begin{proof}
+		% 	Let $p$ be a log-concave density with compact support and invertible covariance matrix $A$. It suffices to prove the claim for dimension $n\geq 3$ (Why?). Combining \Cref{chen norm bound} and \eqref{eqn: chen prob in terms of spectral norm}, we have
+		% 	\[ \Pr\left[\frac{1}{4} \leq p_{T_2}(E) \leq \frac{3}{4}\right] \geq \frac{1}{2}. \]
+		% 	Using this in our original sequence of equations \eqref{stoch loc: basic intuition},
+		% 	\[ p(\partial E) = \frac{T_2^{1/2}}{8} \norm{A}_2^{-1/2} \min\{p(E),p(\Rn\setminus E)\}. \]
+		% 	Substituting $T_2$, we get the required.
+		% \end{proof}
+
+		% How do we extend this to a general bound on the isoperimetric constant?
+
+		% \begin{ftheo}
+		% 	There is a universal constant $c$ such that for any log-concave $p$ in $\Rn$ and integer $\ell \geq 1$,
+		% 	\[ \psi_p \geq \frac{1}{(c\ell(\log n + 1))^{\ell/2} n^{16/\ell} \sqrt{\rho(p)}}. \]
+		% 	In particular, there is a universal constant $c'$ such that
+		% 	\[ \psi_p \geq \frac{1}{n^{c'\left(\frac{\log \log n}{\log n}\right)^{1/2}} \sqrt{\rho(p)}}. \]
+		% \end{ftheo}
+		% \begin{proof}
+		% 	We prove this using a \textit{bootstrapping} argument, applying \eqref{eqn: main bootstrap} repeatedly.\\
+		% 	Define $\alpha_\ell$ and $\beta_\ell$ for integer $\ell \geq 1$ as
+		% 	\begin{align*}
+		% 		\alpha_1 &= 4,\;\;\; \alpha_{\ell + 1} = 2c\alpha_\ell\beta_\ell^{-1/2} \\
+		% 		\beta_1 &= \frac{1}{2},\;\;\; \beta_{\ell + 1} = \beta_\ell - \frac{\beta_\ell^2}{16}.
+		% 	\end{align*}
+		% 	It is not too difficult to show using an inductive argument that
+		% 	\[ \frac{1}{\ell+1} \leq \beta_\ell \leq \frac{16}{\ell} \text{ and } \alpha_\ell \leq (4c^2\ell)^{\ell/2}. \]
+		% 	By the bound \Cref{isoperimetric coefficient bound 1} in the original KLS paper \cite{KLSConjecture}, it follows that for all $n\geq 1$,
+		% 	\[ \psi_n \geq \frac{1}{\alpha_1 n^{\beta_1}}. \]
+		% 	As part of the induction, suppose that for all $n \geq 1$,
+		% 	\[ \psi_n \geq \frac{1}{\alpha_\ell (1+\log n)^{\ell/2} n^{\beta_\ell}}. \]
+		% 	Letting $\alpha_\ell' = \alpha_\ell (1 + \log n)^{\ell/2}$, for all $1 \leq k \leq n$, $\psi_k \geq 1/\alpha_\ell' k^{\beta_\ell}$. Using \eqref{eqn: main bootstrap},
+		% 	\begin{align*}
+		% 		\psi_n &\geq \frac{1}{cq^{1/2}\alpha_\ell (1 + \log n)^{\ell/2} \log(n)^{1/2} n^{\beta_\ell - (\beta_\ell/8q)}} \\
+		% 			&\geq \frac{1}{2c \alpha_\ell\beta_\ell^{-1/2} (1 + \log n)^{(\ell+1)/2} n^{\beta_\ell - (\beta_\ell^2/16)}} & \left(q \leq \frac{2}{\beta_\ell}\right) \\
+		% 			&= \frac{1}{2c \alpha_{\ell+1}(1 + \log n)^{(\ell+1)/2} \log(n)^{1/2} n^{\beta_{\ell+1}}} \\
+		% 			&\geq \frac{1}{\left(c'\ell(1 + \log n)\right)^{\ell/2} n^{16/\ell}},
+		% 	\end{align*}
+		% 	completing the proof of the first part.\\
+		% 	The second part then easily follows on setting
+		% 	\[ \ell = \left\lceil \sqrt{\frac{\log n}{\log \log n}} \right\rceil.\qedhere \]
+		% \end{proof}

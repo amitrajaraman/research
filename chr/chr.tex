@@ -5,7 +5,7 @@
 \setbeamertemplate{theorems}[numbered]
 \title{Coordinate Hit-and-run}
 \author{Amit Rajaraman}
-\date[27-11-2021]{27th November 2021}
+\date{\today}
 % \institute{IIT Bombay}
 \usetheme{Madrid}
 \usepackage{parskip}
@@ -20,8 +20,16 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{cancel}
+\usepackage{commath}
 \usepackage{sansmathaccent}
 \pdfmapfile{+sansmathaccent.map}
+
+\setbeamerfont{bibliography entry author}{size=\small}
+\setbeamerfont{bibliography entry title}{size=\small}
+\setbeamerfont{bibliography entry location}{size=\small}
+\setbeamerfont{bibliography entry note}{size=\small}
+\setbeamerfont{bibliography item}{size=\small}
+
 
 % \tikzset{
 %     invisible/.style={opacity=0},
@@ -33,9 +41,9 @@
 
 \makeatletter
 \newenvironment<>{proofs}[1][\proofname]{%
-    \par
-    \def\insertproofname{#1\@addpunct{.}}%
-    \usebeamertemplate{proof begin}#2}
+	\par
+	\def\insertproofname{#1\@addpunct{.}}%
+	\usebeamertemplate{proof begin}#2}
   {\usebeamertemplate{proof end}}
 \makeatother
 
@@ -48,7 +56,7 @@
 \newcommand{\vol}{\operatorname{vol}}
 \newcommand{\diam}{\operatorname{diam}}
 \newcommand{\rad}{\operatorname{rad}}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+% \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\grad}{\nabla}
 \newcommand{\opnorm}[1]{\norm{#1}_{\text{op}}}
 \newcommand{\indic}{\mathbbm{1}}
@@ -83,311 +91,394 @@
 \newtheorem{cor}[thm]{Corollary}
 \newtheorem{caution}[thm]{Caution}
 \newtheorem{ques}{Question}
+\newtheorem*{ques*}{Question}
 \newtheorem*{alg}{Algorithm}
 \newtheorem*{fac}{Fact}
 \newtheorem*{ex}{Example}
+\newtheorem{lem}[thm]{Lemma}
 
-\DeclareMathOperator{\len}{len}
+
+% \DeclareMathOperator{\len}{len}
 % \newcommand{\md}[1]{\left\lvert #1 \right\rvert}
 
 \AtBeginSection[]
 {
   \begin{frame}
-    \frametitle{Table of Contents}
-    \tableofcontents[currentsection]
+	\frametitle{Table of Contents}
+	\tableofcontents[currentsection]
   \end{frame}
 }
 
 \begin{document}
 \begin{frame}
-    \titlepage
+	\titlepage
 \end{frame}
 
 \begin{frame}
-    \frametitle{Table of Contents}
-    \tableofcontents
+	\frametitle{Table of Contents}
+	\tableofcontents
 \end{frame}
 
 \section{Introduction}
 \begin{frame}{The problem}
-    Uniformly sampling points from a high-dimensional convex body is a basic problem that relates to problems such as volume computation of convex bodies in high dimensions. \pause \\
-    \begin{defn}
-        A compact convex body $K \subseteq \Rn$ is said to have a \emph{well-guaranteed membership oracle} if \pause
-        \begin{itemize}
-            \item it has a \emph{membership oracle}, that is, an oracle that given any $x \in \Rn$ returns whether or not $x \in K$. \pause
-            \item we have $R>r>0$ such that $r B_2^n \subseteq K \subseteq R B_2^n$, where $B_2^n$ is the unit ball in the $L_2$ norm in $\Rn$. \pause
-        \end{itemize}
-    \end{defn}
-    Given a well-guaranteed membership oracle for $K$, the problem is to approximately uniformly sample points for $K$.
+	Uniformly sampling points from a high-dimensional convex body is a basic problem that relates to problems such as volume computation of convex bodies in high dimensions. \pause \\
+	\begin{defn}
+		A compact convex body $K \subseteq \Rn$ is said to have a \emph{well-guaranteed membership oracle} if \pause
+		\begin{itemize}
+			\item it has a \emph{membership oracle}, that is, an oracle that given any $x \in \Rn$ returns whether or not $x \in K$. \pause
+			\item we have $R>r>0$ such that $r B_2^n \subseteq K \subseteq R B_2^n$. \pause
+		\end{itemize}
+	\end{defn}
+	Given a well-guaranteed membership oracle for $K$, the problem is to approximately uniformly sample points for $K$.
 \end{frame}
 
 \begin{frame}{The problem}
-    The B\'{a}r\'{a}ny-Fur\"{e}di Theorem \cite{no-deterministic-algo-barany-furedi} shows that there exists no deterministic polynomial time algorithm to approximate the volume of a convex body. \pause \\
-    \begin{ques}
-        Input: A convex body $K \subseteq \Rn$ with a well-guaranteed membership oracle.
+	% The B\'{a}r\'{a}ny-Fur\"{e}di Theorem in \cite{barany-furedi} shows that there exists no deterministic polynomial time algorithm to approximate the volume of a convex body. \pause \\
+	\begin{ques*}
+		Input: A convex body $K \subseteq \Rn$ with a well-guaranteed membership oracle.
 
-        Output: A probability distribution on $\Rn$ that is at distance at most $\epsilon$ from the uniform distribution on $K$.
-    \end{ques}
+		Output: A probability distribution on $\Rn$ that is at total variation distance at most $\epsilon$ from the uniform distribution on $K$.
+	\end{ques*}
+	Denote by $\pi_K$ the uniform distribution on $K$.
 \end{frame}
 
 \begin{frame}{The approach in broad strokes}
-    The primary method to approximately uniformly sample points is through a \emph{Markov chain}. \pause \\
-    We synthesize a Markov chain whose stationary distribution is the uniform distribution on the given body \pause and try to determine how fast we get `close' to this stationary distribution. \pause \\
-    The first such random walk\footnote{and consequently, polynomial-time algorithm to approximate the volume of a convex body} was proposed in \cite{dyer-frieze-kannan} by Dyer, Frieze, and Kannan. \pause This random walk was on a grid superimposed on the convex body. \pause
-    \begin{center}
-    \includegraphics[width = 0.3\linewidth]{dfk-walk.png} 
-    \end{center} 
+	The primary method to approximately uniformly sample points is through a \emph{Markov chain}. \pause \\
+	We synthesize a Markov chain whose stationary distribution is the uniform distribution on the given body and try to determine how fast we get `close' to this stationary distribution. \pause \\% It is said to be \emph{rapidly mixing} if it gets `close' in polynomial time. \\
+	The first such random walk that gets close to the stationary distribution in polynomial time was proposed in \cite{dyer-frieze-kannan} by Dyer, Frieze, and Kannan. \pause This random walk was on a grid superimposed on the convex body. \pause
+	\begin{center}
+	\includegraphics[width = 0.3\linewidth]{dfk-walk.png}
+	\end{center} 
 \end{frame}
 
-% \begin{frame}{Na\"{i}ve approach}
-%     The simplest way to do this is by \pause trial division. \pause Indeed, we simply divide $n$ by $2, 3, 4$, and so on, and see if the remainder is $0$ in any case. \pause As we know, we only need to divide by numbers up to $\sqrt{n}$. \pause The issue with this algorithm is that it is extremely inefficient, \pause requiring $\Theta(\sqrt{n})$ operations, \pause which is \emph{exponential} in the \emph{bit length} $\log(n)$. \pause For example, if $n$ has $100$-decimal digits, it would take more than $10^{33}$ years to perform $\sqrt{n}$ divisions. \pause
+\begin{frame}{Hit-and-run}
+	The hit-and-run random walk was proved to mix in polynomial time by Lov\'{a}sz in \cite{hit-and-run-lovasz}. \pause
+	\begin{defn}[Hit-and-run]
+		Given $x_t$, we first draw $y$ uniformly at random from $\mathbb{S}^{n-1}$. We then draw $x_{t+1}$ uniformly at random from the set
+		\[ K \cap (x_t + y\R). \]
+	\end{defn}
+	\pause Since the scheme is ergodic and reversible, its stationary distribution is the uniform distribution over $K$. % ***** CHECK YOURSELF!
+\end{frame}
 
-%     Moreover, note that the above algorithm does \emph{more} than what we expected from our algorithm. \pause Namely, it not only tells us that the number is prime but also produces a nontrivial factor in the case that $n$ is composite. 
-% \end{frame}
+\begin{frame}{Coordinate hit-and-run}
+	In the simpler \emph{coordinate hit-and-run} walk (which is the subject of this presentation), we instead draw $y$ u.a.r. from $\{e_1,\ldots,e_n\}$, the standard basis of $\Rn$. \pause \\
+	In other words,
+	\begin{defn}[Coordinate hit-and-run]
+		For the coordinate hit-and-run (CHR) Markov scheme $\mathcal{C}$, the transition probability density from $u$ to $v$ (with respect to the $1$-dimensional Lebesgue measure) is
+		\[
+			\mathcal{C}_{uv} =
+			\begin{cases}
+				\frac{1}{n|K \cap (u + e_i\R)|}, & v \in K \cap (u+e_i\R) \text{ for some } i\in[n], \\
+				0, & \text{otherwise}.
+			\end{cases}
+		\]
+	\end{defn}
+	\pause The above is also sometimes referred to as the \emph{Gibbs sampler}.
+\end{frame}
 
-% \begin{frame}{Probabilistic approach}
-%     In this talk, we describe a much faster primality testing. \pause This is a polynomial time algorithm. \pause It allows for $100$-decimal digits numbers to be tested in less than a second. \pause Unlike the earlier algorithm, it does \emph{not} give us a prime factor in the case that $n$ is composite. 
+\begin{frame}{Conductance}
+	The primary tool we use to determine how fast the Markov chains mix is \emph{conductance}. \pause
 
-%     \pause The catch? \pause This algorithm is \emph{probabilistic}. \pause This means that the algorithm can make a mistake. 
+	\begin{defn}[Conductance]
+		Given a Markov scheme $P$ on $S$, the \emph{ergodic flow} $\Phi_{P,Q}$ with respect to a probability distribution $Q$ on $S$ is
+		\[ \Phi_{P,Q}(A,B) = \int_A P(u,B) Q(\dif u) \]
+		for measurable $A,B\subseteq S$. We also denote $\Phi_{P,Q}(A) = \Phi_{P,Q}(A,S\setminus A)$. \pause \\
+		For $0<s<1/2$, the \emph{$s$-conductance} of $P$ with respect to $Q$ is
+		\[ \Phi_s = \inf_{A : s < Q(A) < 1/2} \frac{\Phi_{P,Q}(A)}{Q(A) - s}. \]
+		The $0$-conductance is referred to as merely \emph{conductance}.
+	\end{defn}
+ \end{frame}
 
-%     \pause \emph{However}, \pause one has control over this probability, and can make it arbitrarily small \pause (but not zero).
-% \end{frame}
+\begin{frame}{Conductance to mixing}	
+	We assert the rapid mixing condition by bounding the $s$-conductance. \pause
 
-% \begin{frame}{Some algebraic objects}
-%     For the rest of the talk, we shall assume that $n > 1$ is an \emph{odd} integer. \pause
-%     Let $n = p_{1}^{e_{1}} \cdots p_{r}^{e_{r}}$ be its prime factorisation. \pause \\
-%     By $\mathbb{Z}_{n}$, we shall denote the ring of integers modulo $n$. \pause We have a ring homomorphism
-%     \begin{align*} 
-%         \theta : \mathbb{Z}_{n} &\to \mathbb{Z}_{p_{1}^{e_1}} \times \cdots \times \mathbb{Z}_{p_{r}^{e_{r}}} \\
-%         \uncover<5->{[a]_{n} &\mapsto ([a]_{p_{1}^{e_1}}, \cdots, [a]_{p_{r}^{e_{r}}}).}
-%     \end{align*}
-%     \pause \pause
-%     In fact, the Chinese Remainder Theorems tells us that the above is an isomorphism. \pause This gives us a group isomorphism between the group of invertible elements of the two rings as \pause
-%     \begin{equation*} 
-%         (\mathbb{Z}_{n})^{\ast} \xrightarrow{\cong} (\mathbb{Z}_{p_{1}^{e_1}})^{\ast} \times \cdots \times (\mathbb{Z}_{p_{r}^{e_{r}}})^{\ast}.
-%     \end{equation*}
-% \end{frame}
+	\begin{thm}
+		If a Markov scheme $P$ has stationary distribution $Q$, and we start it with initial distribution $Q_0$ with
+		\[ H_s = \sup\{|Q(A) - Q_0(A)| : \text{$A$ measurable with $Q(A) < s$}\}, \]
+		\pause then
+		\[ d_{\text{TV}}(Q_t,Q) \le H_s \left( 1 + \frac{1}{s} \left( 1 - \frac{\Phi_s^2}{2} \right)^t \right). \]
+	\end{thm}
+	\pause If $Q_0$ is $M$-warm with respect to $Q$, then $H_s \le Ms$. Setting $s = \epsilon/(2M)$, we get that
+	\[ d_\text{TV}(Q_t,Q) < \epsilon \text{ if } t \ge \log(2M/\epsilon) \Phi_{s}^{-2}. \]
+	\pause We give two polynomial bounds on the $s$-conductance of the CHR scheme. \pause
+\end{frame}
 
-% \begin{frame}{Bird's eye view of probabilistic tests}
-%     Several probabilistic primality tests, including the Miller–Rabin test, have the following general structure. \\
-%     \pause Define $\mathbb{Z}_{n}^{+}$ to be the set of nonzero elements of $\mathbb{Z}_{n}$. \pause Note that $\md{\mathbb{Z}_{n}^{+}} = n - 1$. \pause Moreover, $\mathbb{Z}_{n}^{+} = \mathbb{Z}_{n}^{\ast}$ iff $n$ is prime. \pause Suppose also that we define a set $L_{n} \subset \mathbb{Z}_{n}^{+}$ such that: \pause
-%     \begin{enumerate}[<+->]
-%         \item there is an efficient algorithm that on input $n$ and $\alpha \in \mathbb{Z}_{n}^{+}$, determines if $\alpha \in L_{n}$; 
-%         \item if $n$ is prime, then $L_{n} = \mathbb{Z}_{n}^{\ast}$; and 
-%         \item if $n$ is composite, $\md{L_{n}} \le c(n - 1)$ for some universal constant $c < 1$.
-%     \end{enumerate}
-%     \pause 
-%     To test for primality, we set a ``repetition parameter'' $k$, and choose random elements $\alpha_{1}, \ldots, \alpha_{k} \in \mathbb{Z}_{n}^{+}$. \pause If $\alpha_{i} \in L_{n}$ for all $i \in \{1, \ldots, k\}$, \pause then we output \texttt{true}; \pause otherwise, we output \texttt{false}.
-% \end{frame}
+\begin{frame}{Two bounds}
+	The first bound is due to \cite{narayanan_srivastava_chr}, showing that if $B_\infty^n \subseteq K \subseteq R\cdot B_\infty^n$, then
+	\[ \Phi_{\mathcal{C},s} = \Omega\left( \frac{s^2}{R^2 n^{3.5} (\log n)^3} \right). \]
+	\pause
 
-% \begin{frame}{Observations}
-%     \begin{alg}
-%         To test for primality, we set a ``repetition parameter'' $k$, and choose random elements $\alpha_{1}, \ldots, \alpha_{k} \in \mathbb{Z}_{n}^{+}$. If $\alpha_{i} \in L_{n}$ for all $i \in \{1, \ldots, k\}$, then we output \texttt{true}; otherwise, we output \texttt{false}.
-%     \end{alg}
-%     \pause 
-%     \begin{enumerate}   
-%         \item The algorithm is efficient since we can check $\alpha \in L_{n}$ efficiently. \pause
-%         \item If $n$ is prime, \pause then the algorithm outputs \texttt{true}, \pause and it does so \emph{correctly}. \pause
-%         \item If $n$ is composite, \pause then the algorithm \emph{may} output \texttt{true}, \pause with probability at most $c^{k}$.
-%     \end{enumerate}
+	The second is due to \cite{laddha_vempala_gibbs}, showing that if $B_2^n \subseteq K$ and $R_0^2 = \expec_{x \sim \pi_K}\norm{x - b_K}_2^2$, then
+	\[ \Phi_{\mathcal{C},s} = \Omega\left( \frac{s}{R_0 n^{4.5} \log n} \right). \]
+	% $R$ can be a factor of at most $n^{1/2}$ larger than $R_0$.
+\end{frame}
 
-%     \pause In particular, note that there is a \emph{one-sided error}. \pause In fancy language, this is a \emph{Monte Carlo algorithm}.
-% \end{frame}
+\section{The first bound}
+\begin{frame}{Overview of the proof}
+	% The proof of this is primarily by bounding the conductance of an auxiliary Gaussian random walk from below. \pause
+	\begin{defn}[Gaussian CHR]
+		Given $x_t$, we draw $i$ uniformly from $[n]$ and $\kappa$ from $\mathcal{N}(0,\sigma^2)$. The next point $x_{t+1}$ is defined by
+		\[
+			x_{t+1} =
+			\begin{cases}
+				x_{t} + \kappa e_i, & (x_t + \kappa e_i) \in K, \\
+				x_{t}, & \text{otherwise.}
+			\end{cases}
+		\]
+		% The Gaussian coordinate hit-and-run (GCHR) walk $\mathcal{G}$ is defined as follows., the transition probability density from $u$ to $v$ (with respect to the $1$-dimensional Lebesgue measure) is
+		% \[
+		% 	\mathcal{G}(u,v) =
+		% 	\begin{cases}
+		% 		\frac{1}{n\sqrt{2\pi}\sigma} \exp\left( -\frac{\norm{v-u}^2}{2\sigma^2} \right), & v \ne u, v \in K \cap (u+e_i\R) \text{ for some } i\in[n], \\
+		% 		0, & \text{otherwise}.
+		% 	\end{cases}
+		% \]
+		% Note that in this case, the rejection probability 
+	\end{defn}
+	\pause On bounding the Radon-Nikodym derivative of $\mathcal{C}(x,\cdot)$ with respect to $\mathcal{G}(x,\cdot)$ from below, we arrive at a bound for the conductance of $\mathcal{C}$. \pause \\
+	The original strategy used to prove the convergence of usual hit-and-run was to show that `close-by' points have `similar' distributions. \pause Here, we do a multistep version of the same, showing that the distributions become similar after running the walk for several steps.
+\end{frame}
 
-% \section{First attempt}
-% \begin{frame}{First attempt}
-%     We now try to define a suitable candidate for $L_{n}$. \pause 
-%     \begin{defn}
-%         \begin{equation*} 
-%             L_{n} \vcentcolon= \{\alpha \in \mathbb{Z}_{n}^{+} : {\color{ForestGreen}\alpha^{n - 1} = 1}\}.
-%         \end{equation*}
-%     \end{defn}
-%     \pause 
-%     Note that we can test $\alpha \in L_{n}$ efficiently, using a repeated-squaring algorithm.
+\begin{frame}{Some setup for the proof}
+	Denote by $\mathcal{G}_v^{(\tau)}$ the probability distribution obtained on starting $\mathcal{G}$ at $v \in \Rn$ and letting it run for $\tau$ time steps. \pause \\
+	Let $\mathcal{M}_{n,\tau}$ be the set of all $\mathbb{I} = (i_1,\ldots,i_n) \in \N^n$ with $\sum i_j = \tau$. \pause For each such $\mathbb{I}$, define $\mathcal{G}_{v,\mathbb{I}}$ as the Gaussian distribution centered at $v$ with diagonal covariance matrix $\Sigma_{\mathbb{I}}$ defined by $(\Sigma_\mathbb{I})_{jj} = \mathbb{I}_j \sigma^2$. \pause Finally, define $\lambda_{\mathbb{I}} = \binom{\tau}{\mathbb{I}} n^{-\tau}$, which is the probability of getting the multi-index $\tau$ on uniformly drawing an element of $[n]$ $\tau$ times. \pause \\
+	Observe that if we drop the $v \in K$ condition in the definition of $\mathcal{G}$, we just get the random walk $\mathcal{H}$ defined by
+	\[ \mathcal{H}_{v}^{(\tau)} = \sum_{\mathbb{I} \in \mathcal{M}_{n,\tau}} \lambda_{\mathbb{I}} \mathcal{G}_{v,\mathbb{I}}. \]
+	\pause Also define the random walk $\mathcal{H}'$ by
+	\[ (\mathcal{H}')_{v}^{(\tau)} = \sum_{\substack{\mathbb{I} \in \mathcal{M}_{n,\tau} \\ \mathbb{I}_j \ne 0 \text{ for all }j }} \lambda_{\mathbb{I}} \mathcal{G}_{v,\mathbb{I}}. \]
+\end{frame}
 
-%     \pause
-%     It is easy to see that $L_{n} \subset \mathbb{Z}_{n}^{\ast}$. \pause In fact, $L_{n}$ is the kernel of the $(n - 1)$-power map $\mathbb{Z}_{n}^{\ast} \to \mathbb{Z}_{n}^{\ast}$ given by $x \mapsto x^{n - 1}$.
-% \end{frame}
+\begin{frame}{Showing the closeness property for $\mathcal{G}$}
+	To show that close points have similar distributions, we shall first show that
+	\begin{equation}
+		d_{\text{TV}}(\mathcal{G}_{v}^{(\tau)} , \mathcal{H}_v^{(\tau)}) \text{ is small}
+	\end{equation}
+	\pause and then that for close points $u,v$,
+	\begin{equation}
+		d_{\text{TV}}( \mathcal{H}_u^{(\tau)} , \mathcal{H}_v^{(\tau)}) \text{ is small.}
+	\end{equation}
+\end{frame}
 
-% \begin{frame}{Does it fit the bill?}
-%     \begin{thm}
-%         If $n$ is prime, then $L_{n} = \mathbb{Z}_{n}^{\ast}$. \pause If $n$ is composite \pause {\only<5->{\color{red}}and $L_{n} \subsetneq \mathbb{Z}_{n}^{\ast}$}, \pause \emph{then} $\md{L_{n}} \le \frac{1}{2}(n - 1)$.
-%     \end{thm}
-%     \pause \pause
-%     \begin{proof}[Proof sketch]
-%         The first statement is clear. \pause For the second, one recalls that $L_{n}$ is a subgroup of $Z_{n}^{\ast}$. \pause Thus, $\frac{\md{\mathbb{Z}_{n}^{\ast}}}{\md{L_{n}}}$ is a positive integer. \pause Thus, if the integer is not $1$, it is at least $2$. \pause Combine this with the fact that $\md{Z_{n}^{\ast}} \le n - 1$ to get the result.
-%     \end{proof}
-%     \pause However, there \emph{are} infinitely many odd composite $n$ for which $L_{n} = \mathbb{Z}_{n}^{\ast}$ \pause and thus, they cannot be ignored.
-% \end{frame}
+\begin{frame}{A proof of (1)}
+	\[ d_{\text{TV}}(\mathcal{G}_{v}^{(\tau)} , \mathcal{H}_v^{(\tau)}) \text{ is small.} \]
+	\pause Let $x_0 = v$. For $t \in [\tau]$, pick $i \in [n]$ uniformly randomly, $\kappa \sim \mathcal{N}(0,\sigma^2)$, and let $x_{t} = x_{t-1} + \kappa e_i$. \pause This just represents a draw from $\mathcal{H}_v^{(\tau)}$. \pause Consider the event $E$ that every $x_i$ is in $K$. Observe that the probability that $\mathcal{G}_v^{(\tau)} = \mathcal{H}_v^{(\tau)}$ is at least the probability that $E$ occurs. \pause Therefore,
+	\[ d_\text{TV}(\mathcal{G}_v^{(\tau)}, \mathcal{H}_v^{(\tau)}) \le 1 - \Pr[E]. \]
+	\pause Now, set $\tau = 20 n \log n$ and suppose that $\inf_{z \in \partial K} \norm{v - z}_\infty > 100 \sigma \log n$. \pause An application of the Chernoff bound (to show that no coordinate is chosen many times) together with a Gaussian tail bound (to show that none of the coordinate changes are too large) shows that with high probability, the point remains in $K$.
+\end{frame}
 
-% \begin{frame}{Carmichael numbers}
-%     \begin{defn}
-%         An odd composite number $n$ such that $L_{n} = \mathbb{Z}_{n}^{\ast}$ is called a \emph{Carmichael number}.
-%     \end{defn}
-%     \pause
-%     \begin{ex}
-%         The smallest Carmichael number is $561 = 3 \cdot 11 \cdot 17.$
-%     \end{ex}
-%     \pause 
-%     \begin{thm}
-%         $n$ is a Carmichael number iff $n$ is of the following form: \pause
-%         \begin{enumerate}[<+->]
-%             \item $n = p_{1} \cdots p_{r}$ for distinct primes $p_{i}$,
-%             \item {\color{red}$r \ge 3$},
-%             \item $(p_{i} - 1) \mid (n - 1)$ for all $i \in \{1, \ldots, r\}$. 
-%         \end{enumerate}
-%     \end{thm}
-%     % \pause The above is not hard to prove, it only requires some basic facts about cyclic groups. However, we skip the proof.
-% \end{frame}
+\begin{frame}{A proof of (2)}
+	\[ d_{\text{TV}}( \mathcal{H}_u^{(\tau)} , \mathcal{H}_v^{(\tau)}) \text{ is small.} \]
+	\pause To show this, first observe that
+	\[ d_{\text{TV}}(\mathcal{H}_u^{(\tau)} , (\mathcal{H}')_u^{(\tau)}) \text{ is small.} \]
+	\pause Indeed, the distance between the two is at most the sum of all $\lambda_\mathbb{I}$ over all $\mathbb{I} \in \mathcal{M}_{n,\tau}$ with a zero in them, and this in turn can be made small for large $\tau$. \pause Therefore, it suffices to show that
+	\[ d_{\text{TV}}( (\mathcal{H}')_u^{(\tau)} , (\mathcal{H}')_v^{(\tau)}) \text{ is small.} \]
+\end{frame}
 
-% \begin{frame}{Carmichael Numbers characterisation}
-%     \begin{proofs} 
-%         Let $n = p_{1}^{e_{1}} \cdots p_{r}^{e_{r}}$ be a Carmichael number. \pause From earlier, we have
-%         \begin{equation*} 
-%             \mathbb{Z}_{n}^{\ast} \cong \mathbb{Z}_{p_{1}^{e_1}}^{\ast} \times \cdots \times \mathbb{Z}_{p_{r}^{e_{r}}}^{\ast}.
-%         \end{equation*} \pause
-%         Since $n - 1$ annihilates the left group, it annihilates the right group. \pause Thus,
-%         \begin{equation*} 
-%             p_{i}^{e_{i} - 1}(p_{i} - 1) \mid (n - 1)
-%         \end{equation*} 
-%         for all $i \in \{1, \ldots, r\}$. \pause In particular, $(p_{i} - 1) \mid (n - 1)$. \pause Moreover, if $e_{i} > 1$ for some $i$, \pause then $p_{i} \mid n - 1$, a contradiction. \pause Thus, $e_{i} = 1$ for all $i$. \pause
+\begin{frame}{A proof of (2) (contd.)}
+	For this, we use Pinsker's inequality to get that for any $\mathbb{I} \in \mathcal{M}_{n,\tau}$ with no non-zero element, \pause
+	\begin{align*}
+		d_{\text{TV}}( \mathcal{G}_{v,\mathbb{I}} , \mathcal{G}_{u,\mathbb{I}} ) &\le \sqrt{\frac{1}{2} D_\text{KL} (\mathcal{G}_{v,\mathbb{I}} \lVert \mathcal{G}_{u,\mathbb{I}}) } \\ 
+			\uncover<3->{&= \frac{1}{2} \sqrt{ (v-u)^\top \Sigma_\mathbb{I}^{-1} (v-u) }} \\ 
+			\uncover<4->{&\le \frac{1}{2\sigma} \norm{v-u}_2.}
+	\end{align*}
+	\pause\pause\pause Therefore,
+	\[ d_{\text{TV}}( (\mathcal{H}')_u^{(\tau)} , (\mathcal{H}')_v^{(\tau)}) \le \sum_{\substack{ \mathbb{I} \in \mathcal{M}_{n,\tau} \\ \mathbb{I}_j \ne 0 \text{ for any $j$} }} \lambda_\mathbb{I} d_{\text{TV}}( \mathcal{G}_{v,\mathbb{I}} , \mathcal{G}_{u,\mathbb{I}} ) \le \frac{\norm{v-u}_2}{2\sigma}, \]
+	which is small.
+\end{frame}
 
-%         Now, we must show that $r \ge 3$. \pause For the sake of contradiction, assume that $r = 2$. \pause In this case, we have $n = p_{1} p_{2}$ for some $p_{1} > p_{2}$. \pause We note that
-%         \begin{equation*} 
-%             n - 1 = p_{1} p_{2} - 1 = (p_{1} - 1) p_{2} + (p_{2} - 1).
-%         \end{equation*} \pause
-%         The above shows that $p_{1} - 1 \mid p_{2} - 1$, \pause a contradiction since $p_{1} > p_{2}$.
-%     \end{proofs}
-% \end{frame}
-% \begin{frame}{Carmichael Numbers characterisation}
-%     \begin{proof}[Proof (Continued)]
-%         Conversely, suppose $n$ has the given form. \pause Let $a$ be coprime to $n$ \pause and hence, to each $p_{i}$. \pause Then, by Fermat's Little Theorem, we have $a^{p_{i} - 1} \equiv 1 \mod p_{i}$. \pause Since $n - 1$ is a multiple of $p_{i} - 1$, we get \pause
-%         \begin{equation*} 
-%             a^{n - 1} \equiv 1 \mod p_{i}
-%         \end{equation*}
-%         for all $i \in \{1, \ldots, r\}$. \pause By the Chinese Remainder Theorem, we are now done.
-%     \end{proof}
-% \end{frame}
+\begin{frame}{Concluding the main proof}
+	Now, consider the multistep Gaussian CHR walk $\mathcal{G}'$, performing $\tau = 20 n \log n$ steps of $\mathcal{G}$ at each step. \pause By (1) and (2), $\mathcal{G}'$ satisfies the following property. Let
+	\[ K' = \{ x \in K : \inf_{z \in \partial K} \norm{x - z}_\infty > 100 \sigma \log n \}. \]
+	\pause Then, for any $u,v \in K'$ with $\norm{u-v}_2 \le \textcolor{green}{\sigma}$,
+	\[ d_\text{TV} (\mathcal{G}'(u,\cdot),\mathcal{G}'(v,\cdot)) \le 1 - \textcolor{blue}{\frac{1}{4}}. \]
+	\pause Given that $B_\infty \subseteq K$, we may further show that $(1 - 100 \sigma \log n) K \subseteq K'$. Consequently,
+	\[ \vol(K') \ge (1 - \textcolor{red}{100\sigma n \log n}) \vol(K). \]
+	This is referred to as the $(\textcolor{red}{\epsilon},\textcolor{green}{\delta},\textcolor{blue}{\nu})$ property.
+\end{frame}
 
-% \section{The Miller-Rabin test}
+\begin{frame}
+	Now, how do we go from the $(\epsilon,\delta,\nu)$ property of $\mathcal{G}'$ to a bound on the conductance? \pause
+	Let $S_1 \sqcup S_2$ be a partition of $K$ into disjoint measurable subsets. \pause Let $T_i = S_i \cap K'$ (so we may use the $(\epsilon,\delta,\nu)$ property). \pause Define
+	\[ T_i' = \{ x \in T_i : \mathcal{G}'(x,S_{3-i}) < \nu/2 \}. \]
+	\pause Observe that for any $x\in T_1', y \in T_2'$, $\norm{x-y}_2 > \delta$. Indeed, otherwise,
+	\[ 1 - \nu \ge d_\text{TV}(\mathcal{G}'(x,\cdot), \mathcal{G}'(y,\cdot)) \ge 1 - \mathcal{G}'(x,S_2) - \mathcal{G}'(y,S_1) > 1 - \nu. \]
+	\pause We now use Theorem 2.6 of \cite{vol-algo}.
+	\begin{thm}
+		Let $\delta > 0$ and $\norm{\cdot}_\ell$ be a norm on $\Rn$. Let $K$ be a convex body in $\Rn$ and $K_1,K_2$ be disjoint measurable subsets of $K$ such that for $u\in K_1$ and $v\in K_2$, $\norm{u-v}_\ell \ge \delta$. Further suppose that $\sup_{x,y \in K} \norm{x-y}_\ell = D$. \pause Then,
+		\[ \pi_K(K \setminus (K_1 \cup K_2)) \ge \frac{2\delta}{D-\delta} \min\{\pi_K(K_1),\pi_K(K_2)\}. \] 
+	\end{thm}
+\end{frame}
 
-% \begin{frame}{A Better Candidate}
-%     We now define a new set $L_{n}'$ as follows. \pause
-%     \begin{defn}
-%         Let $n - 1 = t 2^{h}$ \pause where $t$ is odd, and $h \ge 1$. \pause
-%         \begin{align*} 
-%             L_{n}' \vcentcolon= \{\alpha \in \mathbb{Z}_{n}^{+} :\ &{\color{ForestGreen}\alpha^{t2^{h}} = 1} \text{ and} \\
-%            \uncover<5->{ &{\color{Sepia}\alpha^{t2^{j + 1}} = 1 \Rightarrow \alpha^{t2^{j}} = \pm 1} \text{ for } j = 0, \ldots, h - 1\}. }
-%         \end{align*}
-%     \end{defn}
-%     \pause \pause 
-%     The Miller-Rabin test uses this set $L_{n}'$. \pause By definition, it is clear that $L_{n}' \subset L_{n}$, \pause since the {\color{ForestGreen}green condition} is the same from earlier. \pause \\
-%     In fact, $L_{n}'$ is precisely the set of those elements of $L_{n}$ which also satisfy the {\color{Sepia}brown condition}.
-% \end{frame}
+\begin{frame}
+	The previous theorem implies that
+	\[ \pi_{K}(K'\setminus (T_1' \cup T_2')) \ge \frac{2\delta}{D-\delta} \min \{\pi_{K}(T_1'),\pi_{K}(T_2')\}. \]
+	\pause If $\pi_K(T_1') \le \frac{1}{2} \pi_K(T_1)$, then the result immediately follows since
+	\[ \Phi_{\mathcal{G}',\pi_K}(S_1,S_2) \ge \Phi_{\mathcal{G}',\pi_K}(T_1\setminus T_1',S_2) \ge \frac{\nu}{4} (\pi_K(S_1) - \epsilon). \]
+	\pause Therefore, assume that $\pi_K(T_i') > \frac{1}{2} \pi_K(T_i)$. \pause We now have
+	\begin{align*}
+		\Phi_{\mathcal{G}', \pi_K}(S_1,S_2) &\ge \frac{1}{2} ( \Phi_{\mathcal{G}', \pi_K}(T_1 \setminus T_1',S_2) + \Phi_{\mathcal{G}', \pi_K}(S_1,T_2\setminus T_2') ) \\
+			\uncover<5->{&\ge \frac{\nu}{4} ( \pi_K(T_1 \setminus T_1') + \pi_K(T_2 \setminus T_2') )} \\
+			\uncover<6->{&= \frac{\nu}{4} ( \pi_K(K' \setminus (T_1' \cup T_2')) )} \\
+			\uncover<7->{&\ge \frac{\nu\delta}{2(D-\delta)} \min\{\pi_K(T_1'), \pi_K(T_2')\}} \\
+			\uncover<8->{&\ge \frac{\nu\delta}{4(D-\delta)} (\min\{\pi_K(S_1),\pi_K(S_2)\} - \epsilon).} 
+	\end{align*}
+	\pause\pause\pause\pause\pause This gives a bound on the $\epsilon$-conductance of $\mathcal{G}'$!
+\end{frame}
 
-% \begin{frame}{Testing membership}
-%     Testing whether a given $\alpha \in \mathbb{Z}_{n}^{+}$ belongs to $L_{n}'$ can be done using the following algorithm: \pause
-%     \begin{alg}[Testing membership]
-%         \begin{enumerate}[<+->]
-%             \itemsep1mm
-%             \item $\beta \leftarrow \alpha^{t}$
-%             \item if $\beta = 1$ then return \texttt{true}
-%             \item for $j \leftarrow 0$ to $h - 1$ do
-%             \begin{itemize}[<+->]
-%                 \item if $\beta = -1$ then return \texttt{true}
-%                 \item if $\beta = 1$ then return \texttt{false}
-%                 \item $\beta \leftarrow \beta^{2}$
-%             \end{itemize}
-%             \item return \texttt{false}
-%         \end{enumerate}
-%     \end{alg}
-%     \pause This algorithm runs in time $O(\mathsf{poly}(\log(n)))$ and thus, satisfies the first criteria.
-% \end{frame}
+\begin{frame}{Going from $\mathcal{G}'$ to $\mathcal{G}$}
+	Now, we must arrive at a bound on the conductance of $\mathcal{G}$. Fix some measurable $S \subseteq K$. \pause Let $x_0,x_1,\ldots,x_\tau$ be a walk according to the scheme $\mathcal{G}$, where $x_0$ is sampled from $\pi_K$. \pause Let $E$ denote the event that $x_0 \in S$ and $x_\tau \in K \setminus S$, and $E_i$ the event that $x_i \in S$ and $x_{i+1} \in K \setminus S$. \pause Clearly, $\Pr[E] \le \sum_{i} \Pr[E_i]$. \pause\\
+	Since each $x_i$ is sampled from $\pi_K$ (the stationary distribution of $\mathcal{G}$ is $\pi_K$), $\Pr[E_i] = \Phi_{\mathcal{G},\pi_K}(S,K\setminus S)$. \pause Further, $\Pr[E] = \Phi_{\mathcal{G}',\pi_K}(S,K\setminus S)$. \pause It follows that
+	\[ \Phi_{\mathcal{G},\pi_K}(S,K\setminus S) \ge \frac{1}{\tau} \Phi_{\mathcal{G}',\pi_K}(S,K\setminus S). \]
+\end{frame}
 
-% \begin{frame}{Does it fit the bill?}
-%     \begin{thm}
-%         If $n$ is prime, then $L_{n}' = \mathbb{Z}_{n}^{\ast}$. \pause If $n$ is composite, then $\md{L_{n}'} \le \frac{1}{4}(n - 1)$.
-%     \end{thm}
-%     \pause
+\begin{frame}{Completing the proof}
+	Finally, since the Radon-Nikodym derivative of $\mathcal{C}(x,\cdot)$ with respect to $\mathcal{G}(x,\cdot)$ is bounded below by $\sqrt{2\pi}\sigma/2R$ at any point, \pause
+	\begin{align*}
+		\Phi_{\mathcal{C},\pi_K}(S,K\setminus S) &\ge \frac{\sqrt{2\pi}\sigma}{2R\tau} \Phi_{\mathcal{G}',\pi_K}(S,K\setminus S) \\
+			\uncover<3->{&= \frac{\sqrt{2\pi}\sigma}{2R\tau} \cdot \frac{\nu\delta}{4(D-\delta)} (\min\{\pi_K(S),\pi_K(K\setminus S)\} - \epsilon) }
+	\end{align*}
+	\pause\pause Substituting $\tau = 20 n\log n$, $\nu = 1/4$, $\delta = \sigma$, $\epsilon = s$, $\sigma = 32s/(n\log n)$ and using the fact that $D \le R\sqrt{n}$, \pause we get
+	\[ \Phi_{\mathcal{C},\pi_K}(S,K\setminus S) \ge \frac{cs^2}{R^2n^{3.5}(\log n)^3} (\min\{\pi_K(S),\pi_K(K\setminus S)\} - \epsilon), \]
+	completing the proof.
+\end{frame}
 
-%     Thus, this set $L_{n}'$ does have the required properties. \pause This choice gives the Miller-Rabin test. \pause 
+\section{The second bound}
+\begin{frame}{Overview of the proof}
+	In this proof, we reduce the problem of bounded conductance to that of an isoperimetric problem on `axis-disjoint' subsets. \pause
+	\begin{defn}
+		Sets $S_1,S_2 \subseteq \Rn$ are said to be \emph{axis-disjoint} if for any $i \in [n]$, $(S_1 + e_i\R) \cap S_2 = \emptyset$.
+	\end{defn}
+	\pause Similar to how in the earlier proof we used the $(\epsilon,\delta,\nu)$ property to arrive at an isoperimetric inequality, here we use the following theorem to get the same.
+\end{frame}
 
-%     To put it all together, we have the test as:
+\begin{frame}{The main result}
+	\begin{thm}
+		\label{mainthm-2}
+		Let $K$ be a convex body satisfying $B_2^n \subseteq K$ and let $R_0^2 = \expec_{x \sim \pi_K}\norm{x - b_K}_2^2$. Let $S_1, S_2 \subseteq K$ be axis-disjoint. Then, there exists a universal constant $c$ such that
+		\[ \pi_K(K \setminus (S_1 \cup S_2)) \ge \frac{c\epsilon}{R_0 n^{3.5} \log n} ( \min\{\pi_K(S_1),\pi_K(S_2)\} - \epsilon ). \]
+	\end{thm}
+	\pause To prove this, we consider a grid of cubes, proving an isoperimetric inequality on each of them separately, then combining these together to give a global isoperimetric inequality.
+\end{frame}
 
-%     \begin{alg}[Miller-Rabin]
-%         \begin{enumerate}[<+->]
-%             \itemsep1mm
-%             \item input $n$ and $k$
-%             \item for $j \leftarrow 1$ to $k$ do 
-%             \begin{itemize}[<+->]
-%                 \item pick $\alpha \in \mathbb{Z}_{n}^{+}$ randomly
-%                 \item if $\alpha \notin L_{n}'$ then return \texttt{false}
-%             \end{itemize}
-%             \item return \texttt{true}
-%         \end{enumerate}
-%     \end{alg}
-%     \pause 
-%     Let us now prove the above theorem.
-% \end{frame}
-% \begin{frame}{Does it fit the bill? (Yes)}
-%     We shall frequently use the following result from group theory: \pause If $G$ has a cyclic group of order $n$, \pause then there are exactly $\gcd(n, m)$ many elements of $G$ satisfying $g^{m} = 1$. \pause
-%     \begin{proofs} \pause %Write $n - 1 = t2^{h}$ with $t$ odd. 
-%         \textbf{Case 1.} $n$ is prime. 
+\begin{frame}{The final part of the proof}
+	Before proving Theorem \ref{mainthm-2}, let us show how a bound on the conductance follows from it. \pause Suppose $S_1 \sqcup S_2$ is a partition of $K$ into disjoint measurable subsets. \pause Set
+	\[ S_i' = \left\{ x \in S_i : \mathcal{C}(x,S_{3-i}) < \frac{1}{2n} \right\}. \]
+	\pause We claim that $S_1'$ and $S_2'$ are axis-disjoint. \pause Otherwise, let $\ell$ be an axis-parallel line intersecting both of them. If $x_i \in \ell \cap S_i'$,
+	\[ \frac{1}{2n} > \mathcal{C}(x_i,S_{3-i}) \ge \frac{1}{n} \frac{|\ell \cap S_i|}{|\ell \cap K|}. \]
+	\pause However, this gives that $|\ell\cap K| > |\ell \cap S_1| + |\ell \cap S_2|$, which is clearly incorrect since the two are equal. \pause \\
+	The remainder of the proof follows near-identically to the final part of the proof of the first bound, except that instead of the $(\epsilon,\delta,\nu)$ property to bound conductance, we use the given theorem regarding axis-disjoint sets.
+\end{frame}
 
-%         Note that we have $L_{n}' \subset L_{n} = \mathbb{Z}_{n}^{\ast}$. \pause Thus, it suffices to prove that $L_{n} \subset L_{n}'$. \pause But this follows because {\color{Sepia}$x^{2} = 1 \Rightarrow x = \pm 1$} in a field. \\~\\
-%         \pause
-%         \textbf{Case 2.} $n = p^{e}$ for a prime $p \ge 3$ and $e \ge 2$. \pause
+\begin{frame}{Isoperimetry on a cube}
+	The following isoperimetric inequality is not too hard to prove and we use it extensively.
+	\begin{lem}
+		% \label{cube-isoperimetry}
+		Let $C$ be an axis-aligned cube in $\Rn$. For any axis-disjoint $S_1,S_2 \subseteq C$,
+		\[ \pi_C(C \setminus (S_1 \cup S_2)) \ge \frac{1}{4n\log n} \min\{\pi_C(S_1), \pi_C(S_2)\}. \]
+	\end{lem}
 
-%         Recall that $L_{n}$ is the kernel of the $(n - 1)$-power map. \pause Since $\mathbb{Z}_{n}^{\ast}$ is cyclic, it follows that $\md{L_{n}} = \gcd(\varphi(n), n - 1)$. \pause We can explicitly calculate it to get \pause
-%         \begin{flalign*} 
-%             \qquad \md{L_{n}'} \le \md{L_{n}} = \only<12>{\gcd(\varphi(n), n - 1)} \only<13>{\gcd(\varphi(p^{e}), p^{e} - 1)} \uncover<14->{\gcd(p^{e - 1}(p - 1), p^{e} - 1) =} \only<15>{p - 1} \uncover<16->{\frac{p^{e} - 1}{p^{e - 1} + \cdots + 1}} \uncover<17->{\le \frac{n - 1}{4}.} &&
-%         \end{flalign*}
-%     \end{proofs}
-% \end{frame}
-% \begin{frame}{Does it fit the bill? (Yes)}
-%     \begin{proofs}[Proof (continued)]
-%         \textbf{Case 3.} $n = p_{1}^{e_{1}} \cdots p_{r}^{e_{r}}$ is the standard prime factorisation of $n$, with $r > 1$. \\~\\\pause
-%         %    
-%         Let $\theta : \mathbb{Z}_{n} \to \mathbb{Z}_{p_{1}^{e_1}} \times \cdots \times \mathbb{Z}_{p_{r}^{e_{r}}}$ be the ring isomorphism from earlier. \pause \\
-%         Write $n - 1 = t2^{h}$ and $\varphi(p_{i}^{e_{i}}) = t_{i}2^{h_{i}}$ in the usual way, \pause and let $g \vcentcolon= \min\{h, h_{1}, \ldots, h_{r}\}$. \pause Note that $g \ge 1$, and that each $\mathbb{Z}_{p_{i}^{e_{i}}}^{\ast}$ is a cyclic group of order $t_{i}2^{h_{i}}$. \pause Let $\alpha \in L_{n}'$. \pause \\~\\
-%         %
-%         We first show that $\alpha^{t2^{g}} = 1$. \pause By {\color{ForestGreen}definition} of $L_{n}'$, we may assume $g < h$. \pause Now, suppose $\alpha^{t2^{g}} \neq 1$, \pause and let $j$ be the smallest index in $g, \ldots, h - 1$ such that $\alpha^{t2^{j + 1}} = 1$. \pause By {\color{Sepia}definition} of $L_{n}'$, we have $\alpha^{t2^{j}} = -1$. \pause Let $i$ be such that $g = h_{i}$. \pause Writing $\theta(\alpha) = (\alpha_{1}, \ldots, \alpha_{r})$, \pause we have $\alpha_{i}^{t2^{j}} = -1$. \pause Thus, the order of $\alpha_{i}^{t}$ (in $\mathbb{Z}_{p_{i}^{e_{i}}}^{\ast}$) is equal to $2^{j + 1}$. \pause But this is a contradiction since $2^{j + 1}$ does not divide $\md{\mathbb{Z}_{p_{i}^{e_{i}}}^{\ast}} = t_{i}2^{h_{i}}$. \pause \hfill ($\because j \ge g = h_{i}$)
-%     \end{proofs}
-% \end{frame}
+	\pause Since we have by definition that
+	\[ \pi_C(C \setminus (S_1 \cup S_2)) \ge 1 - \pi_C(S_1) - \pi_C(S_2), \]
+	\pause we also have that
+	\begin{equation}
+		\label{eqn 3}
+		\pi_C(C \setminus (S_1 \cup S_2)) \ge \frac{1}{16n\log n} \pi_C(S_1).
+	\end{equation}
+\end{frame}
 
-% \begin{frame}{Does it fit the bill? (Yes)}
-%     \begin{proofs}[Proof (continued)]
-%         For $j = 0, \ldots, h$, define $\rho_{j}$ to be the $(t2^{j})$-power map on $\mathbb{Z}_{n}^{\ast}$. \pause From the previous claim, and the {\color{Sepia}definition} of $L_{n}'$, it follows that $\alpha^{t2^{g - 1}} = \pm 1$ $\forall \alpha \in L_{n}'$. \pause Thus, $L_{n}' \subset \rho_{g - 1}^{-1}(\{\pm 1\})$ \pause and hence, $\md{L_{n}}' \le 2{\color{red}\md{\ker(\rho_{g - 1})}}$. \pause Also,
-%         \begin{flalign*} 
-%             && \md{\ker(\rho_{j})} = \prod_{i = 1}^{r} \gcd(t_{i}2^{h_{i}}, t2^{j}) && \forall j \in \{0, \ldots, h\}.
-%         \end{flalign*}
-%         \pause Since $g \le h$ and $g \le h_{i}$ for all $i$, we get \pause
-%         \begin{equation*} 
-%             {\color{red}2^{r}\md{\ker(\rho_{g - 1})}} = \md{\ker(\rho_{g})} \le \md{\ker(\rho_{h})}.
-%         \end{equation*} \pause
-%         Combining the {\color{red}red} expressions, we get
-%         \begin{equation*} 
-%             \md{L_{n}'} \le 2^{-r + 1}\md{\ker(\rho_{h})} = \frac{\md{L_{n}}}{2^{r - 1}}.
-%         \end{equation*}
-%     \end{proofs}
-% \end{frame}
+\begin{frame}{The lattice}
+	We now move on to the proof of the result. Let $S_1,S_2$ be axis-disjoint subsets of $K$. Similar to the first proof, set $K' = (1 - \epsilon/20n)K$, and let $S_i' = S_i \cap K'$. Suppose $\vol(S_1') \le \vol(S_2')$. \pause \\ 
+	Consider the lattice $\delta\Z^n$, where $\delta = \epsilon/80n\sqrt{n}$. This value of $\delta$ is chosen to ensure that any of the cubes that intersect $S_i'$ are contained completely within $K$. \pause \\
+	Define $\mathcal{C}$ to be the set of hypercubes in the lattice that intersect $S_1$, $\mathcal{C}_1$ as the set of cubes in $\mathcal{C}$ where $S_1$ takes up at least $2/3$ the volume of the cube, and $\mathcal{C}_2$ as $\mathcal{C} \setminus \mathcal{C}_1$.
+\end{frame}
 
-% \begin{frame}{Does it fit the bill? (Yes)}
-%     \begin{proof}[Proof (continued)]
-%         \begin{equation*} 
-%             \md{L_{n}'} \le \frac{\md{L_{n}}}{2^{r - 1}}
-%         \end{equation*} \pause
-%         If $r \ge 3$, then we are done \pause since $\md{L_{n}} \le \md{\mathbb{Z}_{n}^{\ast}} \le n - 1$, and $2^{r - 1} \ge 4$. \pause 
+\begin{frame}{The case where $\mathcal{C}_1$ has many cubes}
+	If there is a significant number of cubes in $\mathcal{C}_1$, that is, $\vol(\mathcal{C}_1 \cap S_1) \ge \vol(S_1)/2$, then we can use the previous isoperimetry on each of the cubes to arrive at an overall isoperimetric inequality. \pause That is, we have
+	\begin{align*}
+		\pi_K(S_3) &\ge \frac{1}{16n\log n} \sum_{\substack{c \in \mathcal{C}_1 \\ c \cap K' \ne \emptyset}} \pi_K(c \cap S_1) \\
+			\uncover<3->{&= \frac{1}{16n\log n} \left(\pi_K(\mathcal{C}_1 \cap S_1) - \frac{\epsilon}{2}\right)} \\
+			\uncover<4->{&\ge \frac{1}{32n\log n} \left( \pi_K(S_1) - \epsilon \right).}
+	\end{align*}
+\end{frame}
 
-%         If $r = 2$, then $n$ is not a Carmichael number and thus, \pause 
-%         \begin{equation*} 
-%             \frac{\md{L_{n}}}{2^{r - 1}} = \frac{\md{L_{n}}}{2} \uncover<6->{\le \frac{1}{4}(n - 1), }
-%         \end{equation*} \pause 
-%         and we are again done.
-%     \end{proof}
-% \end{frame}
+\begin{frame}{The non-trivial part}
+	Therefore, suppose that $\vol(\mathcal{C}_2 \cap S_1) \ge \vol(S_1)/2$.\\ 
+	\pause The idea is as follows. We first show that the cubes adjacent to $\partial \mathcal{C}_2$ not in $\mathcal{C}_2$ have a significant amount of $S_3$\pause, then use a known isoperimetric inequality to compare the volume of $\mathcal{C}_2$ to that of $\partial \mathcal{C}_2$.\pause \\
+	Combining these two inequalities compares the volume of $\mathcal{C}_2$ (and thus $S_1$) to that of $S_3$, which is exactly what we desire.\pause\\
+	Set $\mathcal{C}_2'$ to be the set of cubes in $\mathcal{C}_2$ that intersect $K'$.
+\end{frame}
 
-\bibliographystyle{alpha}
-\bibliography{references}
+\begin{frame}{The isoperimetric inequality (1)}
+	First, let us show the second part in the overview described on the previous slide. \pause In \cite{KLS}, Kannan, Lov\'{a}sz, and Simonovits show that for any convex body $K$ and $S \subseteq K$ with $\pi_K(S) \le 1/2$,
+	\begin{equation}
+		% \label{eqn-kls}
+		\vol(\partial_{K}(S)) \ge \frac{\log 2}{R_0} \min\{ \vol(S) , \vol(K\setminus S) \},
+	\end{equation}
+	where $\partial_K(S)$ is the boundary of $S$ relative to $K$. \\
+	\pause In particular, since we have
+	\[ \vol(\mathcal{C}_2' \cap S_1) \le \vol(\mathcal{C}_2') \le \frac{3}{2} \vol(S_1 \cap K') \le \frac{3}{4} \vol(K'), \]
+	it follows that
+\end{frame}
+
+\begin{frame}{The isoperimetric inequality (2)}
+	\begin{align*}
+		\vol(\partial_{K'}(\mathcal{C}_2')) &\ge \frac{\log 2}{R_0} \min\{ \vol(\mathcal{C}_2') , \vol(K' \setminus \mathcal{C}_2') \} \\
+			\uncover<2->{&\ge \frac{\log 2}{R_0} \min\left\{ \vol(\mathcal{C}_2') , \frac{1}{4} \vol(K') \right\}} \\
+			\uncover<3->{&\ge \frac{\log 2}{R_0} \min\left\{ \vol(\mathcal{C}_2 \cap K') , \frac{1}{3} \vol(\mathcal{C}_2 \cap K') \right\}} \\
+			\uncover<4->{&= \frac{\log 2}{3R_0} \vol(\mathcal{C}_2 \cap K')} \\
+			% &\ge \frac{\log 2}{3R_0} \left(\vol(\mathcal{C}_2 \cap S_1) - \frac{\epsilon}{2} \vol(K)\right) \\
+			\uncover<5->{&\ge \frac{\log 2}{3R_0} \left(\frac{1}{2}\vol(S_1) - \frac{\epsilon}{2} \vol(K)\right)} \\
+			\uncover<6->{&= \frac{\log 2}{6R_0} \left( \vol(S_1) - \epsilon \right).}
+	\end{align*}
+	\pause\pause\pause\pause\pause\pause If we manage to compare $\vol(S_3)$ and $\vol(\partial_{K'}(\mathcal{C}_2'))$, we are done.
+\end{frame}
+
+\begin{frame}{Comparing $\vol(S_3)$ and $\vol(\partial_{K'}(\mathcal{C}_2'))$ (1)}
+	Since $\mathcal{C}_2$ is a set of cubes, its boundary consists of facets. \pause Let $f$ be one such facet, $c_2$ be the cube adjacent to it that is in $\mathcal{C}_2$, and $c_1$ be the other cube adjacent to it.\\
+	\pause Since $\vol(c_2 \cap S_1) \ge (2/3) \vol(c_2)$, at least $2/3$ of $c_1$ is reachable from $S_1$, and is thus not in $S_2$.\\
+	\pause If $c_1$ intersects $S_1$ at all, then we have two cases:
+	\begin{enumerate}
+		\item \pause If $\vol(c_1 \cap S_1) \le \vol(c_1)/3$, at least $1/3$ of the $2/3$ fraction earlier (that is not in $S_2$) is not in $S_1$ either, and is thus in $S_3$.
+		\item \pause If $\vol(c_1)/3 \le \vol(c_1 \cap S_1) \le 2\vol(c_1)/3$, we can use (\ref{eqn 3}) to conclude that
+		\[ \vol(c_1 \cap S_3) \ge \frac{1}{16 n \log n} \vol(c_1 \cap S_1) \ge \frac{1}{48n\log n} \vol(c_1). \]
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Comparing $\vol(S_3)$ and $\vol(\partial_{K'}(\mathcal{C}_2))$ (2)}
+	The above says that each cube adjacent to a facet of $\partial_K(\mathcal{C}_2)$ that is not in $\mathcal{C}_2$ must have at least a $1/(48 n \log n)$ fraction of $S_3$. \pause Since each such cube is adjacent to at most $2n$ facets, each facet to contributes to a $S_3$ volume at least
+	\[ \frac{1}{96 n^2 \log n} \delta^n. \]
+	\pause That is,
+	\begin{align*}
+		\vol(S_3) &\ge \sum_{f \in \partial_{K'}(\mathcal{C}_2')} \frac{1}{96n^2 \log n} \delta^n \\
+			\uncover<4->{&= \frac{\delta}{96n^2 \log n} \sum_{f \in \partial_{K'}(\mathcal{C}_2')} \delta^{n-1}} \\
+			\uncover<5->{&= \frac{\delta}{96n^2 \log n} \vol(\partial_{K'}(\mathcal{C}_2')).}
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Putting the two pieces together}
+	Combining the two equations,
+	\begin{align*}
+		\vol(S_3) &\ge \frac{\delta}{96n^2 \log n} \vol(\partial_{K'}(\mathcal{C}_2')) \\
+			\uncover<2->{&\ge \frac{\delta}{96n^2 \log n} \cdot \frac{\log 2}{6R_0} \left( \vol(S_1) - \epsilon \right)} \\
+			\uncover<3->{&= \frac{c\delta}{R_0 n^2 \log n} \left( \vol(S_1) - \epsilon \right)} \\
+			\uncover<4->{&= \frac{c'\epsilon}{R_0 n^{3.5} \log n} \left( \vol(S_1) - \epsilon \right),}
+	\end{align*}
+	\pause\pause\pause completing the proof.
+\end{frame}
+
+\begin{frame}{Room for improvement}
+	% It is believed that we can do better in Lemma \ref{cube-isoperimetry}, possibly improving the $1/(n\log n)$ factor on the right to a constant.
+
+\end{frame}
+
+\begin{frame}{Comparing the two bounds}
+	In general, we always have that
+	\[ \sqrt{n} R_0 \le R \]
+\end{frame}
+
+\begin{frame}[allowframebreaks,t]{References}
+	\bibliographystyle{alpha}
+	\small\bibliography{references}
+\end{frame}
 
 \end{document}

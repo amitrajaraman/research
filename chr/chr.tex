@@ -283,14 +283,14 @@
 	\begin{itemize}
 		\item Let $\mathcal{M}_{n,\tau}$ be the set of all $\mathbb{I} = (i_1,\ldots,i_n) \in \N^n$ with $\sum i_j = \tau$. \pause
 		\item For each such $\mathbb{I}$, define $\mathcal{G}_{v,\mathbb{I}}$ as the Gaussian distribution centered at $v$ with diagonal covariance matrix $\Sigma_{\mathbb{I}}$ defined by $(\Sigma_\mathbb{I})_{jj} = \mathbb{I}_j \sigma^2$. \pause
-		\item Finally, define $\lambda_{\mathbb{I}} = \binom{\tau}{\mathbb{I}} n^{-\tau}$, which is the probability of getting the multi-index $\tau$ on uniformly drawing an element of $[n]$ $\tau$ times. \pause
+		\item Finally, define $\lambda_{\mathbb{I}} = \binom{\tau}{\mathbb{I}} n^{-\tau}$, which is the probability of getting the multi-index $\tau$ on uniformly drawing an element of $[n]$ $\tau$ times.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Some setup for the proof (contd.)}
 	Observe that if we drop the $v \in K$ condition in the definition of $\mathcal{G}$, we just get the random walk $\mathcal{H}$ defined by the mixture
 	\[ \mathcal{H}_{v}^{(\tau)} = \sum_{\mathbb{I} \in \mathcal{M}_{n,\tau}} \lambda_{\mathbb{I}} \mathcal{G}_{v,\mathbb{I}}. \]
-	\pause Also define the random walk $\mathcal{H}'$ by
+	\pause Also define
 	\[ (\mathcal{H}')_{v}^{(\tau)} = \sum_{\substack{\mathbb{I} \in \mathcal{M}_{n,\tau} \\ \mathbb{I}_j \ne 0 \text{ for all }j }} \lambda_{\mathbb{I}} \mathcal{G}_{v,\mathbb{I}}. \]
 \end{frame}
 
@@ -312,7 +312,7 @@
 	\[ d_{\text{TV}}(\mathcal{G}_{v}^{(\tau)} , \mathcal{H}_v^{(\tau)}) \text{ is small.} \]
 	\pause Let $x_0 = v$. For $t \in [\tau]$, pick $i \in [n]$ uniformly randomly, $\kappa \sim \mathcal{N}(0,\sigma^2)$, and let $x_{t} = x_{t-1} + \kappa e_i$. \pause $x_\tau$ just represents a draw from $\mathcal{H}_v^{(\tau)}$. \pause \\
 
-	Consider the event $E$ that every $x_i$ is in $K$. Observe that the probability that $\mathcal{G}_v^{(\tau)} = \mathcal{H}_v^{(\tau)}$ is at least the probability that $E$ occurs. \pause Therefore,
+	Consider the event $E$ that every $x_i$ is in $K$. \pause By a standard coupling argument,
 	\[ d_\text{TV}(\mathcal{G}_v^{(\tau)}, \mathcal{H}_v^{(\tau)}) \le 1 - \Pr[E]. \]
 	\pause Now, set $\tau = 20 n \log n$ and suppose that $\inf_{z \in \partial K} \norm{v - z}_\infty > 100 \sigma \log n$. \pause An application of the Chernoff bound (to show that no coordinate is chosen many times) together with a Gaussian tail bound (to show that none of the coordinate changes are too large) shows that with high probability, the point remains in $K$.
 \end{frame}

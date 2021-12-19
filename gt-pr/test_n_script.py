@@ -8,10 +8,104 @@ def immutabilize(m):
 n = 4
 
 S = {
-	immutabilize(matrix([[1,0,0,0],[0,1,0,0],[0,0,1,0],[1,0,0,1]])),
-	immutabilize(matrix([[1,0,0,1],[0,1,0,0],[0,0,1,0],[1,0,0,1]]))
-	}
-# S = { immutabilize(copy(matrix.identity(n))) }
+		# immutabilize(matrix([(0, 1, 0, 0), (1, 0, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1)])),
+		# immutabilize(matrix([(0, 0, 0, 1), (1, 0, 0, 0), (0, 0, 1, 0), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 1), (0, 1, 0, 0), (0, 0, 1, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 1), (0, 0, 1, 0), (0, 1, 0, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 1), (1, 0, 0, 0), (0, 0, 1, 0), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 1), (0, 0, 1, 0), (1, 0, 0, 0), (0, 1, 0, 0)])),
+		immutabilize(matrix([(1, 0, 0, 1), (0, 1, 0, 0), (1, 0, 0, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 0, 0, 1), (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 0, 1, 0), (0, 0, 0, 1), (0, 0, 1, 0), (0, 1, 0, 0)])),
+		immutabilize(matrix([(1, 0, 1, 0), (0, 0, 1, 0), (0, 0, 0, 1), (0, 1, 0, 0)])),
+		# immutabilize(matrix([(0, 1, 0, 0), (1, 0, 0, 0), (0, 0, 0, 1), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 1, 0, 0), (0, 0, 0, 1), (1, 0, 0, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 1, 1, 0), (0, 0, 0, 1), (0, 0, 1, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 1, 1, 0), (0, 0, 1, 0), (0, 0, 0, 1), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 1, 0, 0), (0, 0, 0, 1), (0, 1, 1, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 1, 0, 0), (1, 0, 0, 0), (0, 1, 1, 0), (0, 0, 0, 1)])),
+		# immutabilize(matrix([(0, 1, 0, 0), (1, 0, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1)])),
+		# immutabilize(matrix([(0, 1, 0, 0), (0, 0, 0, 1), (0, 0, 1, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(1, 0, 0, 1), (0, 0, 1, 0), (1, 0, 0, 0), (0, 1, 0, 0)])),
+		immutabilize(matrix([(1, 0, 0, 1), (0, 0, 1, 0), (0, 1, 0, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 0), (0, 0, 0, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 1), (1, 0, 0, 0), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 1), (0, 1, 0, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 1, 0, 0), (0, 1, 1, 0), (0, 0, 0, 1), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 1, 0, 0), (0, 1, 1, 0), (1, 0, 0, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 1, 0, 1), (0, 0, 1, 1), (0, 0, 1, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 1, 0, 1), (0, 0, 1, 1), (1, 0, 0, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 1, 0, 0), (0, 0, 1, 0), (0, 0, 1, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(1, 1, 0, 0), (0, 0, 1, 0), (0, 1, 0, 0), (0, 0, 1, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 0), (1, 0, 0, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 0), (0, 1, 0, 0), (1, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 1, 0, 0), (1, 0, 0, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 1, 0, 0), (0, 0, 0, 1), (1, 0, 0, 0)])),
+		immutabilize(matrix([(1, 0, 0, 0), (0, 0, 1, 0), (1, 0, 0, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(1, 0, 0, 0), (0, 0, 1, 0), (0, 1, 0, 0), (1, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 1, 0, 0), (0, 0, 1, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 1, 0, 0), (0, 1, 0, 0), (0, 0, 1, 1)])),
+		immutabilize(matrix([(1, 0, 0, 0), (0, 0, 1, 0), (0, 1, 0, 0), (0, 0, 1, 1)])),
+		immutabilize(matrix([(1, 0, 0, 0), (0, 0, 1, 0), (0, 0, 1, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (0, 1, 1, 1), (1, 0, 0, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (0, 1, 1, 1), (0, 0, 0, 1), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 0), (0, 0, 1, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 0, 1, 0), (0, 1, 0, 0), (1, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 0, 1, 0), (1, 0, 1, 0), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 1), (0, 1, 1, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 1), (0, 0, 0, 1), (0, 1, 1, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (0, 0, 0, 1), (0, 1, 0, 1), (1, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 0, 1, 0), (0, 1, 0, 1), (1, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (0, 0, 0, 1), (0, 1, 0, 0), (1, 1, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 0, 1, 0), (0, 1, 0, 0), (1, 1, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 1, 1, 0), (1, 0, 0, 1), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 1, 1, 0), (0, 0, 0, 1), (1, 0, 0, 1), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 1, 0, 0), (1, 0, 0, 0), (1, 0, 1, 0)])),
+		immutabilize(matrix([(1, 1, 0, 0), (0, 0, 0, 1), (1, 0, 0, 0), (1, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 0, 1, 0), (0, 1, 0, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 0, 1, 0), (0, 0, 0, 1), (0, 1, 0, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 1, 0, 0), (1, 0, 1, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(1, 1, 0, 0), (0, 0, 0, 1), (1, 0, 1, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (0, 1, 0, 0), (0, 0, 0, 1), (1, 1, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 1, 0, 0), (0, 0, 1, 0), (1, 1, 1, 0)])),
+		immutabilize(matrix([(1, 0, 1, 0), (0, 0, 1, 0), (0, 1, 0, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 1, 0, 0), (0, 0, 1, 0), (1, 0, 1, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 0, 0, 1), (0, 1, 1, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 1, 1, 0), (1, 0, 0, 1), (0, 0, 0, 1), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 0, 1, 0), (1, 1, 0, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(1, 1, 0, 0), (1, 0, 1, 0), (0, 0, 0, 1), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 1, 0, 0), (1, 0, 1, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 0, 1, 0), (0, 1, 0, 0), (0, 0, 0, 1), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 1, 0, 1), (1, 0, 1, 0), (1, 0, 0, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 0, 1, 0), (1, 0, 0, 0), (1, 1, 0, 1)])),
+		immutabilize(matrix([(0, 0, 1, 0), (1, 0, 0, 1), (0, 1, 0, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(1, 0, 0, 0), (1, 0, 0, 1), (0, 1, 0, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 1, 0), (0, 1, 0, 0), (1, 0, 0, 1), (1, 0, 0, 0)])),
+		immutabilize(matrix([(1, 0, 0, 0), (0, 1, 0, 0), (1, 0, 0, 1), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 1, 1, 0), (1, 0, 1, 1), (0, 0, 0, 1), (0, 0, 1, 0)])),
+		immutabilize(matrix([(1, 1, 1, 0), (0, 0, 1, 0), (0, 0, 0, 1), (1, 0, 1, 1)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 0, 1, 1), (1, 1, 1, 0), (0, 0, 1, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 0, 1, 0), (1, 1, 1, 0), (1, 0, 1, 1)])),
+		immutabilize(matrix([(0, 1, 1, 1), (0, 0, 0, 1), (0, 1, 0, 0), (1, 0, 0, 0)])),
+		immutabilize(matrix([(0, 1, 1, 1), (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 0, 1)])),
+		immutabilize(matrix([(0, 1, 0, 1), (1, 1, 1, 1), (1, 1, 1, 0), (0, 1, 1, 1)])),
+		immutabilize(matrix([(0, 1, 0, 1), (1, 1, 1, 1), (0, 1, 1, 1), (1, 1, 1, 0)])),
+		immutabilize(matrix([(1, 0, 1, 1), (0, 1, 0, 0), (1, 1, 0, 1), (1, 0, 0, 0)])),
+		immutabilize(matrix([(1, 0, 1, 1), (0, 1, 0, 0), (1, 0, 0, 0), (1, 1, 0, 1)])),
+		immutabilize(matrix([(1, 1, 1, 0), (0, 0, 1, 1), (0, 1, 0, 0), (1, 1, 1, 1)])),
+		immutabilize(matrix([(1, 1, 1, 0), (0, 0, 1, 1), (1, 1, 1, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 1, 1), (1, 1, 1, 0), (0, 1, 0, 0), (1, 1, 1, 1)])),
+		immutabilize(matrix([(0, 0, 1, 1), (1, 1, 1, 0), (1, 1, 1, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 1, 1, 1), (0, 1, 0, 0), (1, 1, 0, 1)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 1, 1, 1), (1, 1, 0, 1), (0, 1, 0, 0)])),
+		immutabilize(matrix([(0, 1, 0, 1), (0, 0, 0, 1), (1, 1, 0, 1), (1, 0, 1, 1)])),
+		immutabilize(matrix([(0, 0, 0, 1), (0, 1, 0, 1), (1, 1, 0, 1), (1, 0, 1, 1)])),
+		immutabilize(matrix([(0, 0, 0, 1), (1, 1, 1, 1), (0, 1, 0, 1), (1, 0, 0, 1)])),
+		immutabilize(matrix([(1, 1, 1, 1), (0, 0, 0, 1), (0, 1, 0, 1), (1, 0, 0, 1)])),
+}
+
 
 P = sage.combinat.permutation.Permutations(n)
 P = { immutabilize(p.to_matrix()) for p in P }
@@ -43,25 +137,21 @@ while flag:
 			# A_pP = {immutabilize(A_p*p % 2) for p in P.difference(fullyTested)}
 			AP = {immutabilize(A*p % 2) for p in P}
 			A_pP = {immutabilize(A_p*p % 2) for p in P}
-			# for p in AP.intersection(A_pP):
-			# 	print(p)
-			# 	print(",")
-			# 	print((A**(-1)*p % 2))
-			# 	print(",")
-			# 	print((A_p**(-1) * p) % 2)
-			# 	print("--")
-			# exit()
+			
 			P = P.union(AP.intersection(A_pP))
-			if (len(S) == 0):
-				exit()
+			
+
 			T = set()
 			for m in S:
 				if(m in AP.intersection(A_pP)):
-					print(str(s) + " " + str(t) + " TOP:")
-					print(m)
-					print("--")
-					T = T.union({m})
+					# print(str(s) + " " + str(t) + " TOP:")
+					print("matrix(" + str(list(m)) + ") # (" + str(s) + "," + str(t) + ",0),")
+					# print("--")
+					T.add(m)
 			S = S.difference(T)
+			if (len(S) == 0):
+				exit()
+			
 			if len(P) > sizeT:
 				flag = True
 				sizeT = len(P)
@@ -79,19 +169,20 @@ while flag:
 			# A_pP = {immutabilize(A_p*p % 2) for p in P.difference(fullyTested)}
 			AP = {immutabilize(A*p % 2) for p in P}
 			A_pP = {immutabilize(A_p*p % 2) for p in P}
-			# print(AP.intersection(A_pP))
+
 			P = P.union(AP.intersection(A_pP))
-			if (len(S) == 0):
-				exit()
+			
 
 			T = set()
 			for m in S:
 				if(m in AP.intersection(A_pP)):
-					print(str(s) + " " + str(t) + " BOT:")
-					print(m)
-					print("--")
-					T = T.union({m})
+					# print(str(s) + " " + str(t) + " BOT:")
+					print("matrix(" + str(list(m)) + ") # (" +  str(s) + "," + str(t) + ",1),")
+					# print("--")
+					T.add(m)
 			S = S.difference(T)
+			if (len(S) == 0):
+				exit()
 
 			
 			if len(P) > sizeT:

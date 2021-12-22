@@ -314,7 +314,7 @@
 
 	Consider the event $E$ that every $x_i$ is in $K$. \pause By a standard coupling argument,
 	\[ d_\text{TV}(\mathcal{G}_v^{(\tau)}, \mathcal{H}_v^{(\tau)}) \le 1 - \Pr[E]. \]
-	\pause Now, set $\tau = 20 n \log n$ and suppose that $\inf_{z \in \partial K} \norm{v - z}_\infty > 100 \sigma \log n$. \pause An application of the Chernoff bound (to show that no coordinate is chosen many times) together with a Gaussian tail bound (to show that none of the coordinate changes are too large) shows that with high probability, the point remains in $K$.
+	\pause Now, set $\tau = 20 n \log n$ and suppose that $\inf_{z \in \partial K} \norm{v - z}_\infty > 100 \sigma \log n$. \pause An application of the Chernoff bound (to show that no coordinate is chosen many times) together with a Gaussian tail bound (to show that none of the coordinate changes are too large) shows that with high probability, the points remain in $K$.
 \end{frame}
 
 \begin{frame}{A proof of (2)}
@@ -384,7 +384,7 @@
 \end{frame}
 
 \begin{frame}{Completing the proof}
-	Finally, since the Radon-Nikodym derivative of $\mathcal{C}(x,\cdot)$ with respect to $\mathcal{G}(x,\cdot)$ is bounded below by $\sqrt{2\pi}\sigma/2R$ at any point, \pause
+	Finally, since the Radon-Nikodym derivative of $\mathcal{C}(x,\cdot)$ with respect to $\mathcal{G}(x,\cdot)$ at $y \neq x$ is bounded below by $\sqrt{2\pi}\sigma/2R$ at any point, \pause
 	\begin{align*}
 		\Phi_{\mathcal{C},\pi_K}(S,K\setminus S) &\ge \frac{\sqrt{2\pi}\sigma}{2R\tau} \Phi_{\mathcal{G}',\pi_K}(S,K\setminus S) \\
 			\uncover<3->{&\ge \frac{\sqrt{2\pi}\sigma}{2R\tau} \cdot \frac{\nu\delta}{4(D-\delta)} (\min\{\pi_K(S),\pi_K(K\setminus S)\} - \epsilon) }
@@ -406,9 +406,10 @@
 \begin{frame}{The main result}
 	\begin{thm}
 		\label{mainthm-2}
-		Let $K$ be a convex body satisfying $B_2^n \subseteq K$ and let $R_0^2 = \expec_{x \sim \pi_K}\norm{x - b_K}_2^2$. Let $S_1, S_2 \subseteq K$ be axis-disjoint. Then, there exists a universal constant $c$ such that
+		Let $K$ be a convex body satisfying $B_2^n \subseteq K$ and let $R_0^2 = \expec_{x \sim \pi_K}\norm{x - b_K}_2^2$, where $b_K$ is the centroid of $K$. Let $S_1, S_2 \subseteq K$ be axis-disjoint. Then, there exists a universal constant $c$ such that for any $\epsilon>0$,
 		\[ \pi_K(K \setminus (S_1 \cup S_2)) \ge \frac{c\epsilon}{R_0 n^{3.5} \log n} ( \min\{\pi_K(S_1),\pi_K(S_2)\} - \epsilon ). \]
 	\end{thm}
+	\pause We denote $K\setminus (S_1 \cup S_2)$ as $S_3$. \\
 	\pause To prove this, we consider a grid of cubes, proving an isoperimetric inequality on each of them separately, then combining these together to give a global isoperimetric inequality.
 \end{frame}
 
@@ -448,7 +449,7 @@
 	If there is a significant number of cubes in $\mathcal{C}_1$, that is, $\vol(\mathcal{C}_1 \cap S_1) \ge \vol(S_1)/2$, then we can use the previous isoperimetry on each of the cubes to arrive at an overall isoperimetric inequality. \pause That is, we have
 	\begin{align*}
 		\pi_K(S_3) &\ge \frac{1}{16n\log n} \sum_{\substack{c \in \mathcal{C}_1 \\ c \cap K' \ne \emptyset}} \pi_K(c \cap S_1) \\
-			\uncover<3->{&= \frac{1}{16n\log n} \left(\pi_K(\mathcal{C}_1 \cap S_1) - \frac{\epsilon}{2}\right)} \\
+			\uncover<3->{&\ge \frac{1}{16n\log n} \left(\pi_K(\mathcal{C}_1 \cap S_1) - \frac{\epsilon}{2}\right)} \\
 			\uncover<4->{&\ge \frac{1}{32n\log n} \left( \pi_K(S_1) - \epsilon \right).}
 	\end{align*}
 \end{frame}
@@ -480,7 +481,7 @@
 			\uncover<3->{&\ge \frac{\log 2}{R_0} \min\left\{ \vol(\mathcal{C}_2 \cap K') , \frac{1}{4} \vol(\mathcal{C}_2 \cap K') \right\}} \\
 			\uncover<4->{&= \frac{\log 2}{4R_0} \vol(\mathcal{C}_2 \cap K')} \\
 			\uncover<5->{&\ge \frac{\log 2}{4R_0} \left(\frac{1}{2}\vol(S_1) - \frac{\epsilon}{2} \vol(K)\right)} \\
-			\uncover<6->{&= \frac{\log 2}{8R_0} \left( \vol(S_1) - \epsilon \right).}
+			\uncover<6->{&= \frac{\log 2}{8R_0} \left( \vol(S_1) - \epsilon \vol(K) \right).}
 	\end{align*}
 	\pause\pause\pause\pause\pause\pause If we manage to compare $\vol(S_3)$ and $\vol(\partial_{K'}(\mathcal{C}_2'))$, we are done.
 \end{frame}
@@ -511,9 +512,9 @@
 	Combining the two equations,
 	\begin{align*}
 		\vol(S_3) &\ge \frac{\delta}{96n^2 \log n} \vol(\partial_{K'}(\mathcal{C}_2')) \\
-			\uncover<2->{&\ge \frac{\delta}{96n^2 \log n} \cdot \frac{\log 2}{8R_0} \left( \vol(S_1) - \epsilon \right)} \\
-			\uncover<3->{&= \frac{c\delta}{R_0 n^2 \log n} \left( \vol(S_1) - \epsilon \right)} \\
-			\uncover<4->{&= \frac{c'\epsilon}{R_0 n^{3.5} \log n} \left( \vol(S_1) - \epsilon \right),}
+			\uncover<2->{&\ge \frac{\delta}{96n^2 \log n} \cdot \frac{\log 2}{8R_0} \left( \vol(S_1) - \epsilon \vol(K) \right)} \\
+			\uncover<3->{&= \frac{c\delta}{R_0 n^2 \log n} \left( \vol(S_1) - \epsilon \vol(K) \right)} \\
+			\uncover<4->{&= \frac{c'\epsilon}{R_0 n^{3.5} \log n} \left( \vol(S_1) - \epsilon \vol(K) \right),}
 	\end{align*}
 	\pause\pause\pause completing the proof.
 \end{frame}

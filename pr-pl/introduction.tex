@@ -1,0 +1,132 @@
+\section{Introduction}
+
+\subsection{Projective Planes}
+
+	\begin{fdef}[Incidence System]
+		An \emph{incidence system} is a pair $(\mathcal{P},\mathcal{L})$, where $\mathcal{P}$ is a set and $\mathcal{L}$ is a set of subsets of $\mathcal{P}$. Elements of $\mathcal{P}$ are called \emph{points} and elements of $\mathcal{L}$ are called \emph{lines}. A line $\ell$ is said to be \emph{incident} on a point $p$ if $p \in \ell$.\\
+	\end{fdef}
+
+	\begin{fdef}[Partial Linear Space]
+		An incidence system $(\mathcal{P},\mathcal{L})$ is said to be a \emph{partial linear space} if
+		\begin{enumerate}
+		 	\item for each $\ell \in \mathcal{L}$, $|\ell| \ge 2$.
+		 	\item for distinct $x,y \in \mathcal{P}$, there is at most one $\ell \in \mathcal{L}$ such that $\{x,y\} \subseteq \mathcal{P}$.
+		\end{enumerate}
+	\end{fdef}
+
+	\begin{fdef}[Linear Space]
+		An incidence system $(\mathcal{P},\mathcal{L})$ is said to be a \emph{linear space} if
+		\begin{enumerate}
+		 	\item for each $\ell \in \mathcal{L}$, $|\ell| \ge 2$.
+		 	\item for distinct $x,y \in \mathcal{P}$, there is a unique $\ell \in \mathcal{L}$ such that $\{x,y\} \subseteq \mathcal{P}$.
+		\end{enumerate}
+	\end{fdef}
+
+	\begin{fdef}[Dual]
+		Given a partial linear space $\mathcal{X}=(\mathcal{P},\mathcal{L})$, the incidence system $\mathcal{X}^* = (\mathcal{P}^*,\mathcal{L}^*)$ is said to be its \emph{dual} if there exist bijections $f : \mathcal{P} \to \mathcal{L}^*$ and $g : \mathcal{L} \to \mathcal{P}^*$ such that for any $p \in \mathcal{P}, \ell \in \mathcal{L}$, $p \in \ell$ iff $g(\ell)\in f(p)$.	
+	\end{fdef}
+	We remark that the dual is unique up to isomorphism.
+
+	\begin{fdef}[Projective Plane]
+		An incidence system $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is said to be a \emph{projective plane} if
+		\begin{enumerate}
+			\item $\mathcal{X}$ is a linear space.
+			\item $\mathcal{X}^*$ is a linear space.
+			\item For any distinct $\ell,\ell' \in \mathcal{L}$, there exists $p \in \mathcal{P}$ such that $p \not\in \ell \cup \ell'$. This condition is equivalent to asserting that for distinct $p,p' \in \mathcal{P}$, there exists $\ell \in \mathcal{L}$ such that $\{p,p'\} \cap \ell = \emptyset$.
+		\end{enumerate}
+	\end{fdef}
+
+	% Henceforth, unless mentioned otherwise, denote by $\mathcal{X} = (\mathcal{P},\mathcal{L})$ a projective plane.
+	Given distinct points $x_1,x_2$, we denote by $x_1 \lor x_2$ the (unique) line passing through $x_1$ and $x_2$. Similarly, given distinct lines $\ell_1,\ell_2$, we denote by $\ell_1 \land \ell_2$ the (unique) point in their intersection.
+
+	\begin{fdef}
+		Given a projective plane $\mathcal{X}$, fix a line $\ell$ and point $x$ not incident on $\ell$. The function defined by $y \mapsto x \cup y$ is one from the set of points in $\ell$ to the set of lines through $x$. Further, it has inverse $m \mapsto m \cap \ell$ and is thus a bijection. These two bijections are referred to as \emph{perspectivities} on the projective plane.
+	\end{fdef}
+
+	Using perspectivities, the following may be shown.
+
+	\begin{flem}
+		Given a projective plane $\mathcal{X}$, there exists a number $n \ge 0$, known as the \emph{order} of $\mathcal{X}$, such that
+		\begin{enumerate}
+			\item any point is incident with exactly $n+1$ lines.
+			\item any line contains exactly $n+1$ lines.
+			\item the total number of points is $n^2+n+1$.
+			\item the total number of lines is $n^2+n+1$.
+		\end{enumerate}
+	\end{flem}
+
+	One common example of a projective plane is $\PG(2,\F)$, the projective plane over field $\F$. This has point set $V_1$ equal to the set of all $1$-dimensional subspaces of $\F^3$ (as a vector space over $\F$), and line set $V_2$ equal to the set of all $2$-dimensional subspaces of $\F^3$, where we identify each such subspace with the set of all $1$-dimensional subspaces contained in it.\\
+	In particular, $\PG(2,\F_q)$ (where $q$ is a prime power) is of order $q$.\\
+
+	The second projective plane of interest is the \emph{free projective plane}. We define it using a sequence $(\mathcal{X}_n)$ of incidence systems. Define $\mathcal{X_1} = (\mathcal{P}_1,\mathcal{L}_1)$ by $\mathcal{P}_1 = [4]$, $\mathcal{L}_1 = \binom{\mathcal{P}_1}{2}$. Given $\mathcal{X}_n = (\mathcal{P}_n,\mathcal{L}_n)$, the next incidence system is defined by taking $\mathcal{X}_n$ then performing the following operations:
+	\begin{enumerate}
+		\item for each pair $\{\ell_1,\ell_2\}$ of lines in $\mathcal{X}_n$ which have no common point, introduce a new point $\ell_1 \cap \ell_2$. This new point is incident with $\ell_1$, $\ell_2$ and no other line.
+		\item for each pair $\{x_1,x_2\}$ of points in $\mathcal{X}_n$ which have no line in common, introduce a new line $x_1 \cup x_2$. This new line is incident on $x_1$, $x_2$ and no other point.
+	\end{enumerate}
+	Finally, define the free projective plane $\mathcal{X} = (\bigcup_{n=1}^\infty \mathcal{P}_n,\bigcup_{n=1}^\infty \mathcal{L}_n)$ as the ``limiting element'' of this sequence.\\
+	The free projective plane is denoted $\mathcal{F}$.
+
+	\begin{fdef}[Subplane]
+		A projective plane $(\mathcal{P}',\mathcal{L}')$ is said to be a projective \emph{subplane} of projective plane $(\mathcal{P},\mathcal{L})$ if
+		\[ \mathcal{L}' = \{ \ell \cap \mathcal{P}' : \ell \in \mathcal{L} \}. \]
+	\end{fdef}
+
+	\begin{fdef}
+		A \emph{prime} projective plane is a projective plane that has no proper subplane.
+	\end{fdef}
+	For example, $\PG(2,\F)$ is prime if $\F$ is a prime field (such as $\Q$ or $\F_p$ for prime $p$). The free projective plane is prime as well.
+
+	\begin{remark}
+		We are interested in both prime projective planes and projective planes of prime order. Observe which one is being referred to in any sentence!
+	\end{remark}
+
+	\begin{fcon}
+		\label{singhi-conj}
+		The only examples of prime projective planes are the free projective plane and the projective planes over prime fields.
+	\end{fcon}
+	It turns out that any prime projective plane is a homomorphic image of $\mathcal{F}$.
+	Consequently, it may be interesting to study the sequence $\mathcal{X}_n$ of projective planes involved in the definition of $\mathcal{F}$.\\
+
+	For $q > 8$ that is a non-prime prime power (so $p^r$ for $r \ge 2$), there are constructions of projective planes of order $q$ which are not the field plane $\PG(2,\F_q)$. However, we have nothing similar for prime $q$.
+
+	\begin{fcon}
+		\label{cool-conj}
+		Up to isomorphism, $\PG(2,\F_p)$ is the only projective plane of prime order $p$.
+	\end{fcon}
+
+	The two conjectures given do have some resemblance, but we have nothing concrete. In fact, it is not even known if a projective plane of prime order is necessarily a prime projective plane, or if a finite prime projective plane must have prime order.
+
+	A stronger version of \Cref{singhi-conj} is the following, conjectured by H. Neumann.
+
+	\begin{fcon}
+		A finite projective plane has no subplane of order two if and only if it is isomorphic to $\PG(2,\F_q)$ for some odd prime power $q$. 
+	\end{fcon}
+
+\subsection{Coding Theory}
+
+	\begin{fdef}
+		Given an incidence system $\mathcal{X} = (\mathcal{P},\mathcal{L})$ and a field $\F$, we define the $p$-ary linear code $\mathcal{C}_\F(\mathcal{X})$ over $\F^\mathcal{P}$ as follows. Identify each line $\ell$ with the codeword in $\F^{\mathcal{P}}$ whose $x$th coordinate is $1$ if $x \in \ell$ and $0$ otherwise. $\mathcal{C}_\F(\mathcal{X})$ is then the space spanned by the codewords corresponding to the lines in $\mathcal{L}$.\\
+		If $\F = \F_q$, we sometimes denote the above as $\mathcal{C}_q(\mathcal{X})$.
+	\end{fdef}
+
+	We call the code $\mathcal{X} = (\mathcal{P},\mathcal{L})$ \emph{trivial} at $q$ if $\mathcal{C}_q(\mathcal{X}) = \F^\mathcal{P}$.
+
+	\begin{ftheo}
+		If $\pi$ is a projective plane of order $n$ and $q$ is a prime power that does not divide $n$, then $\mathcal{C}_q(\pi)$ is trivial.
+	\end{ftheo}
+	\begin{proof}
+		For each $x \in \mathcal{P}$, consider the word $v_x$ formed by adding all the lines that pass through $x$. This word has $n+1$ in the $x$th coordinate and $1$ in all remaining coordinates. For distinct $x,y \in \mathcal{C}_p(\pi)$, the word $v_x - v_y$ is thus the vector that has $n$ in the $x$th coordinate, $-n$ in the $y$th coordinate, and all remaining coordinates are $0$. Since $q$ does not divide $n$, $n$ and $-n$ are nonzero in $\F_q$, and so $e_x - e_y$ lies in $\mathcal{C}_q(\pi)$. This implies that the dual $\textbf{1}^\top$ of the all $1$s vector is contained in $\mathcal{C}_q(\pi)$. If we manage to show that $\textbf{1}$ is contained in the code, we are done. 
+		% adding all lines maybe, but that gives (n+1) 1, which may be zero if q | (n+1)?
+	\end{proof}
+
+	\begin{fdef}
+		Given a code $\mathcal{C}$ over $\F_q^\mathcal{P}$, its \emph{dual} is
+		\[ \mathcal{C}^\top = \{ v \in \F_q^\mathcal{P} : \langle v,w\rangle = 0 \text{ for all }w\in\mathcal{C} \}, \]
+		where
+		\[ \langle v , w \rangle = \sum_{x \in \mathcal{P}} v_x w_x.  \]
+	\end{fdef}
+	Observe that perhaps counter to one's intuition, a code and its dual need not be disjoint.\\
+
+	We are interested in the \emph{weight} of the codes $\mathcal{C}_q(\mathcal{X})$ and $\mathcal{C}_q(\mathcal{X})^\top$ for projective planes or partial linear spaces $\mathcal{X}$ (typically of prime order).
+
+\subsection{}

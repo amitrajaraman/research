@@ -257,3 +257,54 @@
 		none of which can be a multiple of $p$ since $1 \le t < r < p/6$, completing the proof.
 		% \end{itemize}
 	\end{proof}
+
+\subsection{Combinatorial Nullstellensatz}
+
+	The reader is likely familiar with the following famous theorem.
+
+	\begin{ftheo}[Hilbert's Nullstellensatz]
+		Let $\F$ be an algebraically closed field and $f,g_1,\ldots,g_m$ be elements of the ring $\F[x_1,\ldots,x_n]$ of polynomials such that $f$ vanishes on all common zeroes of the $(g_i)$. Then, there is an integer $k$ and polynomials $h_1,\ldots,h_m$ in $\F[x_1,\ldots,x_n]$ such that
+		\[ f^k = \sum_{i=1}^{m} g_i h_i. \]
+	\end{ftheo}
+
+	Before we get to the main result of this section which is essentially an interesting form of the above when the $g_i$ take a specific form, we give a lemma related to the size of a `cube' required to evaluate a polynomial at to determine if it is the $0$ polynomial.
+
+	\begin{lemma}
+		\label{lem: comb null lem}
+		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Suppose that for each $i$, $S_i \subseteq F$ with $|S_i| > \deg_i(P)$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
+	\end{lemma}
+	\begin{proof}
+		We prove this by induction on $n$. When $n=1$, this is direct as it merely states that a polynomial of degree at most $t$ has at most $t$ zeroes. Suppose that the statement is true for $n-1$. Let $t_i = \deg_i(P)$ for each $i$. Write $P$ as a sum
+		\[ P = \sum_{i=0}^{t_i} x_n^i P_i(x_1,\ldots,x_{n-1}), \]
+		where each $P_i$ is a polynomial with $\deg_j$ bounded above by $t_j$. Observe that for any fixed tuple $(x_1,\ldots,x_{n-1}) \in S_1 \times \cdots \times S_{n-1}$, the polynomial obtained from $P$ by substituting the values of $x_1,\ldots,x_{n-1}$ vanishes on $S_n$, and thus by the $n=1$ case, is identically zero. Therefore, each $P_i$ vanishes on $S_1 \times \cdots \times S_{n-1}$. Applying the inductive hypothesis, each $P_i$ is thus identically $0$, yielding that $P$ is identically $0$ and completing the proof.
+	\end{proof}
+
+	Later in \Cref{thm: cube-vanishing}, we give a much stronger version of this
+
+	\begin{ftheo}[Combinatorial Nullstellensatz]
+		\label{thm: comb null}
+		Let $\F$ be an algebraically closed field and $S_1,\ldots,S_n \subseteq \F$. Define
+		\[ g_i(x_i) = \prod_{s_i \in S_i} (x_i - s_i) \]
+		for each $i$. Let $f \in \F[x_1,\ldots,x_n]$ vanish on all common zeroes of the $(g_i)$, that is, $f(s_1,\ldots,s_n) = 0$ if $s_i \in S_i$ for each $i$. Then, there are polynomials $h_1,\ldots,h_n$ in $\F[x_1,\ldots,x_n]$ such that
+		\[ f = \sum_{i=1}^{m} g_i h_i. \]
+		and $\deg(h_i) \le \deg(f) - \deg(g_i)$ for each $i$.\\
+		Moreover, if $f,g_1,\ldots,g_n \in R[x_1,\ldots,x_n]$ for some subring $R$ of $\F$, then there are polynomials $h_i \in R[x_1,\ldots,x_n]$ satisfying the above.
+	\end{ftheo}
+	\begin{proof}
+		Let $t_i = |S_i| - 1$ for each $i$. For each $i$, write $g(x_i) = x_i^{t_i+1} - g_0(x_i)$ -- note that $g_0$ is a polynomial of degree at most $t_i$. For each $x_i \in S_i$, we then have
+		\[ x_i^{t_i + 1} = g_0(x_i). \]
+		Now, take the polynomial $f$ and subtract polynomials of the form $h_i g_i$, each of which replaces the higher degree terms of $x_i$ (terms with $x_i^{r}$ for $r > t_i$) with a lower degree one using the above equation, to get a polynomial $f_0$. Observe that this polynomial $f_0$ vanishes on $S_1 \times \cdots \times S_n$, and $\deg_i(f_0) \le t_i$ for each $i$. We can then use \Cref{lem: comb null lem} to conclude that $f_0$ is identically zero, and thus that $f$ is equal to $\sum_i h_i g_i$, completing the proof.
+	\end{proof}
+
+	The simple proof above betrays the surprising usefulness of this result.
+
+	\begin{fcor}
+		\label{thm: cube-vanishing}
+		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Let $\deg(f) = \sum_i t_i$, and let there exist a $x_1^{t_1} x_2^{t_2} \cdots x_n^{t_n}$ term in the polynomial with non-zero coefficient. Suppose that for each $i$, $S_i \subseteq F$ with $|S_i| > t_i$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
+	\end{fcor}
+	\begin{proof}
+		Let us assume that $|S_i| = t_i + 1$ for each $i$.\\
+		Suppose that the claim does not hold and let $g_i(x_i) = \prod_{s_i \in S_i} (x_i - s_i)$ for each $i$. \nameref{thm: comb null} then implies that
+		\[ P = \sum_i h_i g_i \]
+		for polynomials $h_i$ of degree at most $\deg(f) - \deg(g_i)$. Now, any monomial of degree $\deg(f)$ must come from one of the $h_i g_i$. However, any term in these polynomials are divisible by $x_i^{|S_i|} = x_i^{t_i + 1}$, which implies that there is no $x_i^{t_i}$ term in $P$, yielding a contradiction and completing the proof.
+	\end{proof}

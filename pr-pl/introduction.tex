@@ -173,7 +173,7 @@
 		Since any line is in the dual of $\langle w \rangle$, the sum of colours on any line is $0$ modulo $p$.\\
 		By property (c), the colours of any non-empty proper subset of a line do not add to $0$ modulo $p$.\\
 		Therefore, the lines of size $2$ are precisely those that have colours $\alpha$ and $-\alpha$ (for some $\alpha \in \F_p^\times$) and any monochromatic line has length $p$.\\
-		Let $\mathcal{S}$ be the set of all used colours (all the values in $\F_p$ that are equal to some $w_P$) and $\mathcal{P}_\alpha \subseteq \mathcal{P}_w$ be the set of all points of colour $\alpha$. Note that $0 \not\in \mathcal{S}$ (Why?). Then, letting $S_P$ be the set of all points that are on a line passing through $P$,
+		Let $\mathcal{S}$ be the set of all used colours (all the values in $\F_p$ that are equal to some $w_P$). Note that $0 \not\in \mathcal{S}$ (Why?). Then, letting $S_P$ be the set of all points that are on a line passing through $P$,
 		\[ 1 + x_P + 2 y_P + 3 z_P + 4(n+1 - x_P - y_P - z_P) \le |S_P| \le 2n+2-\frac{2n}{p}, \]
 		%%% How does the left inequality come? Some sort of union bound-ey thing gives reverse, no?
 		so
@@ -193,36 +193,36 @@
 			\label{eqn: xP line bound}
 			x_P \ge 1 + \frac{2n}{p} + \sum_{i=1}^{m} (|\ell_i| - 3) \ge 1 + \frac{2n}{p}.	
 		\end{equation}
-		Since the number of size $2$ lines through any point is at least $x_Q$, for any $\alpha \in \mathcal{S}$, there are at least $x_Q$ points of colour $-\alpha$. Since $x_Q > 0$, this implies that $\alpha \in \mathcal{S}$ iff $-\alpha \in \mathcal{S}$. Since $0 \not\in \mathcal{S}$, this means that $|\mathcal{S}|$ is even, say it is equal to $2r$ for some $0 < r \le (p-1)/2$. Since there are at least $x_Q$ points of any colour $\alpha \in \mathcal{S}$,
+		Since the number of size $2$ lines through any point is at least $x_Q$, for any $\alpha \in \mathcal{S}$, there are at least $x_Q$ points of colour $-\alpha$. Because $x_Q > 0$, this implies that $\alpha \in \mathcal{S}$ iff $-\alpha \in \mathcal{S}$, and this together with $0 \not\in \mathcal{S}$ implies that $|\mathcal{S}|$ is even, say $2r$ for some $0 < r \le (p-1)/2$. As there are at least $x_Q$ points of any colour $\alpha \in \mathcal{S}$,
 		\begin{equation}
 			\label{eqn: xQ bound}
 			r x_Q \le n + 1 - \frac{n}{p}.	
 		\end{equation}
 		This together with the previous equation yields that
-		\[ r \le \frac{n+1 - n/p}{1 + 2n/p} < (p-1)/2, \]
-		where the second inequality uses the fact that $p \ge 3$. Therefore, $|\mathcal{S}| \ne p-1$.\\
+		\[ r \le \frac{n+1 - n/p}{1 + 2n/p} < \frac{p-1}{2}, \]
+		where the second inequality uses the fact that $p \ge 3$. Therefore, $|\mathcal{S}| < p-1$.\\
 
 
 		\textbf{Claim.} If $r = 1$, then $|\mathcal{P}| = 2n+2-2n/p$ and $(\mathcal{P},\mathcal{L})$ is isomorphic to the join of two Steiner 2-designs of the described form.\\
-		First, let us consider the case where $r=1$. Then, $\mathcal{S} = \{-1,1\}$ and any line is of size either $2$ or $p$. Let $X_i$ be the number of points of colour $i$ for $i \in \mathcal{S}$. Since the number of size $2$ lines through any $P$ of colour $i$ is at most $|X_{-i}|$, $|x_Q| \le n+1-n/p$. Consequently,
-		\[ 2n+2-\frac{2n}{p} \ge |S_Q| \ge 1 + \underbrace{(p-1) \frac{n}{p}}_{\text{$p$-lines through $Q$}} + \underbrace{n+1-\frac{n}{p}}_{\text{$2$-lines through $Q$}} = 2n+2-\frac{2n}{p},  \]
-		so $x_Q = n+1-n/p$, there are precisely $n/p$ lines through $Q$, and $S_Q = 2n+2-2n/p$. This implies that $|X_1| = |X_{-1}| = n+1-n/p$, and so that the number of size $2$ lines (resp. size $p$ lines) through any $A$ is exactly $n+1-n/p$ (resp. $n/p$).\\
+		As $r=1$, $\mathcal{S} = \{-1,1\}$ and any line is of size either $2$ or $p$. Let $X_i$ be the number of points of colour $i$ for $i \in \mathcal{S}$. Since the number of size $2$ lines through any $P$ of colour $i$ is at most $|X_{-i}|$, $|x_Q| \le n+1-n/p$. Consequently, letting $S_Q$ be all the points that are on a line through $Q$,
+		\[ 2n+2-\frac{2n}{p} \ge |S_Q| \ge 1 + \underbrace{(p-1) \frac{n}{p}}_{\text{$p$-lines through $Q$}} + \underbrace{\left(n+1-\frac{n}{p}\right)}_{\text{$2$-lines through $Q$}} = 2n+2-\frac{2n}{p},  \]
+		so $x_Q = n+1-n/p$, there are precisely $n/p$ lines through $Q$, and $|S_Q| = 2n+2-2n/p$. This implies that $|X_1| = |X_{-1}| = n+1-n/p$, and so that the number of size $2$ lines (resp. size $p$ lines) through any $A$ is exactly $n+1-n/p$ (resp. $n/p$).\\
 		Each of the two $X_i$s is isomorphic to a Steiner $2$-design with $n/p$ lines through each point and $p$ points on each line, so $(\mathcal{P}_w,\mathcal{L}')$ is isomorphic to the join of two Steiner $2$-designs of the prescribed form.\\
 		Note that $(\mathcal{P}_w,\mathcal{L}')$ is then a linear space. If we had replaced a line with its partition in $(\mathcal{P}_w,\mathcal{L}_0)$, this would not have been possible. %%% WHY?
 		Further, since $2n+2-2n/p \le |\mathcal{P}_w| \le |\mathcal{P}| \le 2n+2-2n/p$, $\mathcal{P}_w = \mathcal{P}$. Therefore, $(\mathcal{P}_w,\mathcal{L}')$ is our original PLS $(\mathcal{P},\mathcal{L})$. \qedwhite\\
 
-		Now, consider the case where $r\ge2$. We must show that this situation cannot occur at all.\\ 
-		Consider the graph $G_Q$ with vertex set $\mathcal{S}$ where $\alpha,\beta$ are adjacent iff $\alpha+\beta$ is equal to $0$ or $1$ (in $\F_p$). Note that if there is a $3$-line $L$ through $Q$ and $\alpha \in \mathcal{S}$ of degree $1$, then $L \cap X_\alpha$ is either empty or equal to $\{Q\}$ (in then case where $\alpha = -1$). In particular, the degree of $1$ in $G_Q$ is one so no $3$-line passes through a point of colour $1$.\\
+		Now, consider the case where $r\ge2$. We shall show that this situation cannot occur at all.\\ 
+		Consider the graph $G_Q$ with vertex set $\mathcal{S}$ where $\alpha,\beta$ are adjacent iff $\alpha+\beta$ is equal to $0$ or $1$ (in $\F_p$). Note that for any $\alpha \in \mathcal{S}$ of degree $1$ and $3$-line $L$ through $Q$, $L \cap X_\alpha$ is either empty or equal to $\{Q\}$ (in then case where $\alpha = -1$). In particular, the degree of $1$ in $G_Q$ is one so no $3$-line passes through a point of colour $1$.\\
 		The only possible loop (edge from a vertex to itself) occurs at $(p+1)/2$ if it belongs to $\mathcal{S}$. Consider a cycle $\alpha_1\alpha_2\cdots\alpha_m\alpha_1$. $m$ must be even since the two types of edges alternate. This pattern of edges also implies that $m$ is a multiple of $2p$ (consider the sum of all $\alpha_i$). However, this is not possible since $m \le |\mathcal{S}| < p-1$, so $G_Q$ contains no cycles. Any connected component of $G_Q$ is a path, with possibly a loop at one end due to $(p+1)/2$.\\
 
 		\textbf{Claim.} $G_Q$ is not connected.\\
 		Suppose instead that $G_Q$ is connected.
 		% \begin{itemize}
 		% 	\item First, consider the case where $G_Q$ is connected.
-		It is then just a path. If $1$ is the only vertex of degree one, then this path is equal to $1(-1)2(-2)\cdots (\frac{p-1}{2})(\frac{p+1}{2})(\frac{p+1}{2})$ since there must be a loop at the other end. In this case however, $|\mathcal{S}| = p-1$, which is not possible. So, there is another $-r \in \mathcal{S}$ of degree one, and the path is of the form $1 (-1) 2 (-2) \cdots r (-r)$ for $1 < r < (p-1)$.\\
+		It is then just a path. If $1$ is the only vertex of degree one, then this path is equal to $1(-1)2(-2)\cdots (\frac{p-1}{2})(\frac{p+1}{2})(\frac{p+1}{2})$ since there must be a loop at the other end. In this case however, $|\mathcal{S}| = p-1$, which is not possible. So, there is another $-r \in \mathcal{S}$ of degree one, and the path is of the form $1 (-1) 2 (-2) \cdots r (-r)$ for $1 < r < (p-1)/2$.\\
 		Let $T = \mathcal{P}_w \setminus (\{Q\} \cup X_{-r})$. Since $r > 1$,
 		\[ |T| \le 2n + 2 - \frac{2n}{p} - (1 + x_Q). \]
-		Let $l$ be the number of lines through $Q$ of size $>2$ that contain at most one point from $T$. Note that any size $2$ line through $Q$ is such a line. Counting points in $T$ that lie on lines through $Q$,
+		Let $l$ be the number of lines through $Q$ of size $>2$ that contain at most one point from $T$. Observe that any size $2$ line through $Q$ has exactly one point from $T$. Counting points in $T$ that lie on lines through $Q$,
 		\[ |T| \ge 2 (n+1 - x_Q - l) + x_Q. \]
 		Therefore,
 		\[ l \ge \frac{n}{p} + \frac{1}{2} > \frac{n}{p}. \]
@@ -233,8 +233,8 @@
 		\[ x_Q > 1 + \frac{2n}{p} + \frac{n}{p} \left( \frac{p+r-1}{r} - 3 \right) = 1 + \frac{n}{r} - \frac{n}{pr}, \]
 		which contradicts \Cref{eqn: xQ bound}. \qedwhite \\
 
-		Thus, suppose that $G_Q$ is disconnected. Let $\mathcal{S}' \subseteq \mathcal{S}$ be the set of all degree one colours. Since $G_Q$ is disconnected, $|\mathcal{S}'| \ge 3$.\\
-		Consider the set of points in $\mathcal{P}_w \setminus \{Q\}$ that are on size $3$ lines through $Q$. This set is of size $2y_Q$. Note that this set does not intersect any $X_\alpha$ for $\alpha \in \mathcal{S}'$. Therefore,
+		Thus, suppose that $G_Q$ is disconnected. Let $\mathcal{S}' \subseteq \mathcal{S}$ be the set of all degree one colours. As $G_Q$ is disconnected, $|\mathcal{S}'| \ge 3$.\\
+		Consider the set of points in $\mathcal{P}_w \setminus \{Q\}$ that are on size $3$ lines through $Q$. This set is of size $2y_Q$, and does not intersect any $X_\alpha$ for $\alpha \in \mathcal{S}'$. Therefore,
 		\begin{equation}
 			\label{eqn: xQ yQ joint bound 2}
 			2n + 2 - \frac{2n}{p} \ge 2 y_Q + |\mathcal{S}'| x_Q.
@@ -271,7 +271,7 @@
 
 	\begin{lemma}
 		\label{lem: comb null lem}
-		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Suppose that for each $i$, $S_i \subseteq F$ with $|S_i| > \deg_i(P)$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
+		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Suppose that for each $i$, $S_i \subseteq \F$ with $|S_i| > \deg_i(P)$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
 	\end{lemma}
 	\begin{proof}
 		We prove this by induction on $n$. When $n=1$, this is direct as it merely states that a polynomial of degree at most $t$ has at most $t$ zeroes. Suppose that the statement is true for $n-1$. Let $t_i = \deg_i(P)$ for each $i$. Write $P$ as a sum
@@ -300,7 +300,7 @@
 
 	\begin{fcor}
 		\label{thm: cube-vanishing}
-		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Let $\deg(f) = \sum_i t_i$, and let there exist a $x_1^{t_1} x_2^{t_2} \cdots x_n^{t_n}$ term in the polynomial with non-zero coefficient. Suppose that for each $i$, $S_i \subseteq F$ with $|S_i| > t_i$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
+		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Let $\deg(f) = \sum_i t_i$, and let there exist a $x_1^{t_1} x_2^{t_2} \cdots x_n^{t_n}$ term in the polynomial with non-zero coefficient. Suppose that for each $i$, $S_i \subseteq \F$ with $|S_i| > t_i$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
 	\end{fcor}
 	\begin{proof}
 		Let us assume that $|S_i| = t_i + 1$ for each $i$.\\

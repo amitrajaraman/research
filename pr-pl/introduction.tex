@@ -108,7 +108,7 @@
 		A finite projective plane has no subplane of order two if and only if it is isomorphic to $\PG(2,\F_q)$ for some odd prime power $q$. 
 	\end{fcon}
 
-\subsection{Coding Theory}
+\subsection{The coding theoretic aspect}
 
 	\begin{fdef}
 		Given an incidence system $\mathcal{X} = (\mathcal{P},\mathcal{L})$ and a field $\F$, we define the $p$-ary linear code $\mathcal{C}_\F(\mathcal{X})$ over $\F^\mathcal{P}$ as follows. Identify each line $\ell$ with the codeword in $\F^{\mathcal{P}}$ whose $x$th coordinate is $1$ if $x \in \ell$ and $0$ otherwise. $\mathcal{C}_\F(\mathcal{X})$ is then the space spanned by the codewords corresponding to the lines in $\mathcal{L}$.\\
@@ -117,14 +117,6 @@
 
 	We call the code $\mathcal{X} = (\mathcal{P},\mathcal{L})$ \emph{trivial} at $q$ if $\mathcal{C}_q(\mathcal{X}) = \F^\mathcal{P}$. We often denote this code as $\mathcal{C}_\mathcal{X}$ or $\mathcal{C}_\mathcal{L}$ if $q$ is clear from context.
 
-	\begin{ftheo}
-		If $\pi$ is a projective plane of order $n$ and $q$ is a prime power that does not divide $n$, then $\mathcal{C}_q(\pi)$ is trivial.
-	\end{ftheo}
-	\begin{proof}
-		For each $x \in \mathcal{P}$, consider the word $v_x$ formed by adding all the lines that pass through $x$. This word has $n+1$ in the $x$th coordinate and $1$ in all remaining coordinates. For distinct $x,y \in \mathcal{C}_p(\pi)$, the word $v_x - v_y$ is thus the vector that has $n$ in the $x$th coordinate, $-n$ in the $y$th coordinate, and all remaining coordinates are $0$. Since $q$ does not divide $n$, $n$ and $-n$ are nonzero in $\F_q$, and so $e_x - e_y$ lies in $\mathcal{C}_q(\pi)$. This implies that the dual $\textbf{1}^\top$ of the all $1$s vector is contained in $\mathcal{C}_q(\pi)$. If we manage to show that $\textbf{1}$ is contained in the code, we are done. 
-		% adding all lines maybe, but that gives (n+1) 1, which may be zero if q | (n+1)?
-	\end{proof}
-
 	\begin{fdef}[Dual]
 		Given a code $\mathcal{C}$ over $\F_q^\mathcal{P}$, its \emph{dual} is
 		\[ \mathcal{C}^\top = \{ v \in \F_q^\mathcal{P} : \langle v,w\rangle = 0 \text{ for all }w\in\mathcal{C} \}, \]
@@ -132,9 +124,231 @@
 		\[ \langle v , w \rangle = \sum_{x \in \mathcal{P}} v_x w_x.  \]
 	\end{fdef}
 	Observe that perhaps counter to one's intuition, a code and its dual need not be disjoint.\\
-	If the dual of a code over $\F_q$ contains a non-zero vector, then the code is non-trivial at $q$.\\
+	If the dual of a code over $\F_q$ contains a non-zero vector, then the code is non-trivial at $q$.
 
-	We are interested in the \emph{weight} of the codes $\mathcal{C}_q(\mathcal{X})$ and $\mathcal{C}_q(\mathcal{X})^\top$ for projective planes or partial linear spaces $\mathcal{X}$ (typically of prime order).
+	We are often interested in the \emph{weight} of the codes $\mathcal{C}_q(\mathcal{X})$ and $\mathcal{C}_q(\mathcal{X})^\top$ for projective planes or partial linear spaces $\mathcal{X}$ (typically of prime order).
+
+	\begin{fdef}[Complete Weight Enumerator]
+		Given a code $\mathcal{C}$ over $\F_p^{\mathcal{P}}$, the \emph{complete weight enumerator} $G$ of $\mathcal{C}$ is given by
+		\[ G(\utilde{Z}) = \sum_{f \in \mathcal{C}} \utilde{Z}^{\type(f)}, \]
+		where for $X,Y \in \F_p^{\mathcal{P}}$,
+		\begin{align*}
+			\utilde{X}^{\utilde{Y}} &= \prod_{P \in \mathcal{P}} X_P^{Y_P} \text{ and } \\
+			\type(f) &= ( |\{ P \in \mathcal{P} : f(P) = \alpha \}|  : \alpha \in \F_p ).
+		\end{align*}
+		Here, $\utilde{Z} = ( Z_\alpha : \alpha \in \F_p )$ is any $p$-tuple of commuting variables.
+	\end{fdef}
+
+	\begin{lemma}
+		\label{lem: 1.2}
+		Let $\pi = (\mathcal{P},\mathcal{L})$ be a projective plane of prime order $p$. For a $w \in \F_p^{\mathcal{P}}$, $w \in \mathcal{C}_p(\pi)$ iff $\langle w,\ell \rangle = \langle w, \textbf{1} \rangle$ for all lines $\ell$ of $\pi$.
+	\end{lemma}
+	\begin{proof}
+		Observe that $\{ \textbf{1} - \ell : \ell \in \mathcal{L} \}$ spans $\mathcal{C}_p(\pi)^\top$. Indeed, for any lines $\ell_1 \ne \ell_2$, $\langle \ell_1, \textbf{1} - \ell_1 \rangle = 0$ trivially, and $\langle \ell_1, \textbf{1} - \ell_2 \rangle = 2p = 0$. The required immediately follows.
+	\end{proof}
+
+	\begin{lemma}
+		Let $\mathcal{X}$ be a finite PLS and $p$ a prime. Then $\dim(\mathcal{C}_p(\mathcal{X}^*)) = \dim(\mathcal{C}_p(\mathcal{X}))$.
+	\end{lemma}
+	\begin{proof}
+		Consider the ``incidence'' matrix $M$ of $\mathcal{X}$ indexed by $\mathcal{L}$ and $\mathcal{P}$, where the $(\ell,p)$th entry of $M$ is $1$ iff $p \in \ell$. $\mathcal{C}_p(\mathcal{X})$ is then just $\{Mv : v \in \F_p^{p \times 1}\}$, so $\dim(\mathcal{C}_p(\mathcal{X}))$ is the column rank of $M$. Now note that the incidence matrix of $\mathcal{X}^*$ is just $M^\top$ (reindexed appropriately), so $\dim(\mathcal{C}_p(\mathcal{X}^*))$ is the row rank of $M$. Since the row and column ranks are equal, we are done.
+	\end{proof}
+
+\subsection{Projective Planes}
+
+	\begin{lemma}
+		\label{lemma: common lines implies same plane}
+		Let $\pi_1,\pi_2$ be two projective planes of prime order $p$ that share $p^2+1$ lines. Then $\pi_1 = \pi_2$.
+	\end{lemma}
+	\begin{proof}
+		Let a common set of lines of size $p^2 + 1$ be $\mathcal{L}_0$.\\
+		Since each point $P$ of $\pi_i$ is contained in $p+1$ lines and there are $p^2 + p + 1$ lines in all, $P \in \ell$ for some $\ell \in \mathcal{L_0}$, so the $\pi_i$ share the same point set. Let $\pi_i = (\mathcal{P},\mathcal{L}_i)$.\\
+
+	\end{proof}
+
+	\begin{fdef}
+		An incidence system $\mathcal{Y} = (\mathcal{P},\mathcal{L})$ is said to be \emph{$p$-admissible} if
+		\begin{enumerate}
+			\item there are exactly $p^2+p+1$ points,
+			\item any line is incident on exactly $p+1$ points, and
+			\item any two distinct lines are incident at a single point.
+		\end{enumerate}
+	\end{fdef}
+
+	Observe that if $\pi = (\mathcal{P},\mathcal{L})$ is a projective plane, then $(\mathcal{P},\mathcal{L}')$ is $p$-admissible for any $\mathcal{L}'\subseteq\mathcal{L}$.
+
+	\begin{lemma}
+		Let $\sigma = (\mathcal{P},\mathcal{L})$ be $p$-admissible. Then $\sigma$ has at most $p^2+p+1$ lines, with equality iff $\sigma$ is a projective plane of order $p$.
+	\end{lemma}
+	\begin{proof}
+		For the first part, we are done if we manage to show that there are at most $p+1$ lines through any point. This is easily done using perspectivities -- letting $\{\ell_i\}_{i=1}^n$ to be the set of all lines through a point $P$, the sets $\ell_i \setminus \{x\}$ are disjoint, so 
+		\[ |\mathcal{P} \setminus \{P\}| = p^2 + p \ge np = \left| \bigcup_{i=1}^n \ell_i \setminus \{P\} \right|. \]
+		Because there are precisely $p+1$ points through any line in the equality case, the second part is not too difficult to prove either.
+	\end{proof}
+
+	\begin{lemma}
+		Let $S$ be the union of $k \ge 1$ lines of a $p$-admissible incidence system. The  $k(p+1) - \binom{k}{2} \le |S| \le kp+1$.
+	\end{lemma}
+	\begin{proof}
+		Let $\{\ell_i\}_{i=1}^k$ be a set of $k$ lines in the system.\\
+		If $\mathcal{P}'$ is the set of all $\ell_i \land \ell_j$, then
+		\[ |S| \ge \sum |\ell_i| - |\mathcal{P'}| \ge k(p+1) - \binom{k}{2}. \]
+		For the upper bound on the other hand, we have using the union bound that
+		\[ |S| \le \left| \bigcup (\ell_i \setminus \mathcal{P}') \right| + |\mathcal{P}'|. \]
+		Since any $\ell_i$ must intersect $\mathcal{P}'$ somewhere (and $\mathcal{P}'$ is non-empty), we can use the union bound once more to get that
+		\[ |S| \le k(p+1-1) + |\mathcal{P}'| \le kp + 1. \]
+	\end{proof}
+
+	\begin{lemma}
+		\label{lemma: if union of lines same number of lines}
+		Let $\mathcal{Y},\mathcal{Y}'$ be $p$-admissible incidence systems. Suppose that the union of $m$ lines of $\mathcal{Y}$ is equal to the union of $k$ lines of $\mathcal{Y}'$. If $\binom{k}{2} < p$, $m = k$.
+	\end{lemma}
+
+	\begin{lemma}
+		\label{lem: binary rep border}
+		Let $k$ be a positive integer and $x_i$ for $0 \le i < k$ be non-negative such that $2^k - 1 = \sum_i 2^i x_i$. Then, $\sum_i x_i \ge k$ with equality iff all the $x_i$ are $1$.
+	\end{lemma}
+	We omit the proof of the above as it follows by a doable inductive argument.
+
+	\begin{flem}
+		\label{lemma: big lemma for bagchi}
+		Let $p$ be a prime and $\mathcal{Y}$ a $p$-admissible incidence system with exactly $k$ lines $(\ell_i)_{i=0}^{k-1}$. Consider the word $w \in \mathcal{C}_p(\mathcal{Y})$ defined by $w = \sum_{0 \le i < k} 2^i \ell_i$. Let $\pi$ be a projective plane of order $p$, and suppose $w' \in \mathcal{C}_p(\pi)$ with $\type(w) = \type(w')$.\\
+		If $p \ge 2^k$, there are lines $(\ell_i')_{i=0}^{k-1}$ of $\pi$ such that $w' = \sum_{0 \le i < k} 2^i \ell_i'$. Further, there is a monomorphism $f$ from $\mathcal{Y}$ into $\pi$ such that $\ell_i' = f(\ell_i)$ for each $i$.
+	\end{flem}
+	\begin{proof}
+		Let $\mathcal{P},\mathcal{Q}$ be the point sets of $\pi,\mathcal{Y}$. For integers $i \ge 0$ and $x \ge 0$, let $\delta_i(x)$ be the $i$th digit from the right in the binary representation of $x$ ($0$-indexed). Note that
+		\[ \ell_i = \{ Q \in \mathcal{Q} : \delta_i(w_Q) = 1 \}. \]
+		Inspired by this, define
+		\[ \ell_i' = \{ P \in \mathcal{P} : \delta_i(w'_P) = 1 \}. \]
+		We have $w' = \sum_{0 \le i < k} 2^i \ell_i'$. Since $\type(w) = \type(w')$, there exists a bijection $f : \mathcal{Q} \to \mathcal{P}$ such that $w' = w \circ f$. Thus, for $Q \in \mathcal{Q}$ and any $i$,
+		\[ Q \in \ell_i \iff \delta_i(w_Q) = 1 \iff \delta_i(w_{f(Q)}) = 1 \iff f(Q) \in \ell_i'. \]
+		So, $f(\ell_i) = \ell_i'$ for each $i$. If we manage to show that the $\ell_i'$ are actually lines in $\pi$, then $f$ is a monomorphism from $\mathcal{Y}$ to $\pi$ and we are done.\\
+		Let $S' = \bigcup_{i} \ell_i'$. Observe that because $p \ge 2^k$, $\supp w' = S'$.\\
+		The proof strategy is as follows: we show that $S'$ contains precisely $k$ lines of $\pi$, then show that replacing these $k$ lines with the $k$ lines of the isomorphic image of $\mathcal{Y}$ in $\pi$ yields another projective plane, then use \Cref{lemma: common lines implies same plane} to conclude that the two projective planes are the same since the number of common lines is at least $p^2+p+1-k \ge p^2+1$. Let us first show that replacing the lines yields a projective plane once more.\\
+
+		\textbf{Claim}. For any $\ell\subsetneq S'$ of $\pi$, $|\ell \cap \ell_i'| = 1$.\\
+		First, note that
+		\begin{align*}
+			\sum_{0 \le i < k} 2^i |\ell \cap \ell_i'| &= \sum_{x \in \ell} \sum_{0 \le i < k} 2^i \ell_i(x) \\
+				&= \sum_{x \in \ell} w'_x.
+		\end{align*}
+		Let us now compute the value of this in $\N$. Using  In $\F_p$,
+		\[ \sum_{x \in \mathcal{P}} w'(x) = \langle w', \textbf{1} \rangle = \sum_{0 \le i < k} 2^i |\ell_i| = \sum_{0 \le i < k} 2^i = 2^k - 1. \]
+		Using \Cref{lem: 1.2}, $\langle w', \ell \rangle = 2^k - 1$ in $\F_p$.
+		Since $p \ge 2^k$, we have for any $y \not\in S'$,
+		\begin{align*}
+			(p+1)(2^k-1) &\le \sum_{\ell \ni y} \sum_{x \in \ell} w'_x	\\
+				&= \sum_{x \in \mathcal{P}} w'_x \\
+				&= \sum_{x \in \mathcal{P}} \sum_{0 \le i < k} 2^i \ell_i'(x) \\
+				&= \sum_{0 \le i < k} 2^i \sum_{x \in \mathcal{P}} \ell_i'(x) \\
+				&= \sum_{0 \le i < k} 2^i (p+1) = (p+1)(2^k-1).
+		\end{align*}
+		Therefore, for any line $\ell \subsetneq S'$ (which means such a $y$ exists), $\sum_{x \in \ell} w'_x = 2^k-1$.\\
+		Going back to what we were working with,
+		\[ \sum_{0 \le i < k} 2^i |\ell \cap \ell_i'| = 2^k - 1. \]
+		By \Cref{lem: binary rep border}, $\sum_i |\ell \cap \ell_i'| \ge k$. Now, for any $y \not\in S'$,
+		\begin{align*}
+			(p+1)k &\le \sum_{\ell \ni y} \sum_{0 \le i < k} |\ell \cap \ell_i'| \\
+				&= \sum_{0 \le i < k} \sum_{\ell \ni y} |\ell \cap \ell_i'| \\
+				&= \sum_{0 \le i < k} |\ell_i'| = (p+1)k.
+		\end{align*}
+		Therefore, $\sum_i |\ell \cap \ell_i'| = k$, and it follows using \Cref{lem: binary rep border} that $|\ell \cap \ell_i'| = 1$ for all $i$. \qedwhite
+
+		Next, let us show that $S'$ contains exactly $k$ lines of $\pi$.\\
+		If for some $x \ne y$ in $\ell_i'$, $\ell$ is the line of $\pi$ incident on the two, then we must have by the claim that $\ell \subseteq S'$. It follows that $S'$ is the union of some $m$ lines of $\pi$ as well as $k$ lines of $\mathcal{Y}'$. However, $p > \binom{k}{2}$, so \Cref{lemma: if union of lines same number of lines} implies that $m = k$.\\
+
+		Using the procedure described earlier to replace these $k$ lines of $\pi$ constituting $S'$ with those corresponding to $\mathcal{Y}$, we get that both sets of lines are in fact the same, and therefore, all the $\ell_i'$ are lines of $\pi$, completing the proof.
+	\end{proof}
+	
+	Let us now move to the meat of this particular section.
+
+	\begin{definition}
+		Given incidence systems $\mathcal{X},\mathcal{Y}$, define
+		\begin{enumerate}
+			\item $I(\mathcal{Y},\mathcal{X})$ to be the number of monomorphisms from $\mathcal{Y}$ into $\mathcal{X}$,
+			\item $i(\mathcal{Y},\mathcal{X})$ to be the number of isomorphic copies of $\mathcal{Y}$ that are subsystems of $\mathcal{X}$, and
+			\item $\Aut(\mathcal{X})$ to be the automorphism group of $\mathcal{X}$ (under composition).
+		\end{enumerate}
+	\end{definition}
+
+	\begin{lemma}
+		\label{lemma: I i relation}
+		For any incidence systems $\mathcal{X},\mathcal{Y}$,
+		\[ I(\mathcal{Y},\mathcal{X}) = |\Aut(\mathcal{Y})| \cdot i(\mathcal{Y},\mathcal{X}). \]
+	\end{lemma}
+	We omit the proof of the above as it is straightforward.\\
+
+	Denote by $\mathcal{J}_p$ the set of all $p$-tuples $\utilde{j} = (j_\alpha : \alpha \in \F_p)$ such that $|\utilde{j}| = \sum j_\alpha = p^2 + p + 1$. Note that $\type(w) \in \mathcal{J}_p$ for any $w \in \mathcal{C}_p(\mathcal{X})$ if $\mathcal{X}$ has $p^2+p+1$ points.
+
+	\begin{ftheo}
+		\label{theo: linear combination of cwe coeffs}
+		Let $\pi$ be a projective plane of prime order $p$, and let $f(\utilde{X}) = \sum_{\utilde{j} \in \mathcal{J}_p} a_{\utilde{j}} \utilde{X}^{\utilde{j}}$ be the complete weight enumerator of $\mathcal{C}_p(\pi)$. That is, $a_{\utilde{j}}$ is the number of words of type $\utilde{j}$ in $\mathcal{C}_p(\pi)$. Then, for any PLS $\mathcal{X}$ with at most $\log_2 p$ lines, there are rationals $\alpha_{\utilde{j}}$ for $\utilde{j} \in \mathcal{J}_P$ depending only on $\mathcal{X}$ and $p$ such that
+		\[ i(\mathcal{X},\pi) = \sum_{\utilde{j} \in \mathcal{J}_p} \alpha_{\utilde{j}} a_{\utilde{j}}. \]
+	\end{ftheo}
+	\begin{proof}
+		Observe that up to isomorphism, there exist a finite number of $p$-admissible systems $\mathcal{Y}_j$ ($1 \le j \le m$) with exactly $k$ lines such that $\mathcal{X}$ is a subsystem of $\mathcal{Y}_j$.\\
+		For any isomorphic image $\mathcal{X}'$ of $\mathcal{X}$ in $\pi$, there exists a unique isomorphic image $\mathcal{Y}_j'$ of some $\mathcal{Y}_j$ in $\pi$ such that $\mathcal{X}'$ is a subsystem of $\mathcal{Y}_j$. Indeed, $\mathcal{Y}_j'$ is the unique subsystem of $\pi$ whose lines are merely the lines $\ell'$ of $\pi$ as $\ell$ varies over the lines of $\mathcal{X}$, where $\ell'$ is the unique line in $\pi$ that contains $\ell$. Therefore,
+		\[ i(\mathcal{X},\mathcal{\pi}) = \sum_{j=1}^m i(\mathcal{X},\mathcal{Y}_j) i(\mathcal{Y}_j,\pi). \]
+		So, it suffices to show that letting $\mathcal{Y} = \mathcal{Y}_j$, there exist some rational $\beta_{\utilde{j}}$ depending only on $\mathcal{Y}$ such that
+		\[ I(\mathcal{Y},\pi) = \sum_j a_{\utilde{j}} \beta_{\utilde{j}}. \]
+		We use \Cref{lemma: I i relation} to consider $I$ instead of $i$.\\
+		Now, let us number the $k$ lines of $\mathcal{Y}$ as $(\ell_i)_{i=1}^k$, where $p \ge 2^k$. Fix $w = \sum_{i=1}^k 2^i \ell_i \in \mathcal{C}_p(\mathcal{Y})$ and $\utilde{j} = \type(w) \in \mathcal{J}_p$.\\
+		For any monomorphism $f : \mathcal{Y} \to \pi$, consider the word $w \circ f^{-1}$. This word is one of the $a_{\utilde{j}}$ words of type $\utilde{j}$.\\
+		Conversely, let $w' \in \mathcal{C}_p(\pi)$ be of type $\utilde{j}$ and let $f$ be one of the $\utilde{j}!$ bijection from the point set of $\mathcal{Y}$ to the point set of $\pi$ satisfying $w' = w \circ f^{-1}$. By \Cref{lemma: big lemma for bagchi}, $f$ is a monomorphism! Therefore,
+		\[ I(\mathcal{Y},\pi) = \utilde{j}! a_{\utilde{j}}, \]
+		completing the proof.
+	\end{proof}
+
+	\begin{corollary}
+		\label{same cwe same i}
+		Let $\pi,\sigma$ be two projective planes of prime order $p$ such that their codes $\mathcal{C}_p(\pi)$ and $\mathcal{C}_p(\sigma)$ have the same complete weight enumerator. Then, for any PLS $\mathcal{X}$ with at most $\log_2 p$ lines, $i(\mathcal{X},\pi) = i(\mathcal{X},\sigma)$.
+	\end{corollary}
+
+	Define the partial linear space $\mathbb{P}$, known as the \emph{Pappian configuration}, defined as follows. Fix a point-line incident pair $(x,\ell)$ in $\PG(2,\F_3)$. The points of $\mathbb{P}$ are the points of $\PG(2,\F_3)$ not incident on $\ell$, and lines are the intersections of lines non-incident on $x$ with this point set.\\
+	To visualize it slightly better, suppose we have two non-intersecting lines $x_1x_2x_3$ and $y_1y_2y_3$. Add new points
+	\begin{align*}
+		z_1 &= (x_2 \lor y_3) \land (x_3 \lor y_2) \\
+		z_2 &= (x_3 \lor y_1) \land (x_1 \lor y_3) \\
+		z_3 &= (x_1 \lor y_2) \land (x_2 \lor y_1).
+	\end{align*}
+	Then, the point set of $\mathbb{P}$ is all the $x_i,y_i,z_i$, and the lines are
+	\[ x_1x_2x_3, y_1y_2y_3, z_1z_2z_3, x_iz_{i+1}y_{i+2}, x_iz_{i-1}y_{i-2} \]
+	for $1 \le i \le 3$, where the additions/subtractions are done modulo $3$.
+
+	\begin{definition}[Pappian Projective Plane]
+		Let us call a pair of sets $\alpha,\beta$ of points in a projective plane $\pi$ to be admissible if $\alpha$ and $\beta$ are collinear triples and no four points of $\alpha \sqcup \beta$ are collinear (so the intersection point of the two lines is in neither $\alpha$ nor $\beta$). $\pi$ is said to be \emph{Pappian} if for every pair $(\alpha,\beta)$ of admissible triples and bijection $f : \alpha \to \beta$, there is a unique isomorphic copy of $\mathbb{P}$ in $\pi$ such that $\alpha$ and $\beta$ are lines in $\mathbb{P}$ and for each $x \in \alpha$, $x$ and $f(x)$ are non-collinear in $\mathbb{P}$.
+	\end{definition}
+
+	We give the following famous result from projective geometry without proof.
+
+	\begin{theorem}
+		A projective plane is Pappian iff it is the projective plane over a division ring.\\
+		In particular, by Wedderburn's Theorem, a finite projective plane is Pappian iff it is a field plane.
+	\end{theorem}
+
+	\begin{theorem}
+		\label{theo: i P pi bound}
+		Let $\pi$ be a projective plane of order $n$. Then
+		\[ i(\mathbb{P},\pi) \le \frac{2}{3} \binom{n^2+n+1}{2} \binom{n}{3}^2. \]
+		Equality holds iff $\pi$ is a field plane.
+	\end{theorem}
+	\begin{proof}
+		To determine an isomorphic copy of $\mathbb{P}$ in $\pi$, we require
+		\begin{enumerate}
+			\item two lines $\ell_1, \ell_2$. There are $2\binom{n^2+n+1}{2}$ ways of doing this.
+			\item three points from each of the two lines, none of which are equal to $\ell_1 \land \ell_2$. There are $\binom{n}{3}^2$ ways of doing this.
+			\item a bijection $f$ between the two triplets of points. There are $6$ of these.
+		\end{enumerate}
+		Further, there are $18$ repeats of each copy of $\mathbb{P}$, so
+		\[ i(\mathbb{P},\pi) \le \frac{12}{18} \binom{n^2+n+1}{2} \binom{n}{3}^2, \]
+		with equality iff $\pi$ is Pappian.
+	\end{proof}
+
+	Combining \Cref{theo: i P pi bound,same cwe same i}, we get the following.
+
+	\begin{ftheo}
+		Let $\pi$ be a projective plane of prime order $p$ that has the same complete weight enumerator as $\PG(2,\F_p)$. If $p > 2^9$, $\pi$ is isomorphic to $\PG(2,\F_p)$.
+	\end{ftheo}
 
 \subsection{Rigidity Theorems on Partial Linear Spaces}
 
@@ -263,55 +477,4 @@
 		If $\ell$ contains $0 \le i \le 3$ points from $X_\alpha$, then the sum of colours of $\ell$ is $-1 + (-t)(3-i) + \alpha i$. This must be a multiple of $p$. Substituting each of the values of $i$, this is one of
 		\[ 3t+1,\quad 2(r+t)+1,\quad 2r-t,\quad 6(r-t)-1, \]
 		none of which can be a multiple of $p$ since $1 \le t < r < p/6$, completing the proof.
-	\end{proof}
-
-\subsection{Combinatorial Nullstellensatz}
-
-	The reader is likely familiar with the following famous theorem.
-
-	\begin{ftheo}[Hilbert's Nullstellensatz]
-		Let $\F$ be an algebraically closed field and $f,g_1,\ldots,g_m$ be elements of the ring $\F[x_1,\ldots,x_n]$ of polynomials such that $f$ vanishes on all common zeroes of the $(g_i)$. Then, there is an integer $k$ and polynomials $h_1,\ldots,h_m$ in $\F[x_1,\ldots,x_n]$ such that
-		\[ f^k = \sum_{i=1}^{m} g_i h_i. \]
-	\end{ftheo}
-
-	Before we get to the main result of this section which is essentially an interesting form of the above when the $g_i$ take a specific form, we give a lemma related to the size of a `cube' required to evaluate a polynomial at to determine if it is the $0$ polynomial.
-
-	\begin{lemma}
-		\label{lem: comb null lem}
-		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Suppose that for each $i$, $S_i \subseteq \F$ with $|S_i| > \deg_i(P)$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
-	\end{lemma}
-	\begin{proof}
-		We prove this by induction on $n$. When $n=1$, this is direct as it merely states that a polynomial of degree at most $t$ has at most $t$ zeroes. Suppose that the statement is true for $n-1$. Let $t_i = \deg_i(P)$ for each $i$. Write $P$ as a sum
-		\[ P = \sum_{i=0}^{t_i} x_n^i P_i(x_1,\ldots,x_{n-1}), \]
-		where each $P_i$ is a polynomial with $\deg_j$ bounded above by $t_j$. Observe that for any fixed tuple $(x_1,\ldots,x_{n-1}) \in S_1 \times \cdots \times S_{n-1}$, the polynomial obtained from $P$ by substituting the values of $x_1,\ldots,x_{n-1}$ vanishes on $S_n$, and thus by the $n=1$ case, is identically zero. Therefore, each $P_i$ vanishes on $S_1 \times \cdots \times S_{n-1}$. Applying the inductive hypothesis, each $P_i$ is thus identically $0$, yielding that $P$ is identically $0$ and completing the proof.
-	\end{proof}
-
-	Later in \Cref{thm: cube-vanishing}, we give a much stronger version of this
-
-	\begin{ftheo}[Combinatorial Nullstellensatz]
-		\label{thm: comb null}
-		Let $\F$ be an algebraically closed field and $S_1,\ldots,S_n \subseteq \F$. Define
-		\[ g_i(x_i) = \prod_{s_i \in S_i} (x_i - s_i) \]
-		for each $i$. Let $f \in \F[x_1,\ldots,x_n]$ vanish on all common zeroes of the $(g_i)$, that is, $f(s_1,\ldots,s_n) = 0$ if $s_i \in S_i$ for each $i$. Then, there are polynomials $h_1,\ldots,h_n$ in $\F[x_1,\ldots,x_n]$ such that
-		\[ f = \sum_{i=1}^{m} g_i h_i. \]
-		and $\deg(h_i) \le \deg(f) - \deg(g_i)$ for each $i$.\\
-		Moreover, if $f,g_1,\ldots,g_n \in R[x_1,\ldots,x_n]$ for some subring $R$ of $\F$, then there are polynomials $h_i \in R[x_1,\ldots,x_n]$ satisfying the above.
-	\end{ftheo}
-	\begin{proof}
-		Let $t_i = |S_i| - 1$ for each $i$. For each $i$, write $g(x_i) = x_i^{t_i+1} - g_0(x_i)$ -- note that $g_0$ is a polynomial of degree at most $t_i$. For each $x_i \in S_i$, we then have
-		\[ x_i^{t_i + 1} = g_0(x_i). \]
-		Now, take the polynomial $f$ and subtract polynomials of the form $h_i g_i$, each of which replaces the higher degree terms of $x_i$ (terms with $x_i^{r}$ for $r > t_i$) with a lower degree one using the above equation, to get a polynomial $f_0$. Observe that this polynomial $f_0$ vanishes on $S_1 \times \cdots \times S_n$, and $\deg_i(f_0) \le t_i$ for each $i$. We can then use \Cref{lem: comb null lem} to conclude that $f_0$ is identically zero, and thus that $f$ is equal to $\sum_i h_i g_i$, completing the proof.
-	\end{proof}
-
-	The simple proof above betrays the surprising usefulness of this result.
-
-	\begin{fcor}
-		\label{thm: cube-vanishing}
-		Let $P = P(x_1,\ldots,x_n)$ be a polynomial over a(n arbitrary) field $\F$. Let $\deg(f) = \sum_i t_i$, and let there exist a $x_1^{t_1} x_2^{t_2} \cdots x_n^{t_n}$ term in the polynomial with non-zero coefficient. Suppose that for each $i$, $S_i \subseteq \F$ with $|S_i| > t_i$. If $P(s_1,\ldots,s_n) = 0$ for all choices of $s_i \in S_i$ for each $i$, then $P$ is identically $0$. 
-	\end{fcor}
-	\begin{proof}
-		Let us assume that $|S_i| = t_i + 1$ for each $i$.\\
-		Suppose that the claim does not hold and let $g_i(x_i) = \prod_{s_i \in S_i} (x_i - s_i)$ for each $i$. \nameref{thm: comb null} then implies that
-		\[ P = \sum_i h_i g_i \]
-		for polynomials $h_i$ of degree at most $\deg(f) - \deg(g_i)$. Now, any monomial of degree $\deg(f)$ must come from one of the $h_i g_i$. However, any term in these polynomials are divisible by $x_i^{|S_i|} = x_i^{t_i + 1}$, which implies that there is no $x_i^{t_i}$ term in $P$, yielding a contradiction and completing the proof.
 	\end{proof}

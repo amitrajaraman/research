@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm,amsfonts,amscd}
 \usepackage{bbm}
 \usepackage{enumerate}
+\usepackage{enumitem}
 \usepackage[tmargin=1in, bmargin=1in, lmargin=0.75in, rmargin=0.75in]{geometry}
 \usepackage[colorlinks]{hyperref}
 \usepackage{tikz}
@@ -19,6 +20,7 @@
 \usepackage[square, numbers]{natbib}
 \usepackage{mathrsfs}
 \usepackage{esvect}
+\usepackage{undertilde}
 
 
 \usepackage{titlesec}
@@ -51,10 +53,13 @@
 \newcommand{\rad}{\operatorname{rad}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\Rp}{\mathbb{R}^+}
 \newcommand{\bc}{\mathsf{bc}}
-
+\newcommand{\type}{\operatorname{type}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\supp}{\operatorname{supp}}
 
 \numberwithin{equation}{section}
 \theoremstyle{definition}
@@ -83,6 +88,7 @@
 \newtheorem{exercise}{Exercise}
 \newtheorem*{example}{Example}
 
+
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 
@@ -100,6 +106,8 @@
 }
 \mdtheorem[style=solutionstyle]{solution}{Solution}
 \numberwithin{solution}{section}
+
+\Crefname{corcf}{Corollary}{Corollaries}
 
 \newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
 

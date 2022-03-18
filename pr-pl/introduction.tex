@@ -161,9 +161,10 @@
 		Let $\pi_1,\pi_2$ be two projective planes of prime order $p$ that share $p^2+1$ lines. Then $\pi_1 = \pi_2$.
 	\end{lemma}
 	\begin{proof}
-		Let a common set of lines of size $p^2 + 1$ be $\mathcal{L}_0$.\\
-		Since each point $P$ of $\pi_i$ is contained in $p+1$ lines and there are $p^2 + p + 1$ lines in all, $P \in \ell$ for some $\ell \in \mathcal{L_0}$, so the $\pi_i$ share the same point set. Let $\pi_i = (\mathcal{P},\mathcal{L}_i)$.\\
-
+		Let $\mathcal{L}_0$ be a common set of lines of size $p^2 + 1$.
+		Since each point $P$ of $\pi_i$ is contained in $p+1$ lines and there are $p^2 + p + 1$ lines in all, $P \in \ell$ for some $\ell \in \mathcal{L_0}$, so the $\pi_i$ share the same point set.\\
+		Let $\mathcal{X} = (\mathcal{P},\mathcal{L}_0)$.
+		Since the lines of $\pi_i$ are precisely the supports of the minimum weight words of $\mathcal{C}_p(\pi_i)$, it suffices to show that $\mathcal{C}_p(\pi_i) = \mathcal{C}_p(\pi_2)$. To do this, we shall show that $\mathcal{C}_p(\pi_1) = \mathcal{C}_p(\mathcal{X})$. For the sake of succinctness, denote $\pi_1$ as $\pi = (\mathcal{P},\mathcal{L})$. Since $\mathcal{X}$ is a subsystem of $\pi$, this is equivalent to $\dim(\mathcal{C}_p(\pi)) = \dim(\mathcal{C}_p(\mathcal{X}))$, which in turn is equivalent to $\dim(\mathcal{C}_p(\pi^*)) = \dim(\mathcal{C}_p(\mathcal{X}^*))$. Consider the restriction map from $\F_p^{\mathcal{L}}$ to $\F_p^{\mathcal{L}_0}$. This restricts to a linear map from $\mathcal{C}_p(\pi^*)$ to $\mathcal{C}_p(\mathcal{X}*^)$. Observe that the kernel of this map is precisely those words in $\mathcal{C}_p(\pi^*)$ that have support in $\mathcal{L} \setminus \mathcal{L}_0$. Further, since $|\mathcal{L} \setminus \mathcal{L}_0| = p$, and there is no non-zero word in $\mathcal{C}_p(\pi^*)$ with Hamming weight $\le p$ (any line in $\pi$ is incident on $p+1$ points). Therefore, the kernel of this map is trivial! This implies that $\dim(\mathcal{C}_p(\pi^*)) = \dim(\mathcal{C}_p(\mathcal{X}^*))$, completing the proof.
 	\end{proof}
 
 	\begin{fdef}
@@ -274,7 +275,7 @@
 	\begin{lemma}
 		\label{lemma: I i relation}
 		For any incidence systems $\mathcal{X},\mathcal{Y}$,
-		\[ I(\mathcal{Y},\mathcal{X}) = |\Aut(\mathcal{Y})| \cdot i(\mathcal{Y},\mathcal{X}). \]
+		\[ I(\mathcal{Y},\mathcal{X}) = |{\Aut}(\mathcal{Y})| \cdot i(\mathcal{Y},\mathcal{X}). \]
 	\end{lemma}
 	We omit the proof of the above as it is straightforward.\\
 
@@ -287,7 +288,7 @@
 	\end{ftheo}
 	\begin{proof}
 		Observe that up to isomorphism, there exist a finite number of $p$-admissible systems $\mathcal{Y}_j$ ($1 \le j \le m$) with exactly $k$ lines such that $\mathcal{X}$ is a subsystem of $\mathcal{Y}_j$.\\
-		For any isomorphic image $\mathcal{X}'$ of $\mathcal{X}$ in $\pi$, there exists a unique isomorphic image $\mathcal{Y}_j'$ of some $\mathcal{Y}_j$ in $\pi$ such that $\mathcal{X}'$ is a subsystem of $\mathcal{Y}_j$. Indeed, $\mathcal{Y}_j'$ is the unique subsystem of $\pi$ whose lines are merely the lines $\ell'$ of $\pi$ as $\ell$ varies over the lines of $\mathcal{X}$, where $\ell'$ is the unique line in $\pi$ that contains $\ell$. Therefore,
+		For any isomorphic image $\mathcal{X}'$ of $\mathcal{X}$ in $\pi$, there exists a unique isomorphic image $\mathcal{Y}_j'$ of some $\mathcal{Y}_j$ in $\pi$ such that $\mathcal{X}'$ is a subsystem of $\mathcal{Y}_j$. Indeed, $\mathcal{Y}_j'$ is the unique subsystem of $\pi$ whose lines are merely the lines $\ell'$ of $\pi$ as $\ell$ varies over the lines of $\mathcal{X}'$, where $\ell'$ is the unique line in $\pi$ that contains $\ell$. Therefore,
 		\[ i(\mathcal{X},\mathcal{\pi}) = \sum_{j=1}^m i(\mathcal{X},\mathcal{Y}_j) i(\mathcal{Y}_j,\pi). \]
 		So, it suffices to show that letting $\mathcal{Y} = \mathcal{Y}_j$, there exist some rational $\beta_{\utilde{j}}$ depending only on $\mathcal{Y}$ such that
 		\[ I(\mathcal{Y},\pi) = \sum_j a_{\utilde{j}} \beta_{\utilde{j}}. \]

@@ -21,6 +21,7 @@
 \usepackage{mathrsfs}
 \usepackage{esvect}
 \usepackage{undertilde}
+\usepackage{commath}
 
 
 \usepackage{titlesec}
@@ -71,6 +72,10 @@
 \newenvironment{flem}
   {\colorlet{shadecolor}{orange!15}\begin{shaded}\begin{lemma}}
   {\end{lemma}\end{shaded}}
+\newtheorem{prop}[theorem]{Proposition}
+\newenvironment{fprop}
+  {\colorlet{shadecolor}{orange!15}\begin{shaded}\begin{prop}}
+  {\end{prop}\end{shaded}}
 \newtheorem{corollary}[theorem]{Corollary}
 \newenvironment{fcor}
   {\colorlet{shadecolor}{orange!15}\begin{shaded}\begin{corollary}}

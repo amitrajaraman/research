@@ -1,8 +1,19 @@
-\section{The KLS Conjecture}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{kls}
 
-\subsection{An Isoperimetric Problem}
+\begin{document}
 
-	\subsubsection{Introduction}
+\thispagestyle{empty}
+\titleBC
+
+\tableofcontents
+
+\clearpage
+
+\section{An Isoperimetric Problem}
+
+	\subsection{Introduction}
 
 		In the context of ball-step, let us look at the mixing time of the chain for a general (not necessarily convex) body.\\
 		As discussed, it suffices to look at the conductance of the chain, which relates to finding a ``cut'' of the body of relatively small surface area. For example, in a dumbbell, we could have a cut down the central bottleneck, which would result in a very low conductance.\\
@@ -31,7 +42,7 @@
 		\[ \psi(K) \geq \frac{\ln 2}{M_1(K)}, \]
 		where $M_1(K)$ is the average distance of a point in $K$ from the center of gravity of $K$. 
 
-	\subsubsection{Needles and Localization Lemmas}
+	\subsection{Needles and Localization Lemmas}
 	\label{sec: 5.1.2}
 
 		To begin, consider the following motivated by \Cref{localization lemma}.
@@ -94,7 +105,7 @@
 
 		While these results are quite nice, exponents of a linear function are not very convenient to deal with. This motivates the following.
 
-	\subsubsection{Exponential Needles}
+	\subsection{Exponential Needles}
 	\label{sec: 5.1.3}
 
 		\begin{definition}
@@ -188,7 +199,7 @@
 			However, $F\ell^{n-1}$ is log-concave, so by \Cref{localized exponential needle interconversion}, there exists an exponential needle that violates the assumption.
 		\end{proof}
 
-	\subsubsection{An Example Using the Equivalences}
+	\subsection{An Example Using the Equivalences}
 
 		Let $K$ be a convex body and $f:K\to\R$ be integrable. Define its $L_p$ norm by
 		\[ \norm{f}_p = \left(\frac{1}{\vol K} \int_{K} |f(x)|^p \d{x} \right)^{1/p}. \]
@@ -215,7 +226,7 @@
 		The actual calculation of the supremum above is quite tedious, however.
 
 
-	\subsubsection{Isotropy}
+	\subsection{Isotropy}
 
 		The content of this section is closely related to that of volume computation, primarily \Cref{pro sandwiching}, which discussed sandwiching.
 
@@ -286,7 +297,7 @@
 			\end{itemize}	
 		\end{proof}
 
-	\subsubsection{The KLS Conjecture}
+	\subsection{The KLS Conjecture}
 
 		Let us now move on to the main result of this section.
 
@@ -376,7 +387,9 @@
 		% \cite{chen2021constant} has made the most progress in recent times, proving that there is a constant $c$ such that
 		% \[ \psi(K) \geq \frac{1}{\sqrt{ n^{c\left(\log\log n/\log n\right)^{1/2}} \alpha(K)}}. \]
 
-\subsection{A More Detailed Look}
+\clearpage
+
+\section{A More Detailed Look}
 
 	Henceforth, we write $a\gtrsim b$ if there is some constant $c$ (independent of dimension and all parameters under consideration) such that $a \geq c b$.\\
 	Generalizing \Cref{kls conj hyperplane} to an arbitrary log-concave density (by a nearly identical proof), it just says that
@@ -393,9 +406,9 @@
 	\Cref{isoperimetric coefficient bound 1} then says that for any isotropic log-concave $p$, $\psi_p \gtrsim n^{-1/2}$.\\
 	% For the sake of brevity, if $p$ is a log-concave density with covariance matrix $A$, let $\rho(p) = \opnorm{A}$.\\
 
-	% \subsubsection{The Connection to Ball-Step and the Log-Sobolev Constant}
+	% \subsection{The Connection to Ball-Step and the Log-Sobolev Constant}
 
-	% 	\subsubsection{The Log-Sobolev Constant}
+	% 	\subsection{The Log-Sobolev Constant}
 
 	% 		Recall that if we apply the ball-walk to a log-concave density $p$, then the conductance is $\Omega(1/n\psi_p)$, which leads to $\mathcal{O}^*(n^2\psi_p^2)$ steps (from a warm start).\\
 	% 		The log-Sobolev constant attempts to provide a similar bound in the case where we do not have a warm start.
@@ -403,7 +416,7 @@
 
 	Next, we look at a few consequences of the KLS Conjecture.
 
-	\subsubsection{The Slicing Conjecture}
+	\subsection{The Slicing Conjecture}
 
 		The slicing conjecture essentially asks whether a convex body of unit volume in $\Rn$ has a hyperplane section whose $(n-1)$-volume is at least some universal constant.
 
@@ -431,7 +444,7 @@
 		% 	\[ \Pr_{x\sim p}\left[\norm{x} \leq t\sqrt{n}\right] = \mathcal{O}(t^n) \]
 		% \end{theorem}
 
-	\subsubsection{The Thin-Shell Conjecture}
+	\subsection{The Thin-Shell Conjecture}
 
 		\begin{fcon}[Thin-Shell Conjecture]
 			\label{con: thin shell conjecture}
@@ -444,7 +457,7 @@
 
 		It was shown in \cite{Eldan2010ApproximatelyGM} that the Thin-Shell conjecture implies the Slicing conjecture and by Ball that the KLS conjecture implies the Thin-Shell conjecture. That is, we have that $L_p \lesssim \sigma_p \lesssim \psi_p^{-1}$.
 
-	\subsubsection{The Poincar\'{e} Constant}
+	\subsection{The Poincar\'{e} Constant}
 		\label{sec: poincare constant}
 
 		\begin{fdef}
@@ -456,11 +469,13 @@
 		\[ \zeta_p \sim \psi_p^2, \]
 		that is, $\zeta_p$ is within a constant factor of the square of the isoperimetric constant. Due to this strong relation, we shall in fact use the Poincar\'{e} constant in a later proof (of \Cref{primary bounds chen}) to help bound the isoperimetric constant.
 
-\subsection{Recent Bounds on the Isoperimetric Constant}
+\clearpage
 
-	\subsubsection{A Look At Stochastic Localization}
+\section{Recent Bounds on the Isoperimetric Constant}
 
-	% \subsubsection{An Overview}
+	\subsection{A Look At Stochastic Localization}
+
+	% \subsection{An Overview}
 
 		Most of the progress towards proving the conjecture in recent times has been done using a method known as \textit{stochastic localization}. Recall how in the proof of the localization lemma \Cref{localization lemma}, which is possibly one of the most powerful tools we have built thus far, we use a bisection argument, where we bisect the body with a hyperplane at each step. In the general setting, this just corresponds to multiplying the current log-concave measure by $\indic_{H}$, where $H$ is a certain half-space.\\
 
@@ -547,7 +562,7 @@
 
 		Over the next two sections, we give a $n^{-1/4}$ bound on $\psi_p$, as described in \cite{lee-vempala-kls-n14}. More precisely, we show that $\psi_p \gtrsim \Tr(A^2)^{-1/4}$.
 
-	\subsubsection{Towards a \texorpdfstring{$n^{-1/4}$}{n1/4} Bound}
+	\subsection{Towards a \texorpdfstring{$n^{-1/4}$}{n1/4} Bound}
 
 		Before we begin, define the following for notational convenience.
 		\begin{definition}
@@ -636,7 +651,7 @@
 
 		As mentioned earlier, we now need to control the growth of the covariance matrix $A_t$, preventing it from exploding and ensuring that the condition in above theorem is satisfied for some large $T$.
 
-	\subsubsection{Controlling \texorpdfstring{$A_t$}{At}}
+	\subsection{Controlling \texorpdfstring{$A_t$}{At}}
 
 		To control the growth of $A_t$, we use the potential function $\Tr(A_t^2)$.
 
@@ -737,7 +752,7 @@
 
 		Over the next few sections, we look at the best bound attained (as of the time of writing) of the isoperimetric constant, as described in \cite{chen2021constant}.
 
-	\subsubsection{An Almost Constant Bound}
+	\subsection{An Almost Constant Bound}
 
 		Here, we prove that there is a constant $c$ such that for any log-concave $p$ in $\Rn$,
 		\[ \psi_p \geq \frac{1}{n^{c \sqrt{\log \log n / \log n}} \opnorm{A}^{1/2}}. \]
@@ -1023,3 +1038,8 @@
 		% 	The second part then easily follows on setting
 		% 	\[ \ell = \left\lceil \sqrt{\frac{\log n}{\log \log n}} \right\rceil.\qedhere \]
 		% \end{proof}
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+\end{document}

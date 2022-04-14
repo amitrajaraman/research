@@ -188,7 +188,7 @@
 			\end{itemize}
 		\end{ftheo}
 		\begin{proof}
-			Going from the first to the second isn't too difficult. Given the exponential needle over $[a,b]$ and constant $\gamma$, consider the function $F$ defined by $t\mapsto e^{\gamma \langle t, u\rangle}$, where $u=(b-a)/\norm{b-a}$ restricted to some $\varepsilon$-neighbourhood of $[a,b]$. Letting $\varepsilon\to 0$, we get the required.\\
+			Going from the first to the second isn't too difficult. Given the exponential needle over $[a,b]$ and constant $\gamma$, consider the function $F$ defined by $t\mapsto e^{\gamma \langle t, u\rangle}$, where $u=(b-a)/\norm{b-a}$ restricted to some $\varepsilon$-neighborhood of $[a,b]$. Letting $\varepsilon\to 0$, we get the required.\\
 			On the other hand, let the second hold but not the first for some function $F$. Then applying \Cref{lem: 5.1} on the $Ff_i$, we get some $[a,b]$ and linear function $\ell$ on $[a,b]$ such that
 			\begin{multline*}
 				\left(\int_0^{\norm{b-a}} f_1(a+tu) F(a+tu)\ell(a+tu)^{n-1}\d{t}\right)^\alpha \left(\int_0^{\norm{b-a}} f_2(a+tu) F(a+tu)\ell(a+tu)^{n-1}\d{t}\right)^\beta \\
@@ -307,7 +307,7 @@
 			\[ \psi(K) \geq \frac{\ln 2}{M_1(K)}. \]
 		\end{ftheo}
 
-		In \Cref{def: isoperimetric coefficient}, let $K_3$ be the intersection of $K$ with the open $\varepsilon/2$-neighbourhood of $\partial S$. Further, let $K_1 = S\setminus K_3$ and $K_2 = (K\setminus S)\setminus K_3$. Then, it suffices to prove the following, which is yet another improvement of \Cref{conductance isoperimetric inequality,improvement of conductance isoperimetric inequality}.
+		In \Cref{def: isoperimetric coefficient}, let $K_3$ be the intersection of $K$ with the open $\varepsilon/2$-neighborhood of $\partial S$. Further, let $K_1 = S\setminus K_3$ and $K_2 = (K\setminus S)\setminus K_3$. Then, it suffices to prove the following, which is yet another improvement of \Cref{conductance isoperimetric inequality,improvement of conductance isoperimetric inequality}.
 
 		\begin{ftheo}
 			Let $K$ be a convex body and $K = K_1\cup K_2\cup K_3$ a decomposition of $K$ into three measurable sets such that $d(K_1,K_2)=\varepsilon>0$. Then
@@ -479,7 +479,7 @@
 
 		Most of the progress towards proving the conjecture in recent times has been done using a method known as \textit{stochastic localization}. Recall how in the proof of the localization lemma \Cref{localization lemma}, which is possibly one of the most powerful tools we have built thus far, we use a bisection argument, where we bisect the body with a hyperplane at each step. In the general setting, this just corresponds to multiplying the current log-concave measure by $\indic_{H}$, where $H$ is a certain half-space.\\
 
-		For now, let us discuss how stochastic localization works out in discrete time. Instead of multiplying by this indicator function, we multiply by an affine functional that is very close to $1$. That is, we transform the density $p(x)$ to $(1 + \varepsilon\langle x-\mu,\theta\rangle)p(x)$, where $\mu$ is the barycenter of the measure and $\theta$ is randomly chosen. This is like a reweighting in favour of a certain half-space.\\
+		For now, let us discuss how stochastic localization works out in discrete time. Instead of multiplying by this indicator function, we multiply by an affine functional that is very close to $1$. That is, we transform the density $p(x)$ to $(1 + \varepsilon\langle x-\mu,\theta\rangle)p(x)$, where $\mu$ is the barycenter of the measure and $\theta$ is randomly chosen. This is like a reweighting in favor of a certain half-space.\\
 		As a result, the resulting measure is a probability measure. Further, this measure remains log-concave (assuming $p$ is log-concave).\\
 		This gives a stochastic process (which is discrete time for now) defined by
 		\begin{equation}
@@ -797,7 +797,7 @@
 			\[ \norm{v_t} = \sup_{\theta \in S^{n-1}} \int_E \langle x-\mu_t , \theta \rangle p_t(x) \d{x} \leq \sqrt{ \sup_{\theta \in S^{n-1}} \int_E \langle x-\mu_t , \theta \rangle^2 p_t(x) \d{x} } = \opnorm{A_t}^{1/2}. \]
 			Using It\^{o}'s Lemma,
 			\[ \d{(M_t(1-M_t))} = -\norm{v_t}^2\d{t} + \text{(martingale term)}. \]
-			Taking the expectation on eithe side and using the bound,
+			Taking the expectation on either side and using the bound,
 			\[ \d{\expec[M_t(1-M_t)]} \geq -\expec\left[\opnorm{A_t}\right]\d{t}. \]
 			Therefore,
 			\[ \expec[M_t(1-M_t)] \geq M_0(1-M_0) - \frac{1}{8} = \frac{1}{8}, \]

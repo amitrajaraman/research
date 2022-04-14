@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{bagchi}
+
+\begin{document}
+
+\thispagestyle{empty}
+\titleBC
+
+\tableofcontents
+
+\section{Definitions}
+
+	\begin{fdef}[Incidence System]
+		An \emph{incidence system} is a pair $(\mathcal{P},\mathcal{L})$, where $\mathcal{P}$ is a set and $\mathcal{L}$ is a set of subsets of $\mathcal{P}$. Elements of $\mathcal{P}$ are called \emph{points} and elements of $\mathcal{L}$ are called \emph{lines}. A line $\ell$ is said to be \emph{incident} on a point $p$ if $p \in \ell$.\\
+	\end{fdef}
+
+	\begin{fdef}[Partial Linear Space]
+		An incidence system $(\mathcal{P},\mathcal{L})$ is said to be a \emph{partial linear space} if
+		\begin{enumerate}
+		 	\item for each $\ell \in \mathcal{L}$, $|\ell| \ge 2$.
+		 	\item for distinct $x,y \in \mathcal{P}$, there is at most one $\ell \in \mathcal{L}$ such that $\{x,y\} \subseteq \mathcal{P}$.
+		\end{enumerate}
+	\end{fdef}
+
+	\begin{fdef}
+		Given an incidence system $\mathcal{X} = (\mathcal{P},\mathcal{L})$ and a field $\F$, we define the linear code $\mathcal{C}_\F(\mathcal{X})$ over $\F^\mathcal{P}$ as follows. Identify each line $\ell$ with the codeword in $\F^{\mathcal{P}}$ whose $x$th coordinate is $1$ if $x \in \ell$ and $0$ otherwise. $\mathcal{C}_\F(\mathcal{X})$ is then the space spanned by the codewords corresponding to the lines in $\mathcal{L}$.\\
+		If $\F = \F_q$, we sometimes denote the above as $\mathcal{C}_q(\mathcal{X})$.
+	\end{fdef}
+	We also often denote this as $\mathcal{C}_q(\mathcal{L})$ if the point set is clear from context.\\
+	The incidence system $\mathcal{X}$ is said to be \emph{trivial} at $q$ if $\mathcal{C}_q(\mathcal{X})$ is all of $\F_q^{\mathcal{P}}$.
+
+	\begin{fdef}[Join]
+		Given two partial linear spaces $(\mathcal{P}_1,\mathcal{L}_1)$ and $(\mathcal{P}_2,\mathcal{L}_2)$ with $\mathcal{P}_1 \cap \mathcal{P}_2 = \emptyset$, one can define the \emph{join} of the two partial linear spaces by $(\mathcal{P}_1 \cup \mathcal{P}_2, \mathcal{L}_1\cup\mathcal{L}_2\cup\mathcal{L}_3)$, where
+		\[ \mathcal{L}_3 = \{ \{x,y\} : x \in \mathcal{P}_1, y \in \mathcal{P}_2 \}. \]
+	\end{fdef}
+
+\section{Inamdar's Result}
+
+	% \begin{ftheo}
+	% 	If a PLS $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is non-trivial at $p$ and has at least $n+1$ lines through every point, then $|\mathcal{P}| \ge 2n+2-2n/p$. Moreover, equality holds iff $\mathcal{X}$ is the join of two Steiner $2$-designs with $n/p$ lines through each point and $p$ points on each line.
+	% \end{ftheo}
+
+	\begin{ftheo}
+		If a PLS $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is non-trivial at $p$ and has at least $p+1$ lines through every point, then $|\mathcal{P}| \ge 2p$. Moreover, equality holds iff $\mathcal{X}$ is the join of two $p$-lines.
+	\end{ftheo}
+
+	For the rest of this section, assume that $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is a partial linear space of the above prescribed format with $\mathcal{P} \le 2p$. We wish to show that $\mathcal{P} = 2p$. Let $\mathcal{C} = \mathcal{C}_p(\mathcal{X})$\\
+	It may be shown that it can be assumed that 
+	\begin{enumerate}
+		\item Each point is incident on exactly $p+1$ lines (throw away extra lines).
+		\item $\mathcal{C}^\perp$ is one-dimensional. Suppose that it is equal to $\langle w \rangle$ (restrict to the support of the minimum support word in $\mathcal{C}^\perp$).
+		\item For any line $\ell$ and any $\ell' \subsetneq \ell$, $\langle w,\ell'\rangle \ne 0$ (do the splitting procedure).
+	\end{enumerate}
+	
+	Also consider the colouring of $\mathcal{P}$ wherein each point $P$ is coloured $w(P)$.
+
+	\begin{prop}
+		If $\mathcal{X}$ has a $p$-line, it is equal to a join of two $p$-lines.
+	\end{prop}
+	\begin{proof}
+		Let $P_1\cdots P_p$ be a $p$-line. Since each point has $p$ lines remaining, there must be at least $p$ points other than the $P_i$, say $(Q_i)_{i=1}^p$. Since $|\mathcal{P}| \le 2p$, these constitute all the points. Further, since each $P_i$ has $p$ lines to the $Q_j$, there must be a $2$-line $P_iQ_j$ for each $1\le i,j \le p$. Now, suppose that $w(P_1) = 1$. Because $w(P_1) + w(Q_j) = 0$ for all $j$ ($P_1 Q_j$ forms a $p$-line), $w(Q_j) = -1$ for all $j$. Each of the $Q_i$ now has one line not accounted for. This line must be contained within the $(Q_i)$. However, due to all of them having the same colour, the size of any such line must be $p$, completing the proof.
+	\end{proof}
+
+	\begin{prop}
+		If $\mathcal{X}$ has no $p$-line, the largest line in $\mathcal{X}$ is of size at most $2p/3$.
+	\end{prop}
+	\begin{proof}
+		Let $\ell$ be a line with $|\ell| > 2p/3$. Given a $P \in \ell$, let $x_P$ be the number of $2$-lines through $P$. We then have that
+		\[ 2p-|\ell| \ge \underbrace{x_P}_{\text{points in $2$-lines}} + \underbrace{2(p-x_P)}_{\text{points in $\ge 3$-lines}}, \]
+		so $x_P \ge \ell$. Observe that if $x_P > (2p-|\ell|)/2$ for all $P \in \ell$, it follows by a pigeonhole argument that any two points $P,Q$ in $\ell$ have a ``$2$-neighbour'' (a point $u$ such that $uP$ and $uQ$ are $2$-lines) in common. This is indeed the case because $x_P \ge |\ell| > (2p/3) > (2p-|\ell|)/2$. This in turn implies that $w(P) = w(Q)$, because $w(P) = -w(u) = w(Q)$. Therefore, $\ell$ is monochromatic, so for any fixed $P \in \ell$,
+		\[ 0 = \sum_{P \in \ell} w(P) = |\ell| w(P). \]
+		As $w(P) \ne 0$, $|\ell| = p$, yielding a contradiction.
+	\end{proof}
+
+	Define
+	\[ \mathcal{S} = \{ S \subseteq \mathcal{P} : \sum_{P \in S} w(P) = 0 \}. \]
+
+	% \begin{prop}
+	% 	Any $S \in \mathcal{S}$ is equal to
+	% 	\begin{enumerate}
+	% 		\item a disjoint union of lines,
+	% 		\item a pencil of all lines through a single point,
+	% 		\item a disjoint union of the above two types of sets, or
+	% 		\item the entire point set $\mathcal{P}$.
+	% 	\end{enumerate}
+	% \end{prop}
+	% \begin{proof}
+	% 	It may be seen that $S \in \mathcal{S}$ iff $\indic_S = \sum_{\ell \subseteq \mathcal{K}} \indic_{\ell}$ for some $\mathcal{K} \subseteq \mathcal{L}$.\\
+	% 	First, observe that $\mathcal{P} \in \mathcal{S}$ because
+	% 	\[ \sum_{\ell \in \mathcal{L}} \indic_{\ell} = \sum_{\ell \in \mathcal{L}} \sum_{P \in \ell} \indic_{P} = \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} \indic_{P} = \indic_{\mathcal{P}}. \]
+	% 	It is similarly easily checked that each of the described sets do indeed belong to $\mathcal{S}$.
+	% 	Let $S \in \mathcal{S}$ with $\indic_S = \sum_{\ell \in \mathcal{K}} \indic_{\ell}$. Observe that if some two lines $\ell,\ell' \in \mathcal{K}$ pass through the same point $P$, then every single line 
+	% \end{proof}
+	
+	
+
+\end{document}

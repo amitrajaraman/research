@@ -22,6 +22,7 @@
 		 	\item for distinct $x,y \in \mathcal{P}$, there is at most one $\ell \in \mathcal{L}$ such that $\{x,y\} \subseteq \mathcal{P}$.
 		\end{enumerate}
 	\end{fdef}
+	An incidence system is said to be a \emph{linear space} if in the second condition above, the ``at most one'' is replaced with ``exactly one''.
 
 	\begin{fdef}
 		Given an incidence system $\mathcal{X} = (\mathcal{P},\mathcal{L})$ and a field $\F$, we define the linear code $\mathcal{C}_\F(\mathcal{X})$ over $\F^\mathcal{P}$ as follows. Identify each line $\ell$ with the codeword in $\F^{\mathcal{P}}$ whose $x$th coordinate is $1$ if $x \in \ell$ and $0$ otherwise. $\mathcal{C}_\F(\mathcal{X})$ is then the space spanned by the codewords corresponding to the lines in $\mathcal{L}$.\\
@@ -45,7 +46,7 @@
 		If a PLS $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is non-trivial at $p$ and has at least $p+1$ lines through every point, then $|\mathcal{P}| \ge 2p$. Moreover, equality holds iff $\mathcal{X}$ is the join of two $p$-lines.
 	\end{ftheo}
 
-	For the rest of this section, assume that $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is a partial linear space of the above prescribed format with $\mathcal{P} \le 2p$. We wish to show that $\mathcal{P} = 2p$. Let $\mathcal{C} = \mathcal{C}_p(\mathcal{X})$\\
+	For the rest of this section, assume that $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is a partial linear space of the above prescribed format with $\mathcal{P} \le 2p$. We wish to show that $\mathcal{P} = 2p$. Let $\mathcal{C} = \mathcal{C}_p(\mathcal{X})$. \\
 	It may be shown that it can be assumed that 
 	\begin{enumerate}
 		\item Each point is incident on exactly $p+1$ lines (throw away extra lines).
@@ -73,26 +74,92 @@
 		As $w(P) \ne 0$, $|\ell| = p$, yielding a contradiction.
 	\end{proof}
 
-	Define
-	\[ \mathcal{S} = \{ S \subseteq \mathcal{P} : \sum_{P \in S} w(P) = 0 \}. \]
+	As a result, we are done if we manage to show that $\mathcal{X}$ has a line of size greater than $2p/3$.\\
 
-	% \begin{prop}
-	% 	Any $S \in \mathcal{S}$ is equal to
-	% 	\begin{enumerate}
-	% 		\item a disjoint union of lines,
-	% 		\item a pencil of all lines through a single point,
-	% 		\item a disjoint union of the above two types of sets, or
-	% 		\item the entire point set $\mathcal{P}$.
-	% 	\end{enumerate}
-	% \end{prop}
-	% \begin{proof}
-	% 	It may be seen that $S \in \mathcal{S}$ iff $\indic_S = \sum_{\ell \subseteq \mathcal{K}} \indic_{\ell}$ for some $\mathcal{K} \subseteq \mathcal{L}$.\\
-	% 	First, observe that $\mathcal{P} \in \mathcal{S}$ because
-	% 	\[ \sum_{\ell \in \mathcal{L}} \indic_{\ell} = \sum_{\ell \in \mathcal{L}} \sum_{P \in \ell} \indic_{P} = \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} \indic_{P} = \indic_{\mathcal{P}}. \]
-	% 	It is similarly easily checked that each of the described sets do indeed belong to $\mathcal{S}$.
-	% 	Let $S \in \mathcal{S}$ with $\indic_S = \sum_{\ell \in \mathcal{K}} \indic_{\ell}$. Observe that if some two lines $\ell,\ell' \in \mathcal{K}$ pass through the same point $P$, then every single line 
-	% \end{proof}
-	
-	
+	Now, let us restrict ourselves to the case where $\mathcal{X}$ is a linear space with exactly $p+1$ lines through each point. Let $C$ be the $m \times n$ incidence matrix of $\mathcal{X}$, where $m = |\mathcal{L}|$ and $n = |\mathcal{P}|$. Observe that $(C^tC)_{ij} = pI + J$, where $J$ is the all $1$s matrix. As a result, its characteristic equation is just $(X - (p+n))(X-p)^{n-1}$. Recall that the characteristic matrix of $CC^t$ and $C^tC$ only differ by a power of $X$. That is, the characteristic equation of $CC^t$ is $X^{m-n} (X - (p+n))(X-p)^{n-1}$. Over $\F_p$, this becomes $X^{m-1}(X-n)$.\\
 
+	Suppose that $y$ is an eigenvector with eigenvalue $0$. That is, $CC^ty = 0$. A question to ask is: is $C^ty$ always $0$? If it is not, we can explicitly get a vector in $\mathcal{C}^\perp$.
+
+	\begin{prop}
+		There exists $y$ in the kernel of $CC^t$ such that $C^ty \ne 0$ (in $\F_p$).
+	\end{prop}
+	\begin{proof}
+		Indeed, note that the kernel of $CC^t$ is of dimension $m-1$, whereas the kernel of $C^t$ is of dimension at most $m-n$. It follows that the kernel of $C^t$ is a proper subset of $CC^t$.
+	\end{proof}
+	% Also, the $m-n$ bound is attained if $\mathcal{C}$ becomes trivial; and 0 has multiplicity m-n (in N). But we only have non-triviality over Q, not F_p?
+
+	\begin{definition}[Irreducible Matrix]
+		A matrix $A = (a_{ij})_{n \times n}$ is said to be \emph{irreducible} if the (directed) graph $G_A$ with vertex set $[n]$ and edge from $i$ to $j$ iff $a_{ij} \ne 0$ is strongly connected.
+	\end{definition}
+
+	Observe that $CC^t$ is irreducible! Indeed, given any lines $\ell,\ell'$, there is a line $\ell''$ through some (any) $x \in \ell$ and $y \in \ell'$.
+
+	\begin{ftheo}[Perron-Frobenius Theorem]
+		Let $A = (a_{ij})_{n\times n}$ be a non-negative irreducible matrix. Then,
+		\begin{enumerate}
+			\item There exists a positive eigenvalue $\lambda$ such that any other eigenvalue is of absolute value at most $\lambda$. Further, there is a number $h$ called the \emph{period} such that $\lambda \omega_h^k \lambda$ is an eigenvalue for every $0 \le k < h$. These are the only eigenvalues with absolute value $\lambda$.
+			\item $\lambda$ is a simple root of the characteristic polynomial. As a result, its corresponding eigenspace is one-dimensional.
+			\item $\lambda$ has an eigenvector $v$ with all positive entries. Any eigenvector with all positive entries is in the span of $v$.
+		\end{enumerate}
+	\end{ftheo}
+
+	Since $CC^t$ is irreducible and non-negative with maximum eigenvalue $n+p$, there is an eigenvector $v$ of $n+p$ with all positive entries.
+
+	For example, we now have that
+	\begin{align*}
+		m(n+p) &= (n+p)\textbf{1}^\top \textbf{1} \\
+			&\ge \textbf{1}^\top CC^\top \textbf{1} \\
+			&= \sum_{\ell,\ell' \in \mathcal{L}} |\ell \cap \ell'| \\
+			&= \sum_{\ell \in \mathcal{L}} (p+1)|\ell| & \text{(each point on $\ell$ has $p+1$ lines through it)} \\ 
+			&= (p+1) \cdot n(p+1) = n(p+1)^2
+	\end{align*}
+	Since $p+2 < n \le 2p$,
+	\[ m \ge \frac{n(p+1)^2}{n+p} > \frac{(p+1)^2}{3}. \]
+	The system has many lines! Can we use this to show that either there is a ``large'' line somewhere or the code is trivial?\\
+	Can we draw stronger conclusions by using another vector in place of $\textbf{1}$? It seems that the ideal choice is to assign a larger weight to larger lines. What about the vector defined by $v_{\ell} = |\ell|$?
+
+	Recall that
+	\[ \sum_{\ell \in \mathcal{L}} |\ell| = n(p+1). \]
+
+	\begin{prop}
+		The following bound is true.
+		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 \ge n(n+p). \]
+	\end{prop}
+	Note that the bound is tight in the size $2p$ equality case!
+	\begin{proof}
+		Consider the vector $v$ with $v_{\ell} = |\ell|$. Then,
+		\begin{align*}
+			\sum_{\ell \in \mathcal{L}} |\ell|^2 &= v_\ell^t v_\ell \\
+				&\ge \frac{1}{n+p} v_\ell^t CC^t v_\ell \\
+				&= \frac{1}{n+p} \left( \sum_{\ell \in \mathcal{L}} v_\ell^2 |\ell| + \sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'}  \right).
+		\end{align*}
+		Let us compute the second quantity.
+		\begin{align*}
+			\sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'} &= \sum_{P \in \mathcal{P}} \sum_{\substack{\ell,\ell' \ni P \\ \ell \ne \ell'}} |\ell||\ell'| \\
+				&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell,\ell' \ni P} |\ell||\ell'| - \sum_{\ell \ni P} |\ell^2|\right) \\
+				&= \sum_{P \in \mathcal{P}} \left( \left(\sum_{\ell \in P} |\ell|\right)^2 - \sum_{\ell \ni P} |\ell^2| \right).
+		\end{align*}
+		Observe that in the first summation (which is squared), because the incidence system is a linear space, there is precisely one line $\ell \ni P$ passing through each $Q \ne P$, and all $p+1$ lines pass through $P$. Therefore, the inner summation is just $(n-1)+(p+1) = n+p$. So,
+		\begin{align*}
+			\sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'} &= \sum_{P \in \mathcal{P}} \left( (n+p)^2 - \sum_{\ell \ni P} |\ell|^2 \right) \\
+				&= n(n+p)^2 - \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 \\
+				&= n(n+p)^2 - \sum_{\ell \in \mathcal{L}} \sum_{P \in \ell} |\ell|^2 \\
+				&= n(n+p)^2 - \sum_{\ell \in \mathcal{L}} |\ell|^3.
+		\end{align*}
+		Therefore, we get that
+		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 \ge n(n+p). \]
+	\end{proof}
+
+	Consider the graph $G$ with vertex set $\mathcal{L}$, and $u \leftrightarrow v$ iff $u \cap v \ne \emptyset$. What do our conditions on the linear space correspond to?
+	\begin{enumerate}
+		\item Each point has exactly $p+1$ lines through it: any maximal clique in $G$ is of size $p+1$.
+		\item There is a line passing through any two points (linearity): any two maximal cliques have a single point in common.
+	\end{enumerate}
+
+	We wish to count the number of (maximal) cliques in the graph.\\
+	Note that each vertex $\ell$ has degree $|\ell|$. As a result, the graph has $\frac{1}{2}n(p+1)$ edges.
+	Consider the random variable $X$ that chooses a vertex with probability proportional to its degree (the measure of ${\ell}$ is $|\ell|/n(p+1)$). Note that this corresponds to the stationary distribution of a standard random walk on the graph!\\
+	Further, we have that
+	\[ \expec d(v) \ge \frac{p+n}{p+1}. \]
+	
 \end{document}

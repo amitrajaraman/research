@@ -97,7 +97,7 @@
 	\begin{ftheo}[Perron-Frobenius Theorem]
 		Let $A = (a_{ij})_{n\times n}$ be a non-negative irreducible matrix. Then,
 		\begin{enumerate}
-			\item There exists a positive eigenvalue $\lambda$ such that any other eigenvalue is of absolute value at most $\lambda$. Further, there is a number $h$ called the \emph{period} such that $\lambda \omega_h^k \lambda$ is an eigenvalue for every $0 \le k < h$. These are the only eigenvalues with absolute value $\lambda$.
+			\item There exists a positive eigenvalue $\lambda$ such that any other eigenvalue is of absolute value at most $\lambda$. Further, there is a number $h$ called the \emph{period} such that $\omega_h^k \lambda$ is an eigenvalue for every $0 \le k < h$. These are the only eigenvalues with absolute value $\lambda$.
 			\item $\lambda$ is a simple root of the characteristic polynomial. As a result, its corresponding eigenspace is one-dimensional.
 			\item $\lambda$ has an eigenvector $v$ with all positive entries. Any eigenvector with all positive entries is in the span of $v$.
 		\end{enumerate}
@@ -157,13 +157,13 @@
 
 	In fact, one similarly gets that for any $m$,
 	\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left( \sum_{\ell \ni P} |\ell|^m \right)^2. \]
-	The right is easily computable for $m = 0$ (because of regularity) and $m = 1$ (because of linearity).
-	Using the Cauchy-Schwarz inequality as we did in the previous proof, one further gets that
+	The right is easily computable for $m = 0$ (because of regularity) and $m = 1$ (because of linearity and regularity).
+	Using the Cauchy-Schwarz inequality as we did in the previous proof, one further obtains that
 	\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n(n+p)} \left(\sum_{\ell \in \mathcal{L}} |\ell|^{m+1}\right)^2. \]
 	
 
 	\begin{porism}
-		An eigenvector of $CC^t$ corresponding to the eigenvalue $n+p$ is the vector $v : \mathcal{L} \to \R$ with $v_\ell = |\ell|$.
+		The eigenvector (up to scalar multiplication) of $CC^t$ corresponding to the eigenvalue $n+p$ is the vector $v : \mathcal{L} \to \R$ with $v_\ell = |\ell|$.
 	\end{porism}
 
 
@@ -175,9 +175,9 @@
 
 	We wish to count the number of (maximal) cliques in the graph.\\
 	Note that each vertex $\ell$ has degree $|\ell|$. As a result, the graph has $\frac{1}{2}n(p+1)$ edges.
-	Consider the random variable $X$ that chooses a vertex with probability proportional to its degree (the measure of $\{\ell\}$ is $|\ell|/n(p+1)$). Note that this corresponds to the stationary distribution of a standard random walk on the graph!\\
+	Consider the random variable $X$ that chooses a vertex with probability proportional to its degree (the probability of choosing $\ell$ is $|\ell|/n(p+1)$). Note that this corresponds to the stationary distribution of a standard random walk on the graph!\\
 	Further, we have that
-	\[ \expec d(v) \ge \frac{p+n}{p+1}. \]
+	\[ \expec d(v) = \frac{p+n}{p+1}. \]
 
 	Let $D$ be the $m \times m$ diagonal matrix with $D_{ii} = |\ell_i|$. Let $A_G$ and $L_G$ be the adjacency matrix and Laplacian of $G$ respectively. Then, observe that
 	\begin{align*}

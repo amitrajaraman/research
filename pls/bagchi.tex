@@ -114,7 +114,7 @@
 			&= (p+1) \cdot n(p+1) = n(p+1)^2
 	\end{align*}
 	Since $p+2 < n \le 2p$,
-	\[ m \ge \frac{n(p+1)^2}{n+p} > \frac{(p+1)^2}{3}. \]
+	\[ m \ge \frac{n(p+1)^2}{n+p} > \frac{(p+1)^2}{2}. \]
 	The system has many lines! Can we use this to show that either there is a ``large'' line somewhere or the code is trivial?\\
 	Can we draw stronger conclusions by using another vector in place of $\textbf{1}$? It seems that the ideal choice is to assign a larger weight to larger lines. What about the vector defined by $v_{\ell} = |\ell|$?
 
@@ -123,32 +123,49 @@
 
 	\begin{prop}
 		The following bound is true.
-		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 \ge n(n+p). \]
+		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 = n(n+p). \]
 	\end{prop}
-	Note that the bound is tight in the size $2p$ equality case!
+	% Note that the bound is tight in the size $2p$ equality case! In fact, the bound is tight even in 
 	\begin{proof}
 		Consider the vector $v$ with $v_{\ell} = |\ell|$. Then,
 		\begin{align*}
-			\sum_{\ell \in \mathcal{L}} |\ell|^2 &= v_\ell^t v_\ell \\
-				&\ge \frac{1}{n+p} v_\ell^t CC^t v_\ell \\
-				&= \frac{1}{n+p} \left( \sum_{\ell \in \mathcal{L}} v_\ell^2 |\ell| + \sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'}  \right).
+			\sum_{\ell \in \mathcal{L}} |\ell|^2 &= v^t v \\
+				&\ge \frac{1}{n+p} v^t CC^t v \\
+				&= \frac{1}{n+p} \left( \sum_{\ell \in \mathcal{L}} \underbrace{v_\ell^2 |\ell|}_{|\ell|^3} + \sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'}  \right).
 		\end{align*}
 		Let us compute the second quantity.
 		\begin{align*}
 			\sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'} &= \sum_{P \in \mathcal{P}} \sum_{\substack{\ell,\ell' \ni P \\ \ell \ne \ell'}} |\ell||\ell'| \\
-				&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell,\ell' \ni P} |\ell||\ell'| - \sum_{\ell \ni P} |\ell^2|\right) \\
-				&= \sum_{P \in \mathcal{P}} \left( \left(\sum_{\ell \in P} |\ell|\right)^2 - \sum_{\ell \ni P} |\ell^2| \right).
+				&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell,\ell' \ni P} |\ell||\ell'| - \sum_{\ell \ni P} |\ell|^2\right) \\
+				&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2 - \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 .
 		\end{align*}
-		Observe that in the first summation (which is squared), because the incidence system is a linear space, there is precisely one line $\ell \ni P$ passing through each $Q \ne P$, and all $p+1$ lines pass through $P$. Therefore, the inner summation is just $(n-1)+(p+1) = n+p$. So,
+		The second summation is just
+		\[ \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 = \sum_{\ell \in \mathcal{L}} \sum_{P \in \ell} |\ell|^2 = \sum_{\ell \in \mathcal{L}} |\ell|^3. \]
+		The $\sum|\ell|^3$ terms cancels out! Therefore, we get
+		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2. \]
+		On one hand, linearity and regularity imply that for any $P$, $\sum_{\ell \ni P} |\ell| = (n-1) + (p+1)$. Indeed, there is precisely one line through $P$ and any point $Q \ne P$, and there are $p+1$ lines in all (in which $P$ is present). Therefore,
+		\[ \sum_{\ell \ni \mathcal{L}} |\ell|^2 \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} (n+p)^2 = n(n+p). \]
+		Using the Cauchy-Schwarz inequality on the other hand,
 		\begin{align*}
-			\sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'} &= \sum_{P \in \mathcal{P}} \left( (n+p)^2 - \sum_{\ell \ni P} |\ell|^2 \right) \\
-				&= n(n+p)^2 - \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 \\
-				&= n(n+p)^2 - \sum_{\ell \in \mathcal{L}} \sum_{P \in \ell} |\ell|^2 \\
-				&= n(n+p)^2 - \sum_{\ell \in \mathcal{L}} |\ell|^3.
+		 	\sum_{\ell \in \mathcal{L}} |\ell|^2 &\ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2 \\
+		 		&\ge \frac{1}{n(n+p)} \left(\sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|\right)^2 \\
+		 		&= \frac{1}{n(n+p)} \left(\sum_{\ell \in \mathcal{L}} |\ell|^2\right)^2 \\
+		 	n(n+p) &\ge \sum_{\ell \in \mathcal{L}} |\ell|^2,
 		\end{align*}
-		Therefore, we get that
-		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 \ge n(n+p). \]
+		completing the proof.
 	\end{proof}
+
+	In fact, one similarly gets that for any $m$,
+	\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left( \sum_{\ell \ni P} |\ell|^m \right)^2. \]
+	The right is easily computable for $m = 0$ (because of regularity) and $m = 1$ (because of linearity).
+	Using the Cauchy-Schwarz inequality as we did in the previous proof, one further gets that
+	\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n(n+p)} \left(\sum_{\ell \in \mathcal{L}} |\ell|^{m+1}\right)^2. \]
+	
+
+	\begin{porism}
+		An eigenvector of $CC^t$ corresponding to the eigenvalue $n+p$ is the vector $v : \mathcal{L} \to \R$ with $v_\ell = |\ell|$.
+	\end{porism}
+
 
 	Consider the graph $G$ with vertex set $\mathcal{L}$, and $u \leftrightarrow v$ iff $u \cap v \ne \emptyset$. What do our conditions on the linear space correspond to?
 	\begin{enumerate}
@@ -158,8 +175,14 @@
 
 	We wish to count the number of (maximal) cliques in the graph.\\
 	Note that each vertex $\ell$ has degree $|\ell|$. As a result, the graph has $\frac{1}{2}n(p+1)$ edges.
-	Consider the random variable $X$ that chooses a vertex with probability proportional to its degree (the measure of ${\ell}$ is $|\ell|/n(p+1)$). Note that this corresponds to the stationary distribution of a standard random walk on the graph!\\
+	Consider the random variable $X$ that chooses a vertex with probability proportional to its degree (the measure of $\{\ell\}$ is $|\ell|/n(p+1)$). Note that this corresponds to the stationary distribution of a standard random walk on the graph!\\
 	Further, we have that
 	\[ \expec d(v) \ge \frac{p+n}{p+1}. \]
+
+	Let $D$ be the $m \times m$ diagonal matrix with $D_{ii} = |\ell_i|$. Let $A_G$ and $L_G$ be the adjacency matrix and Laplacian of $G$ respectively. Then, observe that
+	\begin{align*}
+		L_G &= pD - A_G \text{ and} \\
+		CC^t &= D + A_G.
+	\end{align*}
 	
 \end{document}

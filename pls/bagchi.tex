@@ -38,6 +38,7 @@
 
 \section{Inamdar's Result}
 
+
 	% \begin{ftheo}
 	% 	If a PLS $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is non-trivial at $p$ and has at least $n+1$ lines through every point, then $|\mathcal{P}| \ge 2n+2-2n/p$. Moreover, equality holds iff $\mathcal{X}$ is the join of two Steiner $2$-designs with $n/p$ lines through each point and $p$ points on each line.
 	% \end{ftheo}
@@ -46,143 +47,156 @@
 		If a PLS $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is non-trivial at $p$ and has at least $p+1$ lines through every point, then $|\mathcal{P}| \ge 2p$. Moreover, equality holds iff $\mathcal{X}$ is the join of two $p$-lines.
 	\end{ftheo}
 
-	For the rest of this section, assume that $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is a partial linear space of the above prescribed format with $\mathcal{P} \le 2p$. We wish to show that $\mathcal{P} = 2p$. Let $\mathcal{C} = \mathcal{C}_p(\mathcal{X})$. \\
-	It may be shown that it can be assumed that 
-	\begin{enumerate}
-		\item Each point is incident on exactly $p+1$ lines (throw away extra lines).
-		\item $\mathcal{C}^\perp$ is one-dimensional. Suppose that it is equal to $\langle w \rangle$ (restrict to the support of the minimum support word in $\mathcal{C}^\perp$).
-		\item For any line $\ell$ and any $\ell' \subsetneq \ell$, $\langle w,\ell'\rangle \ne 0$ (do the splitting procedure).
-	\end{enumerate}
-	
-	Also consider the colouring of $\mathcal{P}$ wherein each point $P$ is coloured $w(P)$.
+	\subsection{Combinatorial Arguments}
 
-	\begin{prop}
-		If $\mathcal{X}$ has a $p$-line, it is equal to a join of two $p$-lines.
-	\end{prop}
-	\begin{proof}
-		Let $P_1\cdots P_p$ be a $p$-line. Since each point has $p$ lines remaining, there must be at least $p$ points other than the $P_i$, say $(Q_i)_{i=1}^p$. Since $|\mathcal{P}| \le 2p$, these constitute all the points. Further, since each $P_i$ has $p$ lines to the $Q_j$, there must be a $2$-line $P_iQ_j$ for each $1\le i,j \le p$. Now, suppose that $w(P_1) = 1$. Because $w(P_1) + w(Q_j) = 0$ for all $j$ ($P_1 Q_j$ forms a $p$-line), $w(Q_j) = -1$ for all $j$. Each of the $Q_i$ now has one line not accounted for. This line must be contained within the $(Q_i)$. However, due to all of them having the same colour, the size of any such line must be $p$, completing the proof.
-	\end{proof}
-
-	\begin{prop}
-		If $\mathcal{X}$ has no $p$-line, the largest line in $\mathcal{X}$ is of size at most $2p/3$.
-	\end{prop}
-	\begin{proof}
-		Let $\ell$ be a line with $|\ell| > 2p/3$. Given a $P \in \ell$, let $x_P$ be the number of $2$-lines through $P$. We then have that
-		\[ 2p-|\ell| \ge \underbrace{x_P}_{\text{points in $2$-lines}} + \underbrace{2(p-x_P)}_{\text{points in $\ge 3$-lines}}, \]
-		so $x_P \ge \ell$. Observe that if $x_P > (2p-|\ell|)/2$ for all $P \in \ell$, it follows by a pigeonhole argument that any two points $P,Q$ in $\ell$ have a ``$2$-neighbour'' (a point $u$ such that $uP$ and $uQ$ are $2$-lines) in common. This is indeed the case because $x_P \ge |\ell| > (2p/3) > (2p-|\ell|)/2$. This in turn implies that $w(P) = w(Q)$, because $w(P) = -w(u) = w(Q)$. Therefore, $\ell$ is monochromatic, so for any fixed $P \in \ell$,
-		\[ 0 = \sum_{P \in \ell} w(P) = |\ell| w(P). \]
-		As $w(P) \ne 0$, $|\ell| = p$, yielding a contradiction.
-	\end{proof}
-
-	As a result, we are done if we manage to show that $\mathcal{X}$ has a line of size greater than $2p/3$.\\
-
-	Now, let us restrict ourselves to the case where $\mathcal{X}$ is a linear space with exactly $p+1$ lines through each point. Let $C$ be the $m \times n$ incidence matrix of $\mathcal{X}$, where $m = |\mathcal{L}|$ and $n = |\mathcal{P}|$. Observe that $(C^tC)_{ij} = pI + J$, where $J$ is the all $1$s matrix. As a result, its characteristic equation is just $(X - (p+n))(X-p)^{n-1}$. Recall that the characteristic matrix of $CC^t$ and $C^tC$ only differ by a power of $X$. That is, the characteristic equation of $CC^t$ is $X^{m-n} (X - (p+n))(X-p)^{n-1}$. Over $\F_p$, this becomes $X^{m-1}(X-n)$.\\
-
-	Suppose that $y$ is an eigenvector with eigenvalue $0$. That is, $CC^ty = 0$. A question to ask is: is $C^ty$ always $0$? If it is not, we can explicitly get a vector in $\mathcal{C}^\perp$.
-
-	\begin{prop}
-		There exists $y$ in the kernel of $CC^t$ such that $C^ty \ne 0$ (in $\F_p$).
-	\end{prop}
-	\begin{proof}
-		Indeed, note that the kernel of $CC^t$ is of dimension $m-1$, whereas the kernel of $C^t$ is of dimension at most $m-n$. It follows that the kernel of $C^t$ is a proper subset of $CC^t$.
-	\end{proof}
-	% Also, the $m-n$ bound is attained if $\mathcal{C}$ becomes trivial; and 0 has multiplicity m-n (in N). But we only have non-triviality over Q, not F_p?
-
-	\begin{definition}[Irreducible Matrix]
-		A matrix $A = (a_{ij})_{n \times n}$ is said to be \emph{irreducible} if the (directed) graph $G_A$ with vertex set $[n]$ and edge from $i$ to $j$ iff $a_{ij} \ne 0$ is strongly connected.
-	\end{definition}
-
-	Observe that $CC^t$ is irreducible! Indeed, given any lines $\ell,\ell'$, there is a line $\ell''$ through some (any) $x \in \ell$ and $y \in \ell'$.
-
-	\begin{ftheo}[Perron-Frobenius Theorem]
-		Let $A = (a_{ij})_{n\times n}$ be a non-negative irreducible matrix. Then,
+		For the rest of this section, assume that $\mathcal{X} = (\mathcal{P},\mathcal{L})$ is a partial linear space of the above prescribed format with $\mathcal{P} \le 2p$. We wish to show that $\mathcal{P} = 2p$. Let $\mathcal{C} = \mathcal{C}_p(\mathcal{X})$. \\
+		It may be shown that it can be assumed that 
 		\begin{enumerate}
-			\item There exists a positive eigenvalue $\lambda$ such that any other eigenvalue is of absolute value at most $\lambda$. Further, there is a number $h$ called the \emph{period} such that $\omega_h^k \lambda$ is an eigenvalue for every $0 \le k < h$. These are the only eigenvalues with absolute value $\lambda$.
-			\item $\lambda$ is a simple root of the characteristic polynomial. As a result, its corresponding eigenspace is one-dimensional.
-			\item $\lambda$ has an eigenvector $v$ with all positive entries. Any eigenvector with all positive entries is in the span of $v$.
+			\item Each point is incident on exactly $p+1$ lines (throw away extra lines).
+			\item $\mathcal{C}^\perp$ is one-dimensional. Suppose that it is equal to $\langle w \rangle$ (restrict to the support of the minimum support word in $\mathcal{C}^\perp$).
+			\item For any line $\ell$ and any $\ell' \subsetneq \ell$, $\langle w,\ell'\rangle \ne 0$ (do the splitting procedure).
 		\end{enumerate}
-	\end{ftheo}
+		
+		Also consider the colouring of $\mathcal{P}$ wherein each point $P$ is coloured $w(P)$.
 
-	Since $CC^t$ is irreducible and non-negative with maximum eigenvalue $n+p$, there is an eigenvector $v$ of $n+p$ with all positive entries.
+		\begin{prop}
+			If $\mathcal{X}$ has a $p$-line, it is equal to a join of two $p$-lines.
+		\end{prop}
+		\begin{proof}
+			Let $P_1\cdots P_p$ be a $p$-line. Since each point has $p$ lines remaining, there must be at least $p$ points other than the $P_i$, say $(Q_i)_{i=1}^p$. Since $|\mathcal{P}| \le 2p$, these constitute all the points. Further, since each $P_i$ has $p$ lines to the $Q_j$, there must be a $2$-line $P_iQ_j$ for each $1\le i,j \le p$. Now, suppose that $w(P_1) = 1$. Because $w(P_1) + w(Q_j) = 0$ for all $j$ ($P_1 Q_j$ forms a $p$-line), $w(Q_j) = -1$ for all $j$. Each of the $Q_i$ now has one line not accounted for. This line must be contained within the $(Q_i)$. However, due to all of them having the same colour, the size of any such line must be $p$, completing the proof.
+		\end{proof}
 
-	For example, we now have that
-	\begin{align*}
-		m(n+p) &= (n+p)\textbf{1}^\top \textbf{1} \\
-			&\ge \textbf{1}^\top CC^\top \textbf{1} \\
-			&= \sum_{\ell,\ell' \in \mathcal{L}} |\ell \cap \ell'| \\
-			&= \sum_{\ell \in \mathcal{L}} (p+1)|\ell| & \text{(each point on $\ell$ has $p+1$ lines through it)} \\ 
-			&= (p+1) \cdot n(p+1) = n(p+1)^2
-	\end{align*}
-	Since $p+2 < n \le 2p$,
-	\[ m \ge \frac{n(p+1)^2}{n+p} > \frac{(p+1)^2}{2}. \]
-	The system has many lines! Can we use this to show that either there is a ``large'' line somewhere or the code is trivial?\\
-	Can we draw stronger conclusions by using another vector in place of $\textbf{1}$? It seems that the ideal choice is to assign a larger weight to larger lines. What about the vector defined by $v_{\ell} = |\ell|$?
+		\begin{prop}
+			If $\mathcal{X}$ has no $p$-line, the largest line in $\mathcal{X}$ is of size at most $2p/3$.
+		\end{prop}
+		\begin{proof}
+			Let $\ell$ be a line with $|\ell| > 2p/3$. Given a $P \in \ell$, let $x_P$ be the number of $2$-lines through $P$. We then have that
+			\[ 2p-|\ell| \ge \underbrace{x_P}_{\text{points in $2$-lines}} + \underbrace{2(p-x_P)}_{\text{points in $\ge 3$-lines}}, \]
+			so $x_P \ge \ell$. Observe that if $x_P > (2p-|\ell|)/2$ for all $P \in \ell$, it follows by a pigeonhole argument that any two points $P,Q$ in $\ell$ have a ``$2$-neighbour'' (a point $u$ such that $uP$ and $uQ$ are $2$-lines) in common. This is indeed the case because $x_P \ge |\ell| > (2p/3) > (2p-|\ell|)/2$. This in turn implies that $w(P) = w(Q)$, because $w(P) = -w(u) = w(Q)$. Therefore, $\ell$ is monochromatic, so for any fixed $P \in \ell$,
+			\[ 0 = \sum_{P \in \ell} w(P) = |\ell| w(P). \]
+			As $w(P) \ne 0$, $|\ell| = p$, yielding a contradiction.
+		\end{proof}		
 
-	Recall that
-	\[ \sum_{\ell \in \mathcal{L}} |\ell| = n(p+1). \]
+		As a result, we are done if we manage to show that $\mathcal{X}$ has a line of size greater than $2p/3$.\\
 
-	\begin{prop}
-		The following bound is true.
-		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 = n(n+p). \]
-	\end{prop}
-	% Note that the bound is tight in the size $2p$ equality case! In fact, the bound is tight even in 
-	\begin{proof}
-		Consider the vector $v$ with $v_{\ell} = |\ell|$. Then,
+		Now, let us restrict ourselves to the case where $\mathcal{X}$ is a linear space with exactly $p+1$ lines through each point.
+
+	\subsection{Linear Algebra}
+
+		Let $C$ be the $m \times n$ incidence matrix of $\mathcal{X}$, where $m = |\mathcal{L}|$ and $n = |\mathcal{P}|$. Observe that $(C^tC)_{ij} = pI + J$, where $J$ is the all $1$s matrix. As a result, its characteristic equation is just $(X - (p+n))(X-p)^{n-1}$. Recall that the characteristic matrix of $CC^t$ and $C^tC$ only differ by a power of $X$. That is, the characteristic equation of $CC^t$ is $X^{m-n} (X - (p+n))(X-p)^{n-1}$. Over $\F_p$, this becomes $X^{m-1}(X-n)$.\\
+
+		Suppose that $y$ is an eigenvector with eigenvalue $0$. That is, $CC^ty = 0$. A question to ask is: is $C^ty$ always $0$? If it is not, we can explicitly get a vector in $\mathcal{C}^\perp$.
+
+		\begin{prop}
+			There exists $y$ in the kernel of $CC^t$ such that $C^ty \ne 0$ (in $\F_p$).
+		\end{prop}
+		\begin{proof}
+			Indeed, note that the kernel of $CC^t$ is of dimension $m-1$, whereas the kernel of $C^t$ is of dimension at most $m-n$. It follows that the kernel of $C^t$ is a proper subset of $CC^t$.
+		\end{proof}
+		% Also, the $m-n$ bound is attained if $\mathcal{C}$ becomes trivial; and 0 has multiplicity m-n (in N). But we only have non-triviality over Q, not F_p?
+
+		\begin{definition}[Irreducible Matrix]
+			A matrix $A = (a_{ij})_{n \times n}$ is said to be \emph{irreducible} if the (directed) graph $G_A$ with vertex set $[n]$ and edge from $i$ to $j$ iff $a_{ij} \ne 0$ is strongly connected.
+		\end{definition}
+
+		Observe that $CC^t$ is irreducible! Indeed, given any lines $\ell,\ell'$, there is a line $\ell''$ through some (any) $x \in \ell$ and $y \in \ell'$.
+
+		\begin{ftheo}[Perron-Frobenius Theorem]
+			Let $A = (a_{ij})_{n\times n}$ be a non-negative irreducible matrix. Then,
+			\begin{enumerate}
+				\item There exists a positive eigenvalue $\lambda$ such that any other eigenvalue is of absolute value at most $\lambda$. Further, there is a number $h$ called the \emph{period} such that $\omega_h^k \lambda$ is an eigenvalue for every $0 \le k < h$. These are the only eigenvalues with absolute value $\lambda$.
+				\item $\lambda$ is a simple root of the characteristic polynomial. As a result, its corresponding eigenspace is one-dimensional.
+				\item $\lambda$ has an eigenvector $v$ with all positive entries. Any eigenvector with all positive entries is in the span of $v$.
+			\end{enumerate}
+		\end{ftheo}
+
+		Since $CC^t$ is irreducible and non-negative with maximum eigenvalue $n+p$, there is an eigenvector $v$ of $n+p$ with all positive entries.
+
+		For example, we now have that
 		\begin{align*}
-			\sum_{\ell \in \mathcal{L}} |\ell|^2 &= v^t v \\
-				&\ge \frac{1}{n+p} v^t CC^t v \\
-				&= \frac{1}{n+p} \left( \sum_{\ell \in \mathcal{L}} \underbrace{v_\ell^2 |\ell|}_{|\ell|^3} + \sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'}  \right).
+			m(n+p) &= (n+p)\textbf{1}^\top \textbf{1} \\
+				&\ge \textbf{1}^\top CC^\top \textbf{1} \\
+				&= \sum_{\ell,\ell' \in \mathcal{L}} |\ell \cap \ell'| \\
+				&= \sum_{\ell \in \mathcal{L}} (p+1)|\ell| & \text{(each point on $\ell$ has $p+1$ lines through it)} \\ 
+				&= (p+1) \cdot n(p+1) = n(p+1)^2
 		\end{align*}
-		Let us compute the second quantity.
+		That is,
+		\begin{empheq}[box={\mybluebox[2pt][2pt]}]{equation*}
+		    m \ge \frac{n(p+1)^2}{n+p}.
+		\end{empheq}
+		The fact that $p+2 < n \le 2p$ further gives that
+		\[ m \ge \frac{(p+1)^2}{2} \]
+		The system has many lines! Can we use this to show that either there is a ``large'' line somewhere or the code is trivial?\\
+		Can we draw stronger conclusions by using another vector in place of $\textbf{1}$? It seems that the ideal choice is to assign a larger weight to larger lines. What about the vector defined by $v_{\ell} = |\ell|$?
+
+		Recall that
+		\[ \sum_{\ell \in \mathcal{L}} |\ell| = n(p+1). \]
+
+		\begin{fprop}
+			\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 = n(n+p). \]
+		\end{fprop}
+		% Note that the bound is tight in the size $2p$ equality case! In fact, the bound is tight even in 
+		\begin{proof}
+			Consider the vector $v$ with $v_{\ell} = |\ell|$. Then,
+			\begin{align*}
+				\sum_{\ell \in \mathcal{L}} |\ell|^2 &= v^t v \\
+					&\ge \frac{1}{n+p} v^t CC^t v \\
+					&= \frac{1}{n+p} \left( \sum_{\ell \in \mathcal{L}} \underbrace{v_\ell^2 |\ell|}_{|\ell|^3} + \sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'}  \right).
+			\end{align*}
+			Let us compute the second quantity.
+			\begin{align*}
+				\sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'} &= \sum_{P \in \mathcal{P}} \sum_{\substack{\ell,\ell' \ni P \\ \ell \ne \ell'}} |\ell||\ell'| \\
+					&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell,\ell' \ni P} |\ell||\ell'| - \sum_{\ell \ni P} |\ell|^2\right) \\
+					&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2 - \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 .
+			\end{align*}
+			The second summation is just
+			\[ \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 = \sum_{\ell \in \mathcal{L}} \sum_{P \in \ell} |\ell|^2 = \sum_{\ell \in \mathcal{L}} |\ell|^3. \]
+			The $\sum|\ell|^3$ terms cancel out! As a result,
+			\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2. \]
+			On one hand, linearity and regularity imply that for any $P$, $\sum_{\ell \ni P} |\ell| = (n-1) + (p+1)$. Indeed, there is precisely one line through $P$ and any point $Q \ne P$, and there are $p+1$ lines in all (in which $P$ is present). Therefore,
+			\[ \sum_{\ell \ni \mathcal{L}} |\ell|^2 \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} (n+p)^2 = n(n+p). \]
+			Using the Cauchy-Schwarz inequality on the other hand,
+			\begin{align*}
+			 	\sum_{\ell \in \mathcal{L}} |\ell|^2 &\ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2 \\
+			 		&\ge \frac{1}{n(n+p)} \left(\sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|\right)^2 \\
+			 		&= \frac{1}{n(n+p)} \left(\sum_{\ell \in \mathcal{L}} |\ell|^2\right)^2 \\
+			 	n(n+p) &\ge \sum_{\ell \in \mathcal{L}} |\ell|^2,
+			\end{align*}
+			completing the proof.
+		\end{proof}
+
+		In fact, one similarly gets that for any $m$,
+		\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left( \sum_{\ell \ni P} |\ell|^m \right)^2. \]
+		The right is easily computable for $m = 0$ (because of regularity) and $m = 1$ (because of linearity and regularity).
+		Using the Cauchy-Schwarz inequality as we did in the previous proof, one further obtains that
+		\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n(n+p)} \left(\sum_{\ell \in \mathcal{L}} |\ell|^{m+1}\right)^2. \]
+		
+
+		\begin{porism}
+			The eigenvector (up to scalar multiplication) of $CC^t$ corresponding to the eigenvalue $n+p$ is the vector $v_{\mathcal{L}} : \mathcal{L} \to \R$ with $v_\mathcal{L}(\ell) = |\ell|$.
+		\end{porism}
+
+		Thus, for any vector $x \in v_{\mathcal{L}}^\perp$,
+		\[ \norm{C^\top x}_2^2 \le p \norm{x}_2^2. \]
+		
+	\subsection{Graphs}
+
+		Consider the graph $G$ with vertex set $\mathcal{L}$, and $u \leftrightarrow v$ iff $u \cap v \ne \emptyset$. What do our conditions on the linear space correspond to?
+		\begin{enumerate}
+			\item Each point has exactly $p+1$ lines through it: any maximal clique in $G$ is of size $p+1$.
+			\item There is a line passing through any two points (linearity): any two maximal cliques have a single point in common.
+		\end{enumerate}
+
+		We wish to count the number of (maximal) cliques in the graph.\\
+		Note that each vertex $\ell$ has degree $|\ell|$. As a result, the graph has $\frac{1}{2}n(p+1)$ edges.
+		Consider the random variable $X$ that chooses a vertex with probability proportional to its degree (the probability of choosing $\ell$ is $|\ell|/n(p+1)$). Note that this corresponds to the stationary distribution of a standard random walk on the graph!\\
+		Further, we have that
+		\[ \expec d(v) = \frac{p+n}{p+1}. \]
+
+		Let $D$ be the $m \times m$ diagonal matrix with $D_{ii} = |\ell_i|$. Let $A_G$ and $L_G$ be the adjacency matrix and ??? of $G$ respectively. Then, observe that
 		\begin{align*}
-			\sum_{\substack{\ell,\ell' \in \mathcal{L} \\ \ell \ne \ell' \\ \ell \cap \ell' \ne \emptyset}} v_{\ell} v_{\ell'} &= \sum_{P \in \mathcal{P}} \sum_{\substack{\ell,\ell' \ni P \\ \ell \ne \ell'}} |\ell||\ell'| \\
-				&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell,\ell' \ni P} |\ell||\ell'| - \sum_{\ell \ni P} |\ell|^2\right) \\
-				&= \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2 - \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 .
+			L_G &= pD - A_G \text{ and} \\
+			CC^t &= D + A_G.
 		\end{align*}
-		The second summation is just
-		\[ \sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|^2 = \sum_{\ell \in \mathcal{L}} \sum_{P \in \ell} |\ell|^2 = \sum_{\ell \in \mathcal{L}} |\ell|^3. \]
-		The $\sum|\ell|^3$ terms cancels out! Therefore, we get
-		\[ \sum_{\ell \in \mathcal{L}} |\ell|^2 \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2. \]
-		On one hand, linearity and regularity imply that for any $P$, $\sum_{\ell \ni P} |\ell| = (n-1) + (p+1)$. Indeed, there is precisely one line through $P$ and any point $Q \ne P$, and there are $p+1$ lines in all (in which $P$ is present). Therefore,
-		\[ \sum_{\ell \ni \mathcal{L}} |\ell|^2 \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} (n+p)^2 = n(n+p). \]
-		Using the Cauchy-Schwarz inequality on the other hand,
-		\begin{align*}
-		 	\sum_{\ell \in \mathcal{L}} |\ell|^2 &\ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left(\sum_{\ell \ni P} |\ell|\right)^2 \\
-		 		&\ge \frac{1}{n(n+p)} \left(\sum_{P \in \mathcal{P}} \sum_{\ell \ni P} |\ell|\right)^2 \\
-		 		&= \frac{1}{n(n+p)} \left(\sum_{\ell \in \mathcal{L}} |\ell|^2\right)^2 \\
-		 	n(n+p) &\ge \sum_{\ell \in \mathcal{L}} |\ell|^2,
-		\end{align*}
-		completing the proof.
-	\end{proof}
-
-	In fact, one similarly gets that for any $m$,
-	\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n+p} \sum_{P \in \mathcal{P}} \left( \sum_{\ell \ni P} |\ell|^m \right)^2. \]
-	The right is easily computable for $m = 0$ (because of regularity) and $m = 1$ (because of linearity and regularity).
-	Using the Cauchy-Schwarz inequality as we did in the previous proof, one further obtains that
-	\[ \sum_{\ell \in \mathcal{L}} |\ell|^{2m} \ge \frac{1}{n(n+p)} \left(\sum_{\ell \in \mathcal{L}} |\ell|^{m+1}\right)^2. \]
-	
-
-	\begin{porism}
-		The eigenvector (up to scalar multiplication) of $CC^t$ corresponding to the eigenvalue $n+p$ is the vector $v : \mathcal{L} \to \R$ with $v_\ell = |\ell|$.
-	\end{porism}
-
-
-	Consider the graph $G$ with vertex set $\mathcal{L}$, and $u \leftrightarrow v$ iff $u \cap v \ne \emptyset$. What do our conditions on the linear space correspond to?
-	\begin{enumerate}
-		\item Each point has exactly $p+1$ lines through it: any maximal clique in $G$ is of size $p+1$.
-		\item There is a line passing through any two points (linearity): any two maximal cliques have a single point in common.
-	\end{enumerate}
-
-	We wish to count the number of (maximal) cliques in the graph.\\
-	Note that each vertex $\ell$ has degree $|\ell|$. As a result, the graph has $\frac{1}{2}n(p+1)$ edges.
-	Consider the random variable $X$ that chooses a vertex with probability proportional to its degree (the probability of choosing $\ell$ is $|\ell|/n(p+1)$). Note that this corresponds to the stationary distribution of a standard random walk on the graph!\\
-	Further, we have that
-	\[ \expec d(v) = \frac{p+n}{p+1}. \]
-
-	Let $D$ be the $m \times m$ diagonal matrix with $D_{ii} = |\ell_i|$. Let $A_G$ and $L_G$ be the adjacency matrix and Laplacian of $G$ respectively. Then, observe that
-	\begin{align*}
-		L_G &= pD - A_G \text{ and} \\
-		CC^t &= D + A_G.
-	\end{align*}
 	
 \end{document}

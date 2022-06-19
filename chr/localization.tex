@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\newcommand{\myname}{Amit Rajaraman}
+\newcommand{\topicname}{Localization Schemes for CHR}
+\usepackage{../generic}
+
+\begin{document}
+
+\titleBC
+% \tableofcontents
+\thispagestyle{empty}
+% \clearpage
+
+\vspace{20pt}
+
+We extensively use the results and terminology of \cite{loc-schemes}.
+
+\section{The Discrete Setting}
+
+In this section, we analyze mixing time bounds for the pinning procedure of coordinate hit-and-run over the discrete set $[m]^n$. The case $m=2$ is analyzed in \cite{alog20,loc-schemes}.
+
+We embed the points of $[m]$ $\R^{m-1}$ as the $m$-simplex, so a point in $[m]^n$ lives in $\R^{(m-1)n}$. Let the vertices of the simplex be $y_1,\ldots,y_m$ (where $\norm{y_i}^2 = 1$ for all $i$). We perform the analysis of each step of the pinning process separately, so it suffices to assume $n=1$ if we know which coordinate we are going to pin.\\
+Let the measure before pinning be $\nu_t$, and the measure after pinning be $\nu_{t+1}$.
+For ease of notation, denote $\nu_t(\{k\})$ as $\alpha_k$. The probability that the coordinate is fixed as $k \in [m]$ is then $\alpha_k$. Denote the barycenter of the distribution as $b_t$. Observe that $b_t = \sum \alpha_k y_k$. \\ 
+The pinning procedure is performed using a linear tilt localization. Suppose that the relevant $Z_t$ is such that it is equal to $Z_k$ with probability $\nu_t(\{k\})$ (this corresponds to the case where the coordinate is pinned as $k$). There are three properties we desire.
+\begin{enumerate}
+	\item $\langle Z_k , y_i - b_t \rangle = -1$ for $i \ne k$.
+	\item $\langle Z_k , y_k - b_t \rangle = 1/\alpha_k - 1$.
+	\item $\sum \alpha_k Z_k = 0$.
+\end{enumerate}
+
+It turns out that all three properties are satisfied by
+\[ Z_k = \left( 1 - \frac{1}{m} \right) \frac{y_k}{\alpha_k}, \]
+as is easily checked -- this uses the fact that $\alpha_k = \frac{1}{n} + \frac{n-1}{n} \langle b_t , y_k \rangle$.\\
+
+The general case with any $n$ is similar. Let $C_t = \Cov(Z_t \mid \nu_t)$. It remains now to bound $\opnorm{C_t^{1/2} \Cov(\nu_t) C_t^{1/2}} = \opnorm{\Cov(\nu_t) C_t}$.%\footnote{recall that $AB$ and $BA$ have the same characteristic polynomial for square matrices $A,B$.}
+
+\clearpage
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+
+\end{document}
